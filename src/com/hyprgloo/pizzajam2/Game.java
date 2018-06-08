@@ -15,7 +15,7 @@ public class Game {
 	
 	public static void update(float delta){
 		
-	
+		
 		
 		player.update(delta);
 		player.draw(delta);
