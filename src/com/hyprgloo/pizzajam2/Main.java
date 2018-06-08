@@ -29,14 +29,14 @@ public class Main extends HvlTemplateInteg2D{
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
 		
-		Game.initialize();
+		MenuManager.initialize();
 	}
 
 	@Override
 	public void update(float delta){
 		font.drawWordc("GAME", Display.getWidth()/2, Display.getHeight()/2, Color.white);
 		
-		Game.update(delta);
+		MenuManager.update(delta);
 	}
 
 }
