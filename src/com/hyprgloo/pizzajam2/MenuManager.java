@@ -117,6 +117,7 @@ public class MenuManager {
 					Game.update(delta);
 				}
 			});
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 		}else if(HvlMenu.getCurrent() == pause){
 			//UPDATING THE GAME//
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
