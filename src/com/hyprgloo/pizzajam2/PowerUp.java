@@ -32,7 +32,7 @@ public class PowerUp {
 		
 	}
 
-	
+	//Powerup moved inward from right side of screen and stops in center. Disappears when collected.
 	
 	static void update(float delta) {
 		
@@ -45,13 +45,7 @@ public class PowerUp {
 		if(random == POWERUP_CHANCE) {
 			powerUpOnScreen = true;
 		}
-		
-		if(powerUpOnScreen) {
-			
-			
-			
-			
-		}
+	
 		
 	}
 
