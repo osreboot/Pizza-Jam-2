@@ -71,7 +71,7 @@ public class PowerUp {
 		yPos = yArg;
 	}
 
-	public void draw() {
+	public void draw(float delta) {
 		
 		hvlDrawQuadc(POWERUP_START_LOCATION_X, POWERUP_START_LOCATION_Y, POWERUP_SIZE, POWERUP_SIZE, Color.red);
 		

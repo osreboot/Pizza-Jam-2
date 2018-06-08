@@ -83,6 +83,8 @@ public class Game {
 		
 		player.update(delta);
 		player.draw(delta);
+		
+		PowerUp.update(delta);
 	}
 	
 	public static void restart(){
