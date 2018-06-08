@@ -5,6 +5,8 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 
+import com.osreboot.ridhvl.HvlMath;
+
 public class Player {
 
 	private static float xPos;
@@ -15,8 +17,8 @@ public class Player {
 	public static final float PLAYER_SIZE = 50;
 	public static final float PLAYER_START_X = 50;
 	public static final float PLAYER_START_Y = 720/2;
-	public static final float MAX_SPEED = 0;
-	public static final float ACCELERATION = 6500f;
+	public static final float MAX_SPEED = 300;
+	public static final float ACCELERATION = 5000f;
 
 	public Player(float xArg, float yArg){
 
@@ -35,22 +37,38 @@ public class Player {
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			ySpeed = ySpeed - (delta * ACCELERATION);
+		}else if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
+			ySpeed = ySpeed + (delta * ACCELERATION);
+		}else {
+			ySpeed = HvlMath.stepTowards(ySpeed, ACCELERATION*delta, 0);
 		}
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			xSpeed = xSpeed - (delta * ACCELERATION);
-		}
-
-		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			ySpeed = ySpeed + (delta * ACCELERATION);
-		}
-
-		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
+		}else if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			xSpeed = xSpeed + (delta * ACCELERATION);
+		}else {
+			xSpeed = HvlMath.stepTowards(xSpeed, ACCELERATION*delta, 0);
 		}
 
 		xPos = xPos + (xSpeed * delta);
 		yPos = yPos + (ySpeed * delta);
+		
+		if(xSpeed >= MAX_SPEED) {
+			xSpeed = MAX_SPEED;
+		}
+		
+		if(xSpeed <= -MAX_SPEED) {
+			xSpeed = -MAX_SPEED;
+		}
+		
+		if(ySpeed >= MAX_SPEED) {
+			ySpeed = MAX_SPEED;
+		}
+		
+		if(ySpeed <= -MAX_SPEED) {
+			ySpeed = -MAX_SPEED;
+		}
 
 	}
 
