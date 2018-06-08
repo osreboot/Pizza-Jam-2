@@ -11,7 +11,8 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	
 	public static final int
-	INDEX_FONT = 0;
+	INDEX_FONT = 0,
+	INDEX_HYPRGLOO = 1;
 	
 	public static HvlFontPainter2D font;
 	
@@ -22,6 +23,7 @@ public class Main extends HvlTemplateInteg2D{
 	@Override
 	public void initialize(){
 		getTextureLoader().loadResource("INOF");
+		getTextureLoader().loadResource("HYPRGLOO");
 		
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
