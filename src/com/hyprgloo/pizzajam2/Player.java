@@ -13,6 +13,8 @@ public class Player {
 	private static float yPos;
 	private static float xSpeed;
 	private static float ySpeed;
+	private static float maxSpeed = 300;
+
 
 	public static final float PLAYER_SIZE = 50;
 	public static final float PLAYER_START_X = 50;
