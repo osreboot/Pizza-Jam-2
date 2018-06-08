@@ -42,12 +42,12 @@ public class MenuManager {
 		}, new HvlComponentDrawable(){
 			@Override
 			public void draw(float deltaArg, float xArg, float yArg, float widthArg, float heightArg){
-				hvlDrawQuad(xArg, yArg, widthArg, heightArg, Color.gray);
+				hvlDrawPolygon(xArg, yArg, POLYGON_BUTTON, Color.blue);
 			}
 		}, new HvlComponentDrawable(){
 			@Override
 			public void draw(float deltaArg, float xArg, float yArg, float widthArg, float heightArg){
-				hvlDrawQuad(xArg, yArg, widthArg, heightArg, Color.darkGray);
+				hvlDrawPolygon(xArg, yArg, POLYGON_BUTTON, Color.blue);
 			}
 		}, Main.font, "NOTEXT", Color.white);
 		defaultLabeledButton.setTextScale(0.2f);
@@ -90,5 +90,14 @@ public class MenuManager {
 		
 		HvlMenu.updateMenus(delta);
 	}
+	
+	/*private static HvlCoord2D[] getTransformedButtonPolygon(){
+		HvlCoord2D[] output = new HvlCoord2D[]{
+				new HvlCoord2D(0, 0),
+				new HvlCoord2D(BUTTON_WIDTH, 0),
+				new HvlCoord2D(BUTTON_WIDTH - (BUTTON_HEIGHT/2), BUTTON_HEIGHT),
+				new HvlCoord2D(0, BUTTON_HEIGHT),
+		};
+	}*/
 	
 }
