@@ -1,6 +1,6 @@
 package com.hyprgloo.pizzajam2;
 
-import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
@@ -29,7 +29,7 @@ public class Player {
 
 	public void draw(float delta){
 
-		hvlDrawQuad(xPos, yPos, PLAYER_SIZE, PLAYER_SIZE, Color.white);
+		hvlDrawQuadc(xPos, yPos, PLAYER_SIZE, PLAYER_SIZE, Color.white);
 
 	}
 
@@ -69,6 +69,10 @@ public class Player {
 		if(ySpeed <= -MAX_SPEED) {
 			ySpeed = -MAX_SPEED;
 		}
+		
+		yPos = HvlMath.limit(yPos, PLAYER_SIZE/2, 720 - (PLAYER_SIZE/2));
+		xPos = HvlMath.limit(xPos, PLAYER_SIZE/2, 1280 - (PLAYER_SIZE/2));
+
 
 	}
 
