@@ -5,7 +5,7 @@ public class Game {
 	public static Player player;
 	
 	public static void initialize(){
-		player = new Player();
+		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 	}
 	
 	public static void update(float delta){
@@ -13,7 +13,7 @@ public class Game {
 	}
 	
 	public static void restart(){
-		player = new Player();
+		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 	}
 
 }
