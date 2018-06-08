@@ -2,34 +2,56 @@ package com.hyprgloo.pizzajam2;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 
 public class Player {
 
 	private static float xPos;
 	private static float yPos;
-	
+	private static float xSpeed;
+	private static float ySpeed;
+
 	public static final float PLAYER_SIZE = 50;
 	public static final float PLAYER_START_X = 50;
 	public static final float PLAYER_START_Y = 720/2;
-	
+	public static final float MAX_SPEED = 0;
+	public static final float ACCELERATION = 6500f;
+
 	public Player(float xArg, float yArg){
 
 		xPos = xArg;
 		yPos = yArg;
-		
+
 	}
 
 	public void draw(float delta){
 
 		hvlDrawQuad(xPos, yPos, PLAYER_SIZE, PLAYER_SIZE, Color.white);
-		
+
 	}
-	
+
 	public void update(float delta) {
-		
-		
-		
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
+			ySpeed = ySpeed - (delta * ACCELERATION);
+		}
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
+			xSpeed = xSpeed - (delta * ACCELERATION);
+		}
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
+			ySpeed = ySpeed + (delta * ACCELERATION);
+		}
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
+			xSpeed = xSpeed + (delta * ACCELERATION);
+		}
+
+		xPos = xPos + (xSpeed * delta);
+		yPos = yPos + (ySpeed * delta);
+
 	}
 
 	public float getX(){
@@ -38,6 +60,30 @@ public class Player {
 
 	public float getY(){
 		return yPos;
+	}
+
+	public void setX(float xArg) {
+		xPos = xArg;
+	}
+
+	public void setY(float yArg) {
+		yPos = yArg;
+	}
+
+	public float getxSpeed(){
+		return xSpeed;
+	}
+
+	public float getySpeed(){
+		return ySpeed;
+	}
+
+	public void setxSpeed(float xArg) {
+		xSpeed = xArg;
+	}
+
+	public void setySpeed(float yArg) {
+		ySpeed = yArg;
 	}
 
 }
