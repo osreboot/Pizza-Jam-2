@@ -36,7 +36,7 @@ public class PowerUp {
 	
 	static void update(float delta) {
 		
-		System.out.println(random);
+		//System.out.println(random);
 		
 		if(!powerUpOnScreen) {
 			random = r.nextInt(POWERUP_CHANCE + 1);
