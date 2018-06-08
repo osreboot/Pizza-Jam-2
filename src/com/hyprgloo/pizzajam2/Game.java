@@ -7,6 +7,7 @@ public class Game {
 	public static Player player;
 	public static ArrayList<LineSegment> tites;
 	public static ArrayList<LineSegment> mites;
+	static ArrayList<PowerUp> powerUps;
 	
 	public static void initialize(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
