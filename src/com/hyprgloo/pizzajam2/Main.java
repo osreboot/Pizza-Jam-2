@@ -36,6 +36,7 @@ public class Main extends HvlTemplateInteg2D{
 		//font.drawWordc("GAME", Display.getWidth()/2, Display.getHeight()/2, Color.white);
 		
 		MenuManager.update(delta);
+		PowerUp.update(delta);
 	}
 
 }
