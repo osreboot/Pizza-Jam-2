@@ -18,7 +18,7 @@ public class Player {
 	public static final float PLAYER_START_X = 50;
 	public static final float PLAYER_START_Y = 720/2;
 	public static final float MAX_SPEED = 300;
-	public static final float ACCELERATION = 5000f;
+	public static final float ACCELERATION = 8500f;
 
 	public Player(float xArg, float yArg){
 
