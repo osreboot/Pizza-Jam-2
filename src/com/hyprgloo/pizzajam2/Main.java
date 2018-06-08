@@ -1,6 +1,10 @@
 package com.hyprgloo.pizzajam2;
 
+import org.lwjgl.opengl.Display;
+
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
+import com.osreboot.ridhvl.painter.HvlRenderFrame;
+import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
@@ -29,12 +33,15 @@ public class Main extends HvlTemplateInteg2D{
 		font.setCharSpacing(16f);
 		
 		MenuManager.initialize();
+		try{
+			MenuManager.pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
+		}catch(FBOUnsupportedException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void update(float delta){
-		//font.drawWordc("GAME", Display.getWidth()/2, Display.getHeight()/2, Color.white);
-		
 		MenuManager.update(delta);
 	}
 

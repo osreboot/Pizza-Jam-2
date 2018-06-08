@@ -1,6 +1,7 @@
 package com.hyprgloo.pizzajam2;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawPolygon;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
+import com.osreboot.ridhvl.action.HvlAction0;
 import com.osreboot.ridhvl.action.HvlAction1;
 import com.osreboot.ridhvl.action.HvlAction2;
 import com.osreboot.ridhvl.menu.HvlComponent;
@@ -21,6 +23,7 @@ import com.osreboot.ridhvl.menu.component.HvlButton;
 import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
 import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
+import com.osreboot.ridhvl.painter.HvlRenderFrame;
 
 public class MenuManager {
 
@@ -28,7 +31,8 @@ public class MenuManager {
 	BUTTON_WIDTH = 256f,
 	BUTTON_HEIGHT = 96f;
 	
-	public static HvlMenu intro, main, game;
+	public static HvlMenu intro, main, game, pause;
+	public static HvlRenderFrame pauseFrame;
 	
 	private static HashMap<HvlLabeledButton, LabeledButtonAlias> buttonAliases = new HashMap<>();
 	
@@ -76,7 +80,7 @@ public class MenuManager {
 		main.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Settings").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
-				
+				System.out.println("NO SETTINGS PAGE!!!");
 			}
 		}).build());
 		main.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
@@ -107,7 +111,16 @@ public class MenuManager {
 			Main.font.drawWordc("MAIN MENU", Display.getWidth()/2, Display.getHeight()/2, Color.white);
 		}else if(HvlMenu.getCurrent() == game){
 			//UPDATING THE GAME//
-			Game.update(delta);
+			pauseFrame.doCapture(new HvlAction0(){
+				@Override
+				public void run() {
+					Game.update(delta);
+				}
+			});
+		}else if(HvlMenu.getCurrent() == pause){
+			//UPDATING THE GAME//
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.5f));
 		}
 		
 		HvlMenu.updateMenus(delta);
