@@ -15,12 +15,12 @@ public class Main extends HvlTemplateInteg2D{
 
 	@Override
 	public void initialize(){
-		
+		Game.initialize();
 	}
 
 	@Override
 	public void update(float delta){
-		
+		Game.update(delta);
 	}
 
 }
