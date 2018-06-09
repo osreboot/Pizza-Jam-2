@@ -13,6 +13,29 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D{
 
+	//TODO Main menu background					L<
+	//TODO functional settings page				S		[OS]
+	//TODO music								M<		[OS,BASS]
+	//TODO sound effects						M<
+	//TODO credits page							S<		[OS]
+	//TODO score, calculations					S		[BASS]
+	//TODO score, menus							S		[OS]
+	//TODO tutorial text						M<<		[OS]
+	//TODO player damage						L<<<	[SAM]
+	//TODO player fail state					M<<
+	//TODO player win state						M<<
+	//TODO stage progression (to win state)		L<<
+	//TODO stage progression visuals 			S<<
+	//TODO particle fields						M		[OS]
+	//TODO mines								L
+	//TODO game name							S<<<
+	//TODO game icon							S<		[OS]
+	//TODO ship lighting effects				S
+	//TODO main menu fade-in					S		[OS]
+	//TODO flare spawns							M<<		[BASS]
+	//TODO fuel pickups/bar						L		[BASS]
+	//TODO bar visuals (hp dividers)			M		[OS]
+	
 	public static void main(String[] args){
 		new Main();
 	}
