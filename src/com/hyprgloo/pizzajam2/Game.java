@@ -313,8 +313,8 @@ public class Game {
 
 		
 		
-
-
+		//Shockwave.displacementY = HvlMath.stepTowards(Shockwave.displacementY, delta*10, 0);
+		System.out.println(Shockwave.displacementY);
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){
 			s.update(delta);
 		}
@@ -324,9 +324,15 @@ public class Game {
 		}
 
 		for(LineSegment miteWave : mites) {
+			
+			miteWave.start.y += Shockwave.displacementY;
+			miteWave.end.y += Shockwave.displacementY;
 			miteWave.drawError(delta);
 		}
 		for(LineSegment titeWave : tites) {
+			
+			titeWave.start.y += Shockwave.displacementY;
+			titeWave.end.y += Shockwave.displacementY;
 			titeWave.drawError(delta);
 		}
 	}
