@@ -105,6 +105,7 @@ public class MenuManager {
 		main.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Quit").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
+				Main.saveConfig();
 				System.exit(0);
 			}
 		}).build());

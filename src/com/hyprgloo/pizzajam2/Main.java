@@ -1,7 +1,10 @@
 package com.hyprgloo.pizzajam2;
 
+import java.io.File;
+
 import org.lwjgl.opengl.Display;
 
+import com.osreboot.ridhvl.config.HvlConfig;
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
@@ -26,9 +29,12 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_SMOKE = 8,
 	INDEX_SHIP = 9,
 	INDEX_FLARE_ICON1 = 10,
-			INDEX_FLARE_ICON2 = 11;
+	INDEX_FLARE_ICON2 = 11;
 
+	public static final String PATH_SETTINGS = "res\\settings.cfg";
+	
 	public static HvlFontPainter2D font;
+	public static Settings settings;
 
 	public Main(){
 		super(144, 1280, 720, "Pizza Jam 2 : HYPRGLOO Submission", new HvlDisplayModeDefault());
@@ -58,11 +64,22 @@ public class Main extends HvlTemplateInteg2D{
 		}catch(FBOUnsupportedException e){
 			e.printStackTrace();
 		}
+		File config = new File(PATH_SETTINGS);
+		if(config.exists()){
+			settings = HvlConfig.loadFromFile(PATH_SETTINGS);
+		}else{
+			HvlConfig.saveToFile(new Settings(), PATH_SETTINGS);
+			settings = HvlConfig.loadFromFile(PATH_SETTINGS);
+		}
 	}
 
 	@Override
 	public void update(float delta){
 		MenuManager.update(delta);
+	}
+	
+	public static void saveConfig(){
+		HvlConfig.saveToFile(settings, PATH_SETTINGS);
 	}
 
 }
