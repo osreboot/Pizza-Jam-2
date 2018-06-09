@@ -100,6 +100,15 @@ public class MenuManager {
 			}
 		}).build());
 		settings.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
+		settings.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Music: " + (Main.settings.musicEnabled ? "on" : "off")).setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg) {
+				HvlLabeledButton b = (HvlLabeledButton)aArg;
+				Main.settings.musicEnabled = !Main.settings.musicEnabled;
+				b.setText("Music: " + (Main.settings.musicEnabled ? "on" : "off"));
+			}
+		}).build());
+		settings.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
 		settings.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Tutorials: " + (Main.settings.tutorialsEnabled ? "on" : "off")).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
