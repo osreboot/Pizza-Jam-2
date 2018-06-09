@@ -80,7 +80,7 @@ public class Game {
 		powerUpHasGivenFlare = true;
 		powerUpHasGivenBigScore = true;
 		spawnedWave = false;
-		
+
 		mine = new Mine(Mine.MINE_START_LOC_X, Mine.mineSpawnY);
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 		tites = new ArrayList<LineSegment>();
@@ -98,7 +98,7 @@ public class Game {
 
 	public static void update(float delta){
 		globalTimer += delta;
-		
+
 		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta/2f, 0f);
 
 		terrainCenterTimer -= delta;
@@ -112,16 +112,16 @@ public class Game {
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter, 25, 25, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter - terrainTightness, 15, 15, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter + terrainTightness, 15, 15, Color.pink);
-	
+
 		for(LineSegment miteWave : mites) {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
 			miteWave.draw(delta);
 			if(player.getX() >= miteWave.start.x && player.getX() <= miteWave.end.x) {
-				
 				yCrossMites = HvlMath.map(player.getX(), miteWave.start.x, miteWave.end.x, miteWave.start.y, miteWave.end.y);
-				
-				
+				if(player.getY() < yCrossMites){
+
+				}
 			}
 		}
 		for(LineSegment titeWave : tites) {
@@ -129,10 +129,10 @@ public class Game {
 			titeWave.end.x -= delta*SCROLLSPEED;
 			titeWave.draw(delta);
 			if(player.getX() >= titeWave.start.x && player.getX() <= titeWave.end.x) {
-				
 				yCrossTites = HvlMath.map(player.getX(), titeWave.start.x, titeWave.end.x, titeWave.start.y, titeWave.end.y);
-				
-				
+				if(player.getY() > yCrossTites){
+
+				}
 			}
 		}
 		if(mites.get(mites.size()-1).end.x <= Display.getWidth() + 10) {
@@ -143,20 +143,20 @@ public class Game {
 		}
 
 		if(Mine.mineOnScreen) mine.draw(delta);
-		
+
 		float gradientAlpha = Math.min(globalTimer/3f, 1f) - HvlMath.mapl(player.flareTimer, 0f, Flare.FLARE_LIFETIME/4f, 0, 0.3f);
-	//	hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
+		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
 		hvlDrawQuadc(player.getX(), yCrossMites, 20,20, Color.blue);
 		hvlDrawQuadc(player.getX(), yCrossTites, 20,20, Color.blue);
 		if(Mine.mineOnScreen) mine.drawLight(delta);
-		
+
 		player.update(delta);
 		player.draw(delta);
 
 
 		PowerUp.update(delta);
 		mine.update(delta);
-		
+
 
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
@@ -317,12 +317,12 @@ public class Game {
 			mine.setxPos(HvlMath.stepTowards(mine.getxPos(), Mine.MINE_SPEED * delta, -50));
 			if(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()) < Mine.MINE_RANGE) {
 				player.hitMine = true;
-				
+
 				HvlCoord2D knockback = new HvlCoord2D(player.getX() - mine.getxPos(), player.getY() - mine.getyPos());
 				knockback.normalize();
 				knockback.mult(1000f);
 				player.impartedMomentum = new HvlCoord2D(knockback);
-				
+
 				//Main.getSound(Main.INDEX_BOOM).playAsSoundEffect(1, (float) 1, false);
 				wave = new Shockwave(mine.getxPos(), mine.getyPos());
 				spawnedWave = true;
@@ -330,21 +330,21 @@ public class Game {
 				mine.setyPos(Mine.mineSpawnY);
 				Mine.mineOnScreen = false;
 			}
-			
+
 			if(mine.getxPos() < -25) {
 				mine.setxPos(Mine.MINE_START_LOC_X);
 				mine.setyPos(Mine.mineSpawnY);
 				Mine.mineOnScreen = false;
 			}
 		}
-		
+
 
 		if(spawnedWave) {
 			wave.update(delta);
 		}
 
-		
-		
+
+
 		//Shockwave.displacementY = HvlMath.stepTowards(Shockwave.displacementY, delta*10, 0);
 		//System.out.println(Shockwave.displacementY);
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){
@@ -356,13 +356,13 @@ public class Game {
 		}
 
 		for(LineSegment miteWave : mites) {
-			
+
 			miteWave.start.y += Shockwave.displacementY;
 			miteWave.end.y += Shockwave.displacementY;
 			miteWave.drawError(delta);
 		}
 		for(LineSegment titeWave : tites) {
-			
+
 			titeWave.start.y += Shockwave.displacementY;
 			titeWave.end.y += Shockwave.displacementY;
 			titeWave.drawError(delta);
@@ -401,19 +401,19 @@ public class Game {
 			mites.add(line);
 		}
 	}
-	
+
 	public static boolean getLivingState() {
-		
+
 		if(player.getHealth() == 0) {
 			return false;
 		}else {
 			return true;
 		}
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 
 }
