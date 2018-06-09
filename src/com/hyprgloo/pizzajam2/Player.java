@@ -56,9 +56,9 @@ public class Player {
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
+			flareTimer = Flare.FLARE_LIFETIME;
 		}
-		
+		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
 		if(damageTaken && !invincibility) {
 			new Flare(xPos, yPos, 30f, -100f);

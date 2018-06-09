@@ -1,6 +1,8 @@
 package com.hyprgloo.pizzajam2;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlResetRotation;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
 import java.util.ArrayList;
 
@@ -27,30 +29,36 @@ public class Flare {
 	
 	public void update(float delta){
 		smokeEmitTimer += delta;
-		if(smokeEmitTimer > 0.1f){
+		if(smokeEmitTimer > 0.1f && life > 2f){
 			new Smoke(loc.x, loc.y, 32f);
+			smokeEmitTimer = 0f;
 		}
-		life = HvlMath.stepTowards(life, delta, 0);
+		life = HvlMath.stepTowards(life, delta, 0f);
 		xs -= delta*10f;
 		xs = HvlMath.limit(xs, -64, 0);
-		ys = HvlMath.stepTowards(ys, delta*10f, 0f);
+		ys = HvlMath.stepTowards(ys, delta*20f, 0f);
 		loc.x += xs*delta;
 		loc.y += ys*delta;
-		hvlDrawQuadc(loc.x, loc.y, 128, 128, Main.getTexture(Main.INDEX_FLARE), new Color(1f, 1f, 1f, HvlMath.randomFloatBetween(0.2f, 0.8f) * (life/FLARE_LIFETIME)));
+		hvlDrawQuadc(loc.x, loc.y, 128, 128, Main.getTexture(Main.INDEX_FLARE), new Color(1f, 1f, 1f, HvlMath.randomFloatBetween(0.2f, 0.9f) * (life/FLARE_LIFETIME)));
 	}
 	
 	public static class Smoke{
 		public static ArrayList<Smoke> smokeParticles = new ArrayList<>();
 		
 		public HvlCoord2D loc;
-		public float size;
+		public float size, life, rotation;
 		public Smoke(float xArg, float yArg, float sizeArg){
 			loc = new HvlCoord2D(xArg, yArg);
 			size = sizeArg;
 			smokeParticles.add(this);
+			life = 1f;
+			rotation = HvlMath.randomFloatBetween(0f, 360f);
 		}
 		public void update(float delta){
-			
+			life = HvlMath.stepTowards(life, delta, 0f);
+			hvlRotate(loc, rotation);
+			hvlDrawQuadc(loc.x, loc.y, size * HvlMath.map(life, 1f, 0, 0.5f, 2f), size * HvlMath.map(life, 1f, 0, 0.5f, 2f), Main.getTexture(Main.INDEX_SMOKE), new Color(1f, 1f, 1f, life/1.5f));
+			hvlResetRotation();
 		}
 	}
 	
