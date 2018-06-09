@@ -21,7 +21,7 @@ public class Player {
 	private static boolean damageTaken;
 	private static boolean invincibility = false;
 	private static float tempTimer;
-	private static float flareTimer = 1;
+	public float flareTimer = 0f;
 	
 
 	public static float MAX_HEALTH = 4;
