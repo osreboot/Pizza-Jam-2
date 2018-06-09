@@ -6,8 +6,6 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
 import java.util.Random;
 
-import org.newdawn.slick.Color;
-
 public class PowerUp {
 
 	public static final float POWERUP_SIZE = 20;

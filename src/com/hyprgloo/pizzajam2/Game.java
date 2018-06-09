@@ -45,7 +45,6 @@ public class Game {
 	private static boolean bigScorePickup = false;
 	private static float powerUpTextCurrentHeight;
 	private static float powerUpTextOpacity = 1;
-	private static boolean drawPowerUpText = false;
 
 	private static float powerUpTextX;
 	private static float powerUpTextY;
@@ -66,6 +65,22 @@ public class Game {
 		terrainCenterGoal = Display.getHeight()/2;
 		terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 
+		powerUpPickup = false;
+		healthPickup = false;
+		scorePickup = false;
+		flarePickup = false;
+		bigScorePickup = false;
+		powerUpTextOpacity = 1;
+
+		playerErrorTimer = 0f;
+		powerUpHeightCheck = true;
+		powerUpHasGivenHealth = true;
+		powerUpHasGivenScore = true;
+		powerUpHasGivenFlare = true;
+		powerUpHasGivenBigScore = true;
+		spawnedWave = false;
+		
+		mine = new Mine(Mine.MINE_START_LOC_X, Mine.mineSpawnY);
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 		tites = new ArrayList<LineSegment>();
 		mites = new ArrayList<LineSegment>();
@@ -162,10 +177,10 @@ public class Game {
 				if((player.getHealth() == Player.MAX_HEALTH && healthPickup == false && flarePickup == false && bigScorePickup == false && PowerUp.powerUpType == 1)) {
 					scorePickup = true;
 				}
-				if(Flare.hasFlare && healthPickup == false && scorePickup == false && flarePickup == false && PowerUp.powerUpType == 2) {
+				if(player.hasFlare && healthPickup == false && scorePickup == false && flarePickup == false && PowerUp.powerUpType == 2) {
 					bigScorePickup = true;
 				}
-				if(!Flare.hasFlare && healthPickup == false && scorePickup == false && bigScorePickup == false && PowerUp.powerUpType == 2) {
+				if(!player.hasFlare && healthPickup == false && scorePickup == false && bigScorePickup == false && PowerUp.powerUpType == 2) {
 					flarePickup = true;
 				}
 			}
@@ -181,7 +196,7 @@ public class Game {
 			}
 
 			if(powerUpHasGivenFlare) {
-				Flare.hasFlare = true;
+				player.hasFlare = true;
 				powerUpHasGivenFlare = false;
 			}
 
@@ -195,7 +210,6 @@ public class Game {
 				powerUpPickup = false;
 				powerUpHasGivenFlare = true;
 				powerUpTextOpacity = 1;
-				drawPowerUpText = false;
 			}
 		}
 
@@ -224,7 +238,6 @@ public class Game {
 				powerUpPickup = false;
 				powerUpHasGivenBigScore = true;
 				powerUpTextOpacity = 1;
-				drawPowerUpText = false;
 			}
 		}
 
@@ -253,7 +266,6 @@ public class Game {
 				powerUpPickup = false;
 				powerUpHasGivenHealth = true;
 				powerUpTextOpacity = 1;
-				drawPowerUpText = false;
 			}
 		}
 
@@ -282,9 +294,6 @@ public class Game {
 				powerUpPickup = false;
 				powerUpHasGivenScore = true;
 				powerUpTextOpacity = 1;
-				drawPowerUpText = false;
-
-
 			}
 		}
 
@@ -294,7 +303,7 @@ public class Game {
 			mine.beepTimer += delta * (Display.getWidth() - HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos())) * 0.005f;
 			mine.setxPos(HvlMath.stepTowards(mine.getxPos(), Mine.MINE_SPEED * delta, -50));
 			if(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()) < Mine.MINE_RANGE) {
-				Player.hitMine = true;
+				player.hitMine = true;
 				
 				HvlCoord2D knockback = new HvlCoord2D(player.getX() - mine.getxPos(), player.getY() - mine.getyPos());
 				knockback.normalize();

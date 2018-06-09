@@ -17,7 +17,6 @@ public class Flare {
 
 	public HvlCoord2D loc;
 	public float xs, ys, smokeEmitTimer, life;
-	public static boolean hasFlare = true;
 	public static final float FLARE_INV_X = Player.HEALTHBAR_X + 130;
 	public static final float FLARE_INV_Y = Player.HEALTHBAR_Y;
 	public static final float FLARE_INV_SIZE_X = 10;

@@ -14,24 +14,21 @@ import com.osreboot.ridhvl.HvlMath;
 
 public class Player {
 
-	private static float xPos;
-	private static float yPos;
-	private static float xSpeed;
-	private static float ySpeed;
-	private static float maxSpeed = 300;
-	private static float health = 4;
-	private static float fuelLevel;
-	private static boolean boostState;
-	private static boolean damageTaken;
-	static boolean hitMine;
-	private static boolean invincibility = false;
-	private static float tempTimer;
-	private static boolean flareLaunched;
+	private float xPos;
+	private float yPos;
+	private float xSpeed;
+	private float ySpeed;
+	private float health = 4;
+	private boolean damageTaken;
+	public boolean hitMine;
+	private boolean invincibility = false;
+	private float tempTimer;
 	public float flareTimer = 0f;
+	public boolean hasFlare = true;
 	
 	public HvlCoord2D impartedMomentum = new HvlCoord2D();
 
-	public static float MAX_HEALTH = 4;
+	public static final float MAX_HEALTH = 4;
 	public static final float PLAYER_SIZE = 50;
 	public static final float PLAYER_START_X = 256;
 	public static final float PLAYER_START_Y = 720/2;
@@ -69,7 +66,7 @@ public class Player {
 		
 		tempTimer -= delta;
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && Flare.hasFlare) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && hasFlare) {
 			//Game.playerErrorTimer = 1f;
 			flareTimer = Flare.FLARE_LIFETIME/2f;
 			//damageTaken = true;
@@ -77,11 +74,11 @@ public class Player {
 			new Flare(xPos, yPos, 30f, 100f);
 			new Flare(xPos, yPos, -50f, -100f);
 			new Flare(xPos, yPos, -50f, 100f);
-			Flare.hasFlare = false;
+			hasFlare = false;
 		}
 		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
-		if(Flare.hasFlare){
+		if(hasFlare){
 			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON1), Game.globalTimer % 1f > 0.5f ? new Color(1f, 0.5f, 0f) : Color.white);
 			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON2), Game.globalTimer % 1f > 0.5f ? Color.white : new Color(1f, 0.5f, 0f));
 		}

@@ -34,7 +34,9 @@ public class MenuManager {
 	BUTTON_WIDTH = 256f,
 	BUTTON_HEIGHT = 96f;
 
-	public static HvlMenu intro, main, game, pause, settings, credits;
+	private static float whiteFade = 0f;
+	
+	public static HvlMenu intro, main, game, pause, settings, credits, death, win;
 	public static HvlRenderFrame pauseFrame;
 	public static HvlInput inputPause;
 
@@ -89,6 +91,8 @@ public class MenuManager {
 		credits = new HvlMenu();
 		game = new HvlMenu();
 		pause = new HvlMenu();
+		death = new HvlMenu();
+		win = new HvlMenu();
 
 		settings.add(new HvlArrangerBox.Builder().setStyle(HvlArrangerBox.ArrangementStyle.VERTICAL).setxAlign(0f).build());
 		settings.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Sound: " + (Main.settings.soundEnabled ? "on" : "off")).setClickedCommand(new HvlAction1<HvlButton>(){
@@ -154,6 +158,24 @@ public class MenuManager {
 				Game.restart();
 			}
 		}).build());
+		
+		death.add(new HvlArrangerBox.Builder().setStyle(HvlArrangerBox.ArrangementStyle.VERTICAL).setxAlign(0f).build());
+		death.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Retry").setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg){
+				Game.restart();
+				Game.initialize();
+				HvlMenu.setCurrent(game);
+			}
+		}).build());
+		death.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
+		death.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Quit").setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg){
+				HvlMenu.setCurrent(main);
+				Game.restart();
+			}
+		}).build());
 
 		HvlMenu.setCurrent(intro);
 	}
@@ -161,6 +183,7 @@ public class MenuManager {
 	private static float introProgress = 0f;
 
 	public static void update(float delta){
+		whiteFade = HvlMath.stepTowards(whiteFade, delta, 0f);
 		if(HvlMenu.getCurrent() == intro){
 			//UPDATING THE INTRO MENU//
 			introProgress += delta/4f;
@@ -195,11 +218,21 @@ public class MenuManager {
 				}
 			});
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
+			if(!Game.getLivingState()){
+				whiteFade = 1f;
+				HvlMenu.setCurrent(death);
+			}
 		}else if(HvlMenu.getCurrent() == pause){
 			//UPDATING THE PAUSE MENU//
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.8f));
 			Main.font.drawWordc("PAUSED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
+		}else if(HvlMenu.getCurrent() == death){
+			//UPDATING THE PAUSE MENU//
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.8f));
+			Main.font.drawWordc("ELIMINATED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(1f, 1f, 1f, whiteFade));
 		}
 
 		HvlMenu.updateMenus(delta);
