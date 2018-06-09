@@ -19,7 +19,9 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_HYPRGLOO = 1,
 	INDEX_GRADIENT = 2,
 	INDEX_TERRAIN_GRADIENT = 3,
-	INDEX_POWERUP_HEALTH = 4;
+	INDEX_POWERUP_HEALTH = 4,
+	INDEX_POWERUP_FUEL = 5,
+	INDEX_POWERUP_FLARE = 6;
 
 	public static HvlFontPainter2D font;
 
@@ -34,6 +36,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Gradient");
 		getTextureLoader().loadResource("Gradient2");
 		getTextureLoader().loadResource("PowerupHealth");
+		getTextureLoader().loadResource("PowerupFuel");
+		getTextureLoader().loadResource("PowerupFlare");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
