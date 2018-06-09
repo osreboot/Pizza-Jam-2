@@ -14,11 +14,19 @@ public class Player {
 	private static float xSpeed;
 	private static float ySpeed;
 	private static float maxSpeed = 300;
+	private static float health = 4;
+	private static float fuelLevel;
+	private static boolean boostState;
+	private static boolean invincibility;
+	private static float tempTimer;
+	
 
-
+	private static float MAX_HEALTH = 4;
 	public static final float PLAYER_SIZE = 50;
 	public static final float PLAYER_START_X = 50;
 	public static final float PLAYER_START_Y = 720/2;
+	public static final float HEALTHBAR_X = 100;
+	public static final float HEALTHBAR_Y = 694;
 	public static final float MAX_SPEED = 300;
 	public static final float ACCELERATION = 8500f;
 
@@ -32,10 +40,22 @@ public class Player {
 	public void draw(float delta){
 
 		hvlDrawQuadc(xPos, yPos, PLAYER_SIZE, PLAYER_SIZE, Color.white);
+		hvlDrawQuadc(HEALTHBAR_X, HEALTHBAR_Y, health*40, 20, Color.white);
 
 	}
 
 	public void update(float delta) {
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
+			invincibility = true;
+		}
+		
+		if(invincibility) {
+			health = health - 1;
+			//tempTimer = Main.g
+			
+			
+		}
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			ySpeed = ySpeed - (delta * ACCELERATION);

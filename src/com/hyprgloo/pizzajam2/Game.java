@@ -102,6 +102,7 @@ public class Game {
 
 	public static void restart(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
+		powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.POWERUP_START_LOCATION_Y, 1);
 		tites.clear();
 		mites.clear();
 	}
