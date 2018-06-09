@@ -19,7 +19,7 @@ public class Game {
 	public static ArrayList<LineSegment> mites;
 	public static ArrayList<Flare> flares;
 
-	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY, 1);
+	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY);
 
 	public static final float SCROLLSPEED = 400;
 	public static final float 
@@ -40,6 +40,8 @@ public class Game {
 	private static boolean powerUpPickup = false;
 	private static boolean healthPickup = false;
 	private static boolean scorePickup = false;
+	private static boolean flarePickup = false;
+	private static boolean bigScorePickup = false;
 	private static float powerUpTextCurrentHeight;
 	private static float powerUpTextOpacity = 1;
 	private static boolean drawPowerUpText = false;
@@ -50,6 +52,8 @@ public class Game {
 	private static boolean powerUpHeightCheck = true;
 	private static boolean powerUpHasGivenHealth = true;
 	private static boolean powerUpHasGivenScore = true;
+	private static boolean powerUpHasGivenFlare = true;
+	private static boolean powerUpHasGivenBigScore = true;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -127,7 +131,7 @@ public class Game {
 			//powerUp.setxPos(powerUp.getxPos() - (PowerUp.POWERUP_SPEED * delta);
 
 			powerUp.setxPos(HvlMath.stepTowards(powerUp.getxPos(), PowerUp.POWERUP_SPEED * delta, 854));
-			
+
 			//if(powerUp.getxPos() <= 854) {
 			//	powerUp.setxPos(854);
 			//}
@@ -144,82 +148,147 @@ public class Game {
 
 			}
 
-			
-			
+
+
 			if(powerUpPickup) {
-				if(player.getHealth() < Player.MAX_HEALTH && scorePickup == false) {
+				if(player.getHealth() < Player.MAX_HEALTH && scorePickup == false && flarePickup == false && bigScorePickup == false  && PowerUp.powerUpType == 1) {
 					healthPickup = true;
 				}
-				if((player.getHealth() == Player.MAX_HEALTH && healthPickup == false)) {
+				if((player.getHealth() == Player.MAX_HEALTH && healthPickup == false && flarePickup == false && bigScorePickup == false && PowerUp.powerUpType == 1)) {
 					scorePickup = true;
+				}
+				if(Flare.hasFlare && healthPickup == false && scorePickup == false && flarePickup == false && PowerUp.powerUpType == 2) {
+					bigScorePickup = true;
+				}
+				if(!Flare.hasFlare && healthPickup == false && scorePickup == false && bigScorePickup == false && PowerUp.powerUpType == 2) {
+					flarePickup = true;
 				}
 			}
 		}
-				if(healthPickup) {
-					
-					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.15f);
-					
-					if(powerUpHeightCheck) {
-						powerUpTextCurrentHeight = powerUpTextY;
-						powerUpHeightCheck = false;
-					}
-					
-					if(player.getHealth() < Player.MAX_HEALTH && powerUpHasGivenHealth) {
-						player.setHealth(player.getHealth() + 1);
-						powerUpHasGivenHealth = false;
-					}
 
-					if(powerUpTextY > powerUpTextCurrentHeight - 20) {
-						powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
-						powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
-					}else {
-						powerUpTextY = 1000;
-						healthPickup = false;
-						powerUpHeightCheck = true;
-						powerUpPickup = false;
-						powerUpHasGivenHealth = true;
-						powerUpTextOpacity = 1;
-						drawPowerUpText = false;
-					}
-				}
+		if(flarePickup) {
 
+			Main.font.drawWordc("+1 Flare", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
 
-				if(scorePickup) {
-					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
+			if(powerUpHeightCheck) {
+				powerUpTextCurrentHeight = powerUpTextY;
+				powerUpHeightCheck = false;
+			}
 
-					
-					if(powerUpHeightCheck) {
-						powerUpTextCurrentHeight = powerUpTextY;
-						powerUpHeightCheck = false;
-					}
+			if(powerUpHasGivenFlare) {
+				Flare.hasFlare = true;
+				powerUpHasGivenFlare = false;
+			}
 
-					if(powerUpHasGivenScore) {
-						//Add 1000 to score
-						powerUpHasGivenScore = false;
-					}
-
-					if(powerUpTextY > powerUpTextCurrentHeight - 20) {
-						powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
-						powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
-					}else {
-						powerUpTextY = 1000;
-						scorePickup = false;
-						powerUpHeightCheck = true;
-						powerUpPickup = false;
-						powerUpHasGivenScore = true;
-						powerUpTextOpacity = 1;
-						drawPowerUpText = false;
+			if(powerUpTextY > powerUpTextCurrentHeight - 20) {
+				powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
+				powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
+			}else {
+				powerUpTextY = 1000;
+				flarePickup = false;
+				powerUpHeightCheck = true;
+				powerUpPickup = false;
+				powerUpHasGivenFlare = true;
+				powerUpTextOpacity = 1;
+				drawPowerUpText = false;
+			}
+		}
 
 
-					}
-				}
-			
-			
-			
+		if(bigScorePickup) {
+
+			Main.font.drawWordc("+3000 Pts", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
+
+			if(powerUpHeightCheck) {
+				powerUpTextCurrentHeight = powerUpTextY;
+				powerUpHeightCheck = false;
+			}
+
+			if(powerUpHasGivenBigScore) {
+				//Add 3000 to score
+				powerUpHasGivenBigScore = false;
+			}
+
+			if(powerUpTextY > powerUpTextCurrentHeight - 20) {
+				powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
+				powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
+			}else {
+				powerUpTextY = 1000;
+				bigScorePickup = false;
+				powerUpHeightCheck = true;
+				powerUpPickup = false;
+				powerUpHasGivenBigScore = true;
+				powerUpTextOpacity = 1;
+				drawPowerUpText = false;
+			}
+		}
+
+
+		if(healthPickup) {
+
+			Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
+
+			if(powerUpHeightCheck) {
+				powerUpTextCurrentHeight = powerUpTextY;
+				powerUpHeightCheck = false;
+			}
+
+			if(player.getHealth() < Player.MAX_HEALTH && powerUpHasGivenHealth) {
+				player.setHealth(player.getHealth() + 1);
+				powerUpHasGivenHealth = false;
+			}
+
+			if(powerUpTextY > powerUpTextCurrentHeight - 20) {
+				powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
+				powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
+			}else {
+				powerUpTextY = 1000;
+				healthPickup = false;
+				powerUpHeightCheck = true;
+				powerUpPickup = false;
+				powerUpHasGivenHealth = true;
+				powerUpTextOpacity = 1;
+				drawPowerUpText = false;
+			}
+		}
+
+
+		if(scorePickup) {
+			Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
+
+
+			if(powerUpHeightCheck) {
+				powerUpTextCurrentHeight = powerUpTextY;
+				powerUpHeightCheck = false;
+			}
+
+			if(powerUpHasGivenScore) {
+				//Add 1000 to score
+				powerUpHasGivenScore = false;
+			}
+
+			if(powerUpTextY > powerUpTextCurrentHeight - 20) {
+				powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
+				powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
+			}else {
+				powerUpTextY = 1000;
+				scorePickup = false;
+				powerUpHeightCheck = true;
+				powerUpPickup = false;
+				powerUpHasGivenScore = true;
+				powerUpTextOpacity = 1;
+				drawPowerUpText = false;
+
+
+			}
+		}
 
 
 
-		
+
+
+
+
 
 
 
@@ -241,7 +310,7 @@ public class Game {
 
 	public static void restart(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
-		powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY, 1);
+		powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY);
 		tites.clear();
 		mites.clear();
 	}

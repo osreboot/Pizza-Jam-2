@@ -83,11 +83,16 @@ public class Player {
 		}
 		
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && Flare.hasFlare) {
 			flareTimer = Flare.FLARE_LIFETIME/2f;
-			damageTaken = true;
 		}
 		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
+		
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
+			damageTaken = true;
+		}
+		
 		
 		if(damageTaken && !invincibility) {
 			new Flare(xPos, yPos, 30f, -100f);

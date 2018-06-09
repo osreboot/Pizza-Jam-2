@@ -46,9 +46,7 @@ public class Flare {
 		loc.y += ys*delta;
 		hvlDrawQuadc(loc.x, loc.y, 128, 128, Main.getTexture(Main.INDEX_FLARE), new Color(1f, 1f, 1f, HvlMath.randomFloatBetween(0.2f, 0.9f) * (life/FLARE_LIFETIME)));
 
-		if(hasFlare) {
-			hvlDrawQuadc(FLARE_INV_X, FLARE_INV_Y, FLARE_INV_SIZE_X, FLARE_INV_SIZE_Y, Color.orange);
-		}
+		
 	}
 
 
