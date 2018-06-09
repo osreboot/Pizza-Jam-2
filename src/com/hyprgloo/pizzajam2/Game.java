@@ -41,11 +41,14 @@ public class Game {
 	private static boolean healthPickup = false;
 	private static boolean scorePickup = false;
 	private static float powerUpTextCurrentHeight;
+	private static float powerUpTextOpacity = 1;
 
 	private static float powerUpTextX;
 	private static float powerUpTextY;
 	public static float playerErrorTimer = 0f;
 	private static boolean powerUpHeightCheck = true;
+	private static boolean powerUpHasGivenHealth = true;
+	private static boolean powerUpHasGivenScore = true;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -151,18 +154,22 @@ public class Game {
 						powerUpTextCurrentHeight = powerUpTextY;
 						powerUpHeightCheck = false;
 					}
-					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, Color.white, 0.15f);
-					if(player.getHealth() < Player.MAX_HEALTH) {
+					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.15f);
+					if(player.getHealth() < Player.MAX_HEALTH && powerUpHasGivenHealth) {
 						player.setHealth(player.getHealth() + 1);
+						powerUpHasGivenHealth = false;
 					}
 
-					if(powerUpTextY >= powerUpTextCurrentHeight - 19) {
+					if(powerUpTextY > powerUpTextCurrentHeight - 20) {
 						powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
+						powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
 					}else {
 						powerUpTextY = 1000;
 						healthPickup = false;
 						powerUpHeightCheck = true;
 						powerUpPickup = false;
+						powerUpHasGivenHealth = true;
+						powerUpTextOpacity = 1;
 					}
 				}
 
@@ -172,16 +179,23 @@ public class Game {
 						powerUpTextCurrentHeight = powerUpTextY;
 						powerUpHeightCheck = false;
 					}
-					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, Color.white, 0.15f);
-					//Add 1000 to score
+					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
 
-					if(powerUpTextY >= powerUpTextCurrentHeight - 19) {
+					if(powerUpHasGivenScore) {
+						//Add 1000 to score
+						powerUpHasGivenScore = false;
+					}
+
+					if(powerUpTextY > powerUpTextCurrentHeight - 20) {
 						powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
+						powerUpTextOpacity = HvlMath.stepTowards(powerUpTextOpacity, delta, 0);
 					}else {
 						powerUpTextY = 1000;
 						scorePickup = false;
 						powerUpHeightCheck = true;
 						powerUpPickup = false;
+						powerUpHasGivenScore = true;
+						powerUpTextOpacity = 1;
 
 					}
 				}
