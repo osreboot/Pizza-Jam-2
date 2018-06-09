@@ -374,5 +374,19 @@ public class Game {
 			mites.add(line);
 		}
 	}
+	
+	public static boolean getLivingState() {
+		
+		if(player.getHealth() == 0) {
+			return false;
+		}else {
+			return true;
+		}
+		
+		
+	}
+	
+	
+	
 
 }
