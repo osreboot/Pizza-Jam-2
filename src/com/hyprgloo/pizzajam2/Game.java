@@ -97,6 +97,7 @@ public class Game {
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
 			powerUp.setxPos(powerUp.getxPos() - PowerUp.POWERUP_SPEED);
+			
 			if(powerUp.getxPos() <= 854) {
 				powerUp.setxPos(854);
 			}

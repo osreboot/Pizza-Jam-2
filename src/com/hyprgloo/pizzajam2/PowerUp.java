@@ -35,8 +35,6 @@ public class PowerUp {
 	
 	static void update(float delta) {
 		
-		System.out.println(random);
-		
 		if(!powerUpOnScreen) {
 			random = r.nextInt(POWERUP_CHANCE + 1);
 		}
@@ -44,7 +42,6 @@ public class PowerUp {
 		if(random == POWERUP_CHANCE) {
 			powerUpOnScreen = true;
 		}
-	
 		
 	}
 
@@ -65,7 +62,6 @@ public class PowerUp {
 	}
 
 	public void draw(float delta) {
-		
 		hvlDrawQuadc(xPos, yPos, POWERUP_SIZE, POWERUP_SIZE, Color.red);
 		
 	}
