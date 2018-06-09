@@ -9,7 +9,6 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 
 import com.hyprgloo.pizzajam2.Flare.Smoke;
-import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 
 public class Player {
@@ -32,7 +31,7 @@ public class Player {
 
 	public static float MAX_HEALTH = 4;
 	public static final float PLAYER_SIZE = 50;
-	public static final float PLAYER_START_X = 25;
+	public static final float PLAYER_START_X = 256;
 	public static final float PLAYER_START_Y = 720/2;
 	public static final float HEALTHBAR_X = 100;
 	public static final float HEALTHBAR_Y = 694;
@@ -40,8 +39,6 @@ public class Player {
 	public static final float ACCELERATION = 8500f;
 	public static final float FLARE_INV_X = HEALTHBAR_X + 170;
 	public static final float FLARE_INV_Y = HEALTHBAR_Y;
-	public static final float FLARE_INV_SIZE_X = 10;
-	public static final float FLARE_INV_SIZE_Y = 20;
 
 	public Player(float xArg, float yArg){
 
@@ -80,8 +77,9 @@ public class Player {
 			Flare.hasFlare = false;
 		}
 		
-		if(Flare.hasFlare) {
-			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, FLARE_INV_SIZE_X, FLARE_INV_SIZE_Y, Color.orange);
+		if(Flare.hasFlare){
+			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON1), Game.globalTimer % 1f > 0.5f ? new Color(1f, 0.5f, 0f) : Color.white);
+			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON2), Game.globalTimer % 1f > 0.5f ? Color.white : new Color(1f, 0.5f, 0f));
 		}
 		
 		
