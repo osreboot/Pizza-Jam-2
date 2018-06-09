@@ -17,9 +17,9 @@ public class Player {
 	private static float health = 4;
 	private static float fuelLevel;
 	private static boolean boostState;
-	private static boolean invincibility;
+	private static boolean damageTaken;
+	private static boolean invincibility = false;
 	private static float tempTimer;
-	
 
 	private static float MAX_HEALTH = 4;
 	public static final float PLAYER_SIZE = 50;
@@ -46,16 +46,23 @@ public class Player {
 
 	public void update(float delta) {
 		
+		tempTimer -= delta;
+		
 		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			invincibility = true;
+			damageTaken = true;
 		}
 		
-		if(invincibility) {
+		if(damageTaken && !invincibility) {
 			health = health - 1;
-			//tempTimer = Main.g
-			
-			
+			invincibility = true;
+			tempTimer = 2;
 		}
+		
+		if(tempTimer <= 0) {
+			invincibility = false;
+			damageTaken = false;
+		}
+		
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			ySpeed = ySpeed - (delta * ACCELERATION);

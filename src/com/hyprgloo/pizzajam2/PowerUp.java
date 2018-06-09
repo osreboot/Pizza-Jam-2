@@ -8,7 +8,7 @@ import org.newdawn.slick.Color;
 
 public class PowerUp {
 
-	public static final float POWERUP_SIZE = 15;
+	public static final float POWERUP_SIZE = 20;
 	public static final float POWERUP_START_LOCATION_X = 1440;
 	public static final float POWERUP_START_LOCATION_Y = 720/2;
 	public static final int POWERUP_CHANCE = 4000;
@@ -62,7 +62,7 @@ public class PowerUp {
 	}
 
 	public void draw(float delta) {
-		hvlDrawQuadc(xPos, yPos, POWERUP_SIZE, POWERUP_SIZE, Color.red);
+		hvlDrawQuadc(xPos, yPos, POWERUP_SIZE, POWERUP_SIZE, Main.getTexture(Main.INDEX_POWERUP_HEALTH));
 		
 	}
 	
