@@ -40,6 +40,7 @@ public class Game {
 	private static boolean powerUpPickup = false;
 	private static float powerUpTextX;
 	private static float powerUpTextY;
+	public static float playerErrorTimer = 0f;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -66,6 +67,8 @@ public class Game {
 
 	public static void update(float delta){
 		globalTimer += delta;
+		
+		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta/2f, 0f);
 		
 		terrainCenterTimer -= delta;
 		if(terrainCenterTimer <= 0){
@@ -150,6 +153,13 @@ public class Game {
 		
 		for(Flare f : flares){
 			f.update(delta);
+		}
+		
+		for(LineSegment miteWave : mites) {
+			miteWave.drawError(delta);
+		}
+		for(LineSegment titeWave : tites) {
+			titeWave.drawError(delta);
 		}
 	}
 

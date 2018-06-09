@@ -2,10 +2,14 @@ package com.hyprgloo.pizzajam2;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlResetRotation;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 
+import com.hyprgloo.pizzajam2.Flare.Smoke;
+import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 
 public class Player {
@@ -40,11 +44,20 @@ public class Player {
 
 	}
 
+	private float rotateGoal = 0f, smokeEmitTimer = 0f;
 	public void draw(float delta){
-
-		hvlDrawQuadc(xPos, yPos, PLAYER_SIZE, PLAYER_SIZE, Color.white);
+		smokeEmitTimer += delta;
+		if(smokeEmitTimer > 0.4f){
+			new Smoke(xPos - 38f, yPos + HvlMath.randomFloatBetween(-12f, 12f) - 4f, 32f, -96f);
+			smokeEmitTimer = 0f;
+		}
+		rotateGoal = HvlMath.stepTowards(rotateGoal, delta*45f, xSpeed/30f);
+		float value = HvlMath.mapl(flareTimer, 0f, Flare.FLARE_LIFETIME/4f, 0.4f, 1.0f);
+		
+		hvlRotate(xPos, yPos, rotateGoal);
+		hvlDrawQuadc(xPos, yPos, PLAYER_SIZE*1.5f, PLAYER_SIZE*1.5f, Main.getTexture(Main.INDEX_SHIP), new Color(value, value, value));
+		hvlResetRotation();
 		hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, health*40, 20, Color.white);
-
 	}
 
 	public void update(float delta) {
@@ -52,6 +65,7 @@ public class Player {
 		tempTimer -= delta;
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
+			Game.playerErrorTimer = 1f;
 			damageTaken = true;
 		}
 		

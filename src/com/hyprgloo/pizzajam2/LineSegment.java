@@ -1,8 +1,10 @@
 package com.hyprgloo.pizzajam2;
 
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawLine;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawPolygon;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord2D;
 
@@ -27,7 +29,10 @@ public class LineSegment {
 
 	public void draw(float delta){
 		hvlDrawPolygon(0, 0, getSegmentPolygon(this), UVS_UNIT, Main.getTexture(Main.INDEX_TERRAIN_GRADIENT));
-		//HvlPainter2D.hvlDrawLine(this.start.x, this.start.y, this.end.x, this.end.y, Color.white);
+	}
+	
+	public void drawError(float delta){
+		hvlDrawLine(this.start.x, this.start.y, this.end.x, this.end.y, new Color(1f, 0f, 0f, Game.playerErrorTimer));
 	}
 
 	private static HvlCoord2D[] getSegmentPolygon(LineSegment sArg){
