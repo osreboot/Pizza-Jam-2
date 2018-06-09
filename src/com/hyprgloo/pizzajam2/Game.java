@@ -55,7 +55,8 @@ public class Game {
 	private static boolean powerUpHasGivenFlare = true;
 	private static boolean powerUpHasGivenBigScore = true;
 	public static boolean spawnedWave = false;
-
+	static float yCrossTites = 0;
+	static float yCrossMites = 0;
 	public static void initialize(){
 		globalTimer = 0f;
 
@@ -111,17 +112,28 @@ public class Game {
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter, 25, 25, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter - terrainTightness, 15, 15, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter + terrainTightness, 15, 15, Color.pink);
-
+	
 		for(LineSegment miteWave : mites) {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
 			miteWave.draw(delta);
-
+			if(player.getX() >= miteWave.start.x && player.getX() <= miteWave.end.x) {
+				
+				yCrossMites = HvlMath.map(player.getX(), miteWave.start.x, miteWave.end.x, miteWave.start.y, miteWave.end.y);
+				
+				
+			}
 		}
 		for(LineSegment titeWave : tites) {
 			titeWave.start.x -= delta*SCROLLSPEED;
 			titeWave.end.x -= delta*SCROLLSPEED;
 			titeWave.draw(delta);
+			if(player.getX() >= titeWave.start.x && player.getX() <= titeWave.end.x) {
+				
+				yCrossTites = HvlMath.map(player.getX(), titeWave.start.x, titeWave.end.x, titeWave.start.y, titeWave.end.y);
+				
+				
+			}
 		}
 		if(mites.get(mites.size()-1).end.x <= Display.getWidth() + 10) {
 			generateTerrain(delta, false);
@@ -133,8 +145,9 @@ public class Game {
 		if(Mine.mineOnScreen) mine.draw(delta);
 		
 		float gradientAlpha = Math.min(globalTimer/3f, 1f) - HvlMath.mapl(player.flareTimer, 0f, Flare.FLARE_LIFETIME/4f, 0, 0.3f);
-		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
-
+	//	hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
+		hvlDrawQuadc(player.getX(), yCrossMites, 20,20, Color.blue);
+		hvlDrawQuadc(player.getX(), yCrossTites, 20,20, Color.blue);
 		if(Mine.mineOnScreen) mine.drawLight(delta);
 		
 		player.update(delta);
