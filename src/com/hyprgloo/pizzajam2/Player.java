@@ -56,7 +56,7 @@ public class Player {
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			flareTimer = Flare.FLARE_LIFETIME;
+			flareTimer = Flare.FLARE_LIFETIME/2f;
 		}
 		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		

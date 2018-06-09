@@ -13,7 +13,7 @@ import com.osreboot.ridhvl.HvlMath;
 
 public class Flare {
 	
-	public static final float FLARE_LIFETIME = 5f;
+	public static final float FLARE_LIFETIME = 4f;
 	
 	public HvlCoord2D loc;
 	public float xs, ys, smokeEmitTimer, life;
