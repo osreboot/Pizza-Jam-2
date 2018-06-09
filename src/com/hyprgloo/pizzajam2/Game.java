@@ -1,8 +1,6 @@
 package com.hyprgloo.pizzajam2;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
-import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlResetRotation;
-import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
 import java.util.ArrayList;
 
@@ -19,6 +17,7 @@ public class Game {
 	public static Player player;
 	public static ArrayList<LineSegment> tites;
 	public static ArrayList<LineSegment> mites;
+	public static ArrayList<Flare> flares;
 
 	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.POWERUP_START_LOCATION_Y, 1);
 
@@ -50,6 +49,7 @@ public class Game {
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 		tites = new ArrayList<LineSegment>();
 		mites = new ArrayList<LineSegment>();
+		flares = new ArrayList<>();
 		LineSegment mite = new LineSegment(
 				new HvlCoord2D(0, Display.getHeight() - TERRAIN_BUFFER), 
 				new HvlCoord2D(Display.getWidth(), Display.getHeight() - TERRAIN_BUFFER), false);
@@ -117,6 +117,14 @@ public class Game {
 				powerUp.setxPos(PowerUp.POWERUP_START_LOCATION_X);
 				powerUp.setyPos(PowerUp.POWERUP_START_LOCATION_Y);
 			}
+		}
+		
+		for(Flare.Smoke s : Flare.Smoke.smokeParticles){
+			s.update(delta);
+		}
+		
+		for(Flare f : flares){
+			f.update(delta);
 		}
 	}
 
