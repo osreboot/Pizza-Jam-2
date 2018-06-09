@@ -66,7 +66,7 @@ public class PowerUp {
 	}
 
 	public void draw(float delta) {
-		rotation += delta*20;
+		rotation += delta*25;
 		hvlRotate(xPos, yPos, rotation);
 		hvlDrawQuadc(xPos, yPos, POWERUP_SIZE, POWERUP_SIZE, Main.getTexture(Main.INDEX_POWERUP_HEALTH));
 		hvlResetRotation();

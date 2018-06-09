@@ -20,6 +20,7 @@ public class Player {
 	private static boolean damageTaken;
 	private static boolean invincibility = false;
 	private static float tempTimer;
+	
 
 	private static float MAX_HEALTH = 4;
 	public static final float PLAYER_SIZE = 50;
@@ -53,11 +54,6 @@ public class Player {
 		}
 		
 		if(damageTaken && !invincibility) {
-			new Flare(xPos, yPos, 30f, -100f);
-			new Flare(xPos, yPos, 30f, 100f);
-			new Flare(xPos, yPos, -50f, -100f);
-			new Flare(xPos, yPos, -50f, 100f);
-			
 			health = health - 1;
 			invincibility = true;
 			tempTimer = 2;
