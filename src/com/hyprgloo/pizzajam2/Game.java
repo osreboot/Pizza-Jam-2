@@ -115,15 +115,19 @@ public class Game {
 			generateTerrain(delta, true);
 		}
 
+		if(Mine.mineOnScreen) mine.draw(delta);
+		
 		float gradientAlpha = Math.min(globalTimer/3f, 1f) - HvlMath.mapl(player.flareTimer, 0f, Flare.FLARE_LIFETIME/4f, 0, 0.3f);
 		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
 
+		if(Mine.mineOnScreen) mine.drawLight(delta);
+		
 		player.update(delta);
 		player.draw(delta);
 
 
 		PowerUp.update(delta);
-		Mine.update(delta);
+		mine.update(delta);
 		
 
 		if(PowerUp.powerUpOnScreen) {
@@ -285,12 +289,11 @@ public class Game {
 		}
 
 		if(Mine.mineOnScreen) {
-			mine.draw(delta);
+			mine.beepVolume = HvlMath.map(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()), 0, 400, 0.3f, 0f);
+			mine.beepVolume = HvlMath.limit(mine.beepVolume, 0f, 0.3f);
+			mine.beepTimer += delta * (Display.getWidth() - HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos())) * 0.005f;
 			mine.setxPos(HvlMath.stepTowards(mine.getxPos(), Mine.MINE_SPEED * delta, -50));
-			if(player.getY() >= mine.getyPos() - (Mine.MINE_SIZE/2) - (Player.PLAYER_SIZE/2) &&
-					player.getY() <= mine.getyPos() + (Mine.MINE_SIZE/2) + (Player.PLAYER_SIZE/2) &&
-					player.getX() >= mine.getxPos() - (Mine.MINE_SIZE/2) - (Player.PLAYER_SIZE/2) &&
-					player.getX() <= mine.getxPos() + (Mine.MINE_SIZE/2) + (Player.PLAYER_SIZE/2)) {
+			if(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()) < Mine.MINE_RANGE) {
 				Player.hitMine = true;
 				
 				HvlCoord2D knockback = new HvlCoord2D(player.getX() - mine.getxPos(), player.getY() - mine.getyPos());
@@ -298,7 +301,7 @@ public class Game {
 				knockback.mult(1000f);
 				player.impartedMomentum = new HvlCoord2D(knockback);
 				
-				Main.getSound(Main.INDEX_BOOM).playAsSoundEffect(1, (float) 1, false);
+				//Main.getSound(Main.INDEX_BOOM).playAsSoundEffect(1, (float) 1, false);
 				wave = new Shockwave(mine.getxPos(), mine.getyPos());
 				spawnedWave = true;
 				mine.setxPos(Mine.MINE_START_LOC_X);
@@ -349,6 +352,8 @@ public class Game {
 		powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY);
 		tites.clear();
 		mites.clear();
+		flares.clear();
+		Flare.Smoke.smokeParticles.clear();
 	}
 
 	public static void generateTerrain(float delta, boolean tite) {
