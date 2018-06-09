@@ -21,7 +21,7 @@ public class Game {
 
 	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY);
 	public static Mine mine = new Mine(Mine.MINE_START_LOC_X, Mine.mineSpawnY);
-
+	public static Shockwave wave;
 	public static final float SCROLLSPEED = 400;
 	public static final float 
 	TERRAIN_CENTER_TIMER = 3f,
@@ -55,6 +55,7 @@ public class Game {
 	private static boolean powerUpHasGivenScore = true;
 	private static boolean powerUpHasGivenFlare = true;
 	private static boolean powerUpHasGivenBigScore = true;
+	public static boolean spawnedWave = false;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -291,6 +292,8 @@ public class Game {
 					player.getX() >= mine.getxPos() - (Mine.MINE_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getX() <= mine.getxPos() + (Mine.MINE_SIZE/2) + (Player.PLAYER_SIZE/2)) {
 				Player.hitMine = true;
+				wave = new Shockwave(mine.getxPos(), mine.getyPos());
+				spawnedWave = true;
 				mine.setxPos(Mine.MINE_START_LOC_X);
 				mine.setyPos(Mine.mineSpawnY);
 				Mine.mineOnScreen = false;
@@ -304,10 +307,12 @@ public class Game {
 		}
 		
 
+		if(spawnedWave) {
+			wave.update(delta);
+		}
 
-
-
-
+		
+		
 
 
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){

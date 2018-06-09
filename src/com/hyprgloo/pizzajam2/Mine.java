@@ -4,6 +4,9 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlResetRotation;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
+import org.newdawn.slick.Color;
+
+import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 
 public class Mine {
@@ -57,7 +60,5 @@ public class Mine {
 		hvlResetRotation();
 	}
 	
-	public static class shockWave{
-		
-	}
+
 }
