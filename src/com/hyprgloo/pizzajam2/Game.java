@@ -129,9 +129,14 @@ public class Game {
 				
 				if(player.getHealth() == Player.MAX_HEALTH) {
 					
-					
-					
 					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, Color.white, 0.15f);
+					
+					if(powerUpTextY >= (720/2) - 19) {
+					powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, (720/2) - 20);
+					}else {
+						powerUpTextY = 1000;
+					}
+					
 					
 				}
 				
