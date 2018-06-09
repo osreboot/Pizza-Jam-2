@@ -6,17 +6,18 @@ import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 
 public class Game {
-	
+
 	public static Player player;
 	public static ArrayList<LineSegment> tites;
 	public static ArrayList<LineSegment> mites;
-	public static ArrayList<PowerUp> powerUps;
-	
+
+	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.POWERUP_START_LOCATION_Y, 1);
+
 	public static final float SCROLLSPEED = 100;
-	
+
 	public static float miteTimer;
 	public static float titeTimer;
-	
+
 	public static void initialize(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 		HvlCoord2D miteStart = new HvlCoord2D();
@@ -40,14 +41,14 @@ public class Game {
 		LineSegment tite = new LineSegment(titeStart, titeEnd);
 		tites.add(tite);
 	}
-	
+
 
 	public static void genMite(float delta) {
-		
+
 		HvlCoord2D miteStart = new HvlCoord2D();
 		HvlCoord2D miteEnd = new HvlCoord2D();
 
-		
+
 		miteStart.x = mites.get(mites.size()-1).end.x;
 		miteStart.y = mites.get(mites.size()-1).end.y;
 		miteEnd.x = HvlMath.randomFloatBetween(1280, 1350);
@@ -59,7 +60,7 @@ public class Game {
 	public static void genTite(float delta) {
 		HvlCoord2D titeStart = new HvlCoord2D();
 		HvlCoord2D titeEnd = new HvlCoord2D();
-		
+
 		titeStart.x = tites.get(tites.size()-1).end.x;
 		titeStart.y = tites.get(tites.size()-1).end.y;
 		titeEnd.x = HvlMath.randomFloatBetween(1280, 1350);
@@ -89,14 +90,34 @@ public class Game {
 		}
 		player.update(delta);
 		player.draw(delta);
-		
+
+
 		PowerUp.update(delta);
+
+		if(PowerUp.powerUpOnScreen) {
+			powerUp.draw(delta);
+			powerUp.setxPos(powerUp.getxPos() - PowerUp.POWERUP_SPEED);
+			if(powerUp.getxPos() <= 854) {
+				powerUp.setxPos(854);
+			}
+			if(player.getY() >= powerUp.getyPos() - (PowerUp.POWERUP_SIZE/2) - (player.PLAYER_SIZE/2) &&
+					player.getY() <= powerUp.getyPos() + (PowerUp.POWERUP_SIZE/2) + (player.PLAYER_SIZE/2) &&
+					player.getX() >= powerUp.getxPos() - (PowerUp.POWERUP_SIZE/2) - (player.PLAYER_SIZE/2) &&
+					player.getX() <= powerUp.getxPos() + (PowerUp.POWERUP_SIZE/2) + (player.PLAYER_SIZE/2)) {
+						PowerUp.powerUpOnScreen = false;
+						powerUp.setxPos(PowerUp.POWERUP_START_LOCATION_X);
+						powerUp.setyPos(PowerUp.POWERUP_START_LOCATION_Y);
+
+					}
+
+		}
+
 	}
-	
+
 	public static void restart(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
-//		tites.clear();
-//		mites.clear();
+		//		tites.clear();
+		//		mites.clear();
 	}
 
 }
