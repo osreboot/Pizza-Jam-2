@@ -79,6 +79,7 @@ public class Game {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
 			miteWave.draw(delta);
+			
 		}
 		for(LineSegment titeWave : tites) {
 			titeWave.start.x -= delta*SCROLLSPEED;

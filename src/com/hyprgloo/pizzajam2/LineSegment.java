@@ -49,5 +49,17 @@ public class LineSegment {
 		}
 		return output;
 	}
+	public float getStartX() {
+		return this.start.x;
+	}
+	public float getStartY() {
+		return this.start.y;
+	}
+	public float getEndX() {
+		return this.end.x;
+	}
+	public float getEndY() {
+		return this.end.y;
+	}
 
 }
