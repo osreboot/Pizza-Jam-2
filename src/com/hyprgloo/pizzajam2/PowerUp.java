@@ -12,9 +12,9 @@ public class PowerUp {
 
 	public static final float POWERUP_SIZE = 20;
 	public static final float POWERUP_START_LOCATION_X = 1440;
-	public static final int POWERUP_CHANCE = 10;
+	public static final int POWERUP_CHANCE = 500;
 	//base = 4000
-	public static final int POWERUP_SPEED = 1;
+	public static final int POWERUP_SPEED = 200;
 
 
 

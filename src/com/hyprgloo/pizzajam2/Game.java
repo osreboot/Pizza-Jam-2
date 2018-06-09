@@ -42,6 +42,7 @@ public class Game {
 	private static boolean scorePickup = false;
 	private static float powerUpTextCurrentHeight;
 	private static float powerUpTextOpacity = 1;
+	private static boolean drawPowerUpText = false;
 
 	private static float powerUpTextX;
 	private static float powerUpTextY;
@@ -123,38 +124,46 @@ public class Game {
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
 
-			powerUp.setxPos(powerUp.getxPos() - PowerUp.POWERUP_SPEED);
+			//powerUp.setxPos(powerUp.getxPos() - (PowerUp.POWERUP_SPEED * delta);
 
-
-			if(powerUp.getxPos() <= 854) {
-				powerUp.setxPos(854);
-			}
+			powerUp.setxPos(HvlMath.stepTowards(powerUp.getxPos(), PowerUp.POWERUP_SPEED * delta, 854));
+			
+			//if(powerUp.getxPos() <= 854) {
+			//	powerUp.setxPos(854);
+			//}
 			if(player.getY() >= powerUp.getyPos() - (PowerUp.POWERUP_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getY() <= powerUp.getyPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2) &&
 					player.getX() >= powerUp.getxPos() - (PowerUp.POWERUP_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getX() <= powerUp.getxPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2)) {
 				powerUpTextX = powerUp.getxPos();
 				powerUpTextY = powerUp.getyPos();
-				PowerUp.powerUpOnScreen = false;
 				powerUp.setxPos(PowerUp.POWERUP_START_LOCATION_X);
 				powerUp.setyPos(PowerUp.powerUpSpawnY);
 				powerUpPickup = true;
+				PowerUp.powerUpOnScreen = false;
+
 			}
 
+			
+			
 			if(powerUpPickup) {
-
 				if(player.getHealth() < Player.MAX_HEALTH && scorePickup == false) {
 					healthPickup = true;
-				}else if((player.getHealth() == Player.MAX_HEALTH && healthPickup == false)) {
+				}
+				if((player.getHealth() == Player.MAX_HEALTH && healthPickup == false)) {
 					scorePickup = true;
 				}
-
-				if(healthPickup && !scorePickup) {
+			}
+		}
+				if(healthPickup) {
+					
+					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.15f);
+					
 					if(powerUpHeightCheck) {
 						powerUpTextCurrentHeight = powerUpTextY;
 						powerUpHeightCheck = false;
 					}
-					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.15f);
+					
 					if(player.getHealth() < Player.MAX_HEALTH && powerUpHasGivenHealth) {
 						player.setHealth(player.getHealth() + 1);
 						powerUpHasGivenHealth = false;
@@ -170,16 +179,19 @@ public class Game {
 						powerUpPickup = false;
 						powerUpHasGivenHealth = true;
 						powerUpTextOpacity = 1;
+						drawPowerUpText = false;
 					}
 				}
 
 
-				if(scorePickup && !healthPickup) {
+				if(scorePickup) {
+					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
+
+					
 					if(powerUpHeightCheck) {
 						powerUpTextCurrentHeight = powerUpTextY;
 						powerUpHeightCheck = false;
 					}
-					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
 
 					if(powerUpHasGivenScore) {
 						//Add 1000 to score
@@ -196,14 +208,18 @@ public class Game {
 						powerUpPickup = false;
 						powerUpHasGivenScore = true;
 						powerUpTextOpacity = 1;
+						drawPowerUpText = false;
+
 
 					}
 				}
-			}
+			
+			
+			
 
 
 
-		}
+		
 
 
 
