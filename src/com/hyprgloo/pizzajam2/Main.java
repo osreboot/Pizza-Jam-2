@@ -24,7 +24,9 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_POWERUP_FLARE = 6,
 	INDEX_FLARE = 7,
 	INDEX_SMOKE = 8,
-	INDEX_SHIP = 9;
+	INDEX_SHIP = 9,
+	INDEX_FLARE_ICON1 = 10,
+			INDEX_FLARE_ICON2 = 11;
 
 	public static HvlFontPainter2D font;
 
@@ -44,6 +46,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Flare");
 		getTextureLoader().loadResource("Smoke");
 		getTextureLoader().loadResource("Ship");
+		getTextureLoader().loadResource("FlareIcon1");
+		getTextureLoader().loadResource("FlareIcon2");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
