@@ -24,7 +24,6 @@ public class Shockwave{
 	public void update(float delta) {
 		size = HvlMath.stepTowards(size, delta*250, 500);
 		opacity = HvlMath.stepTowards(opacity, delta/2, 0);
-		Game.playerErrorTimer = HvlMath.stepTowards(opacity, delta/2, 0) - 0.6f;
 		hvlDrawQuadc(loc.x, loc.y, size,size, Main.getTexture(Main.INDEX_SHOCKWAVE), new Color(255f, 255f, 255f, opacity));
 		if(size > 490 && opacity < 0.01) {
 			Game.spawnedWave = false;

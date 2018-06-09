@@ -19,7 +19,7 @@ public class Player {
 	private float xSpeed;
 	private float ySpeed;
 	private float health = 4;
-	private boolean damageTaken;
+	public boolean damageTaken;
 	public boolean hitMine;
 	private boolean invincibility = false;
 	private float tempTimer;

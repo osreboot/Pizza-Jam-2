@@ -119,8 +119,12 @@ public class Game {
 			miteWave.draw(delta);
 			if(player.getX() >= miteWave.start.x && player.getX() <= miteWave.end.x) {
 				yCrossMites = HvlMath.map(player.getX(), miteWave.start.x, miteWave.end.x, miteWave.start.y, miteWave.end.y);
-				if(player.getY() < yCrossMites){
-
+				if(player.getY() > yCrossMites){
+					playerErrorTimer = 1f;
+					player.damageTaken = true;
+					player.impartedMomentum.y = -200f;
+					player.setY(yCrossMites);
+					player.setySpeed(Math.min(player.getySpeed(), 0));
 				}
 			}
 		}
@@ -130,8 +134,12 @@ public class Game {
 			titeWave.draw(delta);
 			if(player.getX() >= titeWave.start.x && player.getX() <= titeWave.end.x) {
 				yCrossTites = HvlMath.map(player.getX(), titeWave.start.x, titeWave.end.x, titeWave.start.y, titeWave.end.y);
-				if(player.getY() > yCrossTites){
-
+				if(player.getY() < yCrossTites){
+					playerErrorTimer = 1f;
+					player.damageTaken = true;
+					player.impartedMomentum.y = 200f;
+					player.setY(yCrossTites);
+					player.setySpeed(Math.max(player.getySpeed(), 0));
 				}
 			}
 		}
@@ -146,8 +154,8 @@ public class Game {
 
 		float gradientAlpha = Math.min(globalTimer/3f, 1f) - HvlMath.mapl(player.flareTimer, 0f, Flare.FLARE_LIFETIME/4f, 0, 0.3f);
 		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
-		hvlDrawQuadc(player.getX(), yCrossMites, 20,20, Color.blue);
-		hvlDrawQuadc(player.getX(), yCrossTites, 20,20, Color.blue);
+		//hvlDrawQuadc(player.getX(), yCrossMites, 20,20, Color.blue);
+		//hvlDrawQuadc(player.getX(), yCrossTites, 20,20, Color.blue);
 		if(Mine.mineOnScreen) mine.drawLight(delta);
 
 		player.update(delta);
