@@ -12,6 +12,8 @@ import com.osreboot.ridhvl.HvlMath;
 
 public class Game {
 
+	public static float globalTimer = 0f;
+	
 	public static Player player;
 	public static ArrayList<LineSegment> tites;
 	public static ArrayList<LineSegment> mites;
@@ -35,20 +37,30 @@ public class Game {
 	public static float terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 
 	public static void initialize(){
+		globalTimer = 0f;
+		
+		terrainCenter = Display.getHeight()/2;
+		terrainTightness = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
+		terrainCenterTimer = TERRAIN_CENTER_TIMER;
+		terrainCenterGoal = Display.getHeight()/2;
+		terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
+		
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 		tites = new ArrayList<LineSegment>();
 		mites = new ArrayList<LineSegment>();
 		LineSegment mite = new LineSegment(
 				new HvlCoord2D(0, Display.getHeight() - TERRAIN_BUFFER), 
-				new HvlCoord2D(Display.getWidth(), Display.getHeight() - TERRAIN_BUFFER));
+				new HvlCoord2D(Display.getWidth(), Display.getHeight() - TERRAIN_BUFFER), false);
 		mites.add(mite);
 		LineSegment tite = new LineSegment(
 				new HvlCoord2D(0, TERRAIN_BUFFER), 
-				new HvlCoord2D(Display.getWidth(), TERRAIN_BUFFER));
+				new HvlCoord2D(Display.getWidth(), TERRAIN_BUFFER), true);
 		tites.add(tite);
 	}
 
 	public static void update(float delta){
+		globalTimer += delta;
+		
 		terrainCenterTimer -= delta;
 		if(terrainCenterTimer <= 0){
 			terrainCenterTimer = TERRAIN_CENTER_TIMER;
@@ -77,6 +89,9 @@ public class Game {
 		if(tites.get(tites.size()-1).end.x <= Display.getWidth() + 10) {
 			generateTerrain(delta, true);
 		}
+		
+		float gradientAlpha = Math.min(globalTimer/3f, 1f);
+		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
 		
 		player.update(delta);
 		player.draw(delta);
@@ -123,7 +138,7 @@ public class Game {
 		}else{
 			lineEnd.y = HvlMath.randomFloatBetween(Display.getHeight() - TERRAIN_BUFFER, terrainCenter + terrainTightness);
 		}
-		LineSegment line = new LineSegment(lineStart, lineEnd);
+		LineSegment line = new LineSegment(lineStart, lineEnd, tite);
 		if(tite){
 			tites.add(line); 
 		}else{
