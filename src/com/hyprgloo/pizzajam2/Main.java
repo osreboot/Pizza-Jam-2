@@ -55,6 +55,9 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_FLARE_ICON2 = 11,
 	INDEX_MINE = 12,
 	INDEX_SHOCKWAVE = 13;
+	
+	public static final int
+	INDEX_BOOM = 0;
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -81,6 +84,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("FlareIcon2");
 		getTextureLoader().loadResource("mine");
 		getTextureLoader().loadResource("Shockwave");
+		
+		getSoundLoader().loadResource("boom");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);

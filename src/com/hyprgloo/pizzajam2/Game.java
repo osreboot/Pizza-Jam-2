@@ -292,6 +292,7 @@ public class Game {
 					player.getX() >= mine.getxPos() - (Mine.MINE_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getX() <= mine.getxPos() + (Mine.MINE_SIZE/2) + (Player.PLAYER_SIZE/2)) {
 				Player.hitMine = true;
+				Main.getSound(Main.INDEX_BOOM).playAsSoundEffect(1, (float) 1, false);
 				wave = new Shockwave(mine.getxPos(), mine.getyPos());
 				spawnedWave = true;
 				mine.setxPos(Mine.MINE_START_LOC_X);
