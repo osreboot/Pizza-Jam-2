@@ -114,9 +114,9 @@ public class Game {
 
 
 		PowerUp.update(delta);
-		
-		
-		
+
+
+
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
 
@@ -153,7 +153,7 @@ public class Game {
 					}
 					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, Color.white, 0.15f);
 					if(player.getHealth() < Player.MAX_HEALTH) {
-					player.setHealth(player.getHealth() + 1);
+						player.setHealth(player.getHealth() + 1);
 					}
 
 					if(powerUpTextY >= powerUpTextCurrentHeight - 19) {
