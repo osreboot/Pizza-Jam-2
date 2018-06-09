@@ -292,6 +292,12 @@ public class Game {
 					player.getX() >= mine.getxPos() - (Mine.MINE_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getX() <= mine.getxPos() + (Mine.MINE_SIZE/2) + (Player.PLAYER_SIZE/2)) {
 				Player.hitMine = true;
+				
+				HvlCoord2D knockback = new HvlCoord2D(player.getX() - mine.getxPos(), player.getY() - mine.getyPos());
+				knockback.normalize();
+				knockback.mult(1000f);
+				player.impartedMomentum = new HvlCoord2D(knockback);
+				
 				Main.getSound(Main.INDEX_BOOM).playAsSoundEffect(1, (float) 1, false);
 				wave = new Shockwave(mine.getxPos(), mine.getyPos());
 				spawnedWave = true;
@@ -315,7 +321,7 @@ public class Game {
 		
 		
 		//Shockwave.displacementY = HvlMath.stepTowards(Shockwave.displacementY, delta*10, 0);
-		System.out.println(Shockwave.displacementY);
+		//System.out.println(Shockwave.displacementY);
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){
 			s.update(delta);
 		}

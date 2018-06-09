@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 
 import com.hyprgloo.pizzajam2.Flare.Smoke;
+import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 
 public class Player {
@@ -28,7 +29,7 @@ public class Player {
 	private static boolean flareLaunched;
 	public float flareTimer = 0f;
 	
-	
+	public HvlCoord2D impartedMomentum = new HvlCoord2D();
 
 	public static float MAX_HEALTH = 4;
 	public static final float PLAYER_SIZE = 50;
@@ -69,7 +70,8 @@ public class Player {
 		tempTimer -= delta;
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && Flare.hasFlare) {
-			Game.playerErrorTimer = 1f;
+			//Game.playerErrorTimer = 1f;
+			flareTimer = Flare.FLARE_LIFETIME/2f;
 			//damageTaken = true;
 			new Flare(xPos, yPos, 30f, -100f);
 			new Flare(xPos, yPos, 30f, 100f);
@@ -77,17 +79,12 @@ public class Player {
 			new Flare(xPos, yPos, -50f, 100f);
 			Flare.hasFlare = false;
 		}
+		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
 		if(Flare.hasFlare){
 			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON1), Game.globalTimer % 1f > 0.5f ? new Color(1f, 0.5f, 0f) : Color.white);
 			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON2), Game.globalTimer % 1f > 0.5f ? Color.white : new Color(1f, 0.5f, 0f));
 		}
-		
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && Flare.hasFlare) {
-			flareTimer = Flare.FLARE_LIFETIME/2f;
-		}
-		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
 			damageTaken = true;
@@ -96,17 +93,12 @@ public class Player {
 		
 		
 		if(damageTaken && !invincibility) {
-			new Flare(xPos, yPos, 30f, -100f);
-			new Flare(xPos, yPos, 30f, 100f);
-			new Flare(xPos, yPos, -50f, -100f);
-			new Flare(xPos, yPos, -50f, 100f);
-			
 			health = health - 1;
 			invincibility = true;
 			tempTimer = 2;
 		}
 		if(hitMine) {
-			health -= 1;
+			//health -= 1;
 			hitMine = false;
 		}
 		if(tempTimer <= 0) {
@@ -114,6 +106,8 @@ public class Player {
 			damageTaken = false;
 		}
 		
+		impartedMomentum.x = HvlMath.stepTowards(impartedMomentum.x, delta*1000f, 0);
+		impartedMomentum.y = HvlMath.stepTowards(impartedMomentum.y, delta*1000f, 0);
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			ySpeed = ySpeed - (delta * ACCELERATION);
@@ -131,8 +125,8 @@ public class Player {
 			xSpeed = HvlMath.stepTowards(xSpeed, ACCELERATION*delta, 0);
 		}
 
-		xPos = xPos + (xSpeed * delta);
-		yPos = yPos + (ySpeed * delta);
+		xPos = xPos + (xSpeed * delta) + (impartedMomentum.x * delta);
+		yPos = yPos + (ySpeed * delta) + (impartedMomentum.y * delta);
 		
 		if(xSpeed >= MAX_SPEED) {
 			xSpeed = MAX_SPEED;

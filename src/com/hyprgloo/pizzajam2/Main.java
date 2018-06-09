@@ -36,6 +36,7 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO fuel pickups/bar						L		[BASS]
 	//TODO bar visuals (hp dividers)			M		[OS]
 	//TODO AI?									M		[SAM]
+	
 	public static void main(String[] args){
 		new Main();
 	}
@@ -90,7 +91,6 @@ public class Main extends HvlTemplateInteg2D{
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
 
-		MenuManager.initialize();
 		try{
 			MenuManager.pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 		}catch(FBOUnsupportedException e){
@@ -103,6 +103,7 @@ public class Main extends HvlTemplateInteg2D{
 			HvlConfig.saveToFile(new Settings(), PATH_SETTINGS);
 			settings = HvlConfig.loadFromFile(PATH_SETTINGS);
 		}
+		MenuManager.initialize();
 	}
 
 	@Override
