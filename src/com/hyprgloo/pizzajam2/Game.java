@@ -1,6 +1,8 @@
 package com.hyprgloo.pizzajam2;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlResetRotation;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
 import java.util.ArrayList;
 
@@ -99,7 +101,9 @@ public class Game {
 		PowerUp.update(delta);
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
+			
 			powerUp.setxPos(powerUp.getxPos() - PowerUp.POWERUP_SPEED);
+			
 			
 			if(powerUp.getxPos() <= 854) {
 				powerUp.setxPos(854);

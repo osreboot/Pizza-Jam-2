@@ -1,6 +1,8 @@
 package com.hyprgloo.pizzajam2;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlResetRotation;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
 import java.util.Random;
 
@@ -11,13 +13,15 @@ public class PowerUp {
 	public static final float POWERUP_SIZE = 20;
 	public static final float POWERUP_START_LOCATION_X = 1440;
 	public static final float POWERUP_START_LOCATION_Y = 720/2;
-	public static final int POWERUP_CHANCE = 4000;
+	public static final int POWERUP_CHANCE = 10;
+	//base = 4000
 	public static final int POWERUP_SPEED = 1;
 
 
 
 	private float xPos;
 	private float yPos;
+	private float rotation = 0;
 	
 	public static int powerUpType;
 	public static boolean powerUpOnScreen;
@@ -62,7 +66,10 @@ public class PowerUp {
 	}
 
 	public void draw(float delta) {
+		rotation += delta*20;
+		hvlRotate(xPos, yPos, rotation);
 		hvlDrawQuadc(xPos, yPos, POWERUP_SIZE, POWERUP_SIZE, Main.getTexture(Main.INDEX_POWERUP_HEALTH));
+		hvlResetRotation();
 		
 	}
 	
