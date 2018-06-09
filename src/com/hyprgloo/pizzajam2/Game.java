@@ -13,7 +13,7 @@ import com.osreboot.ridhvl.HvlMath;
 public class Game {
 
 	public static float globalTimer = 0f;
-	
+
 	public static Player player;
 	public static ArrayList<LineSegment> tites;
 	public static ArrayList<LineSegment> mites;
@@ -30,30 +30,32 @@ public class Game {
 	TERRAIN_MAX_WIDTH = 250f,//5f,
 	TERRAIN_MIN_TIGHTNESS = 35f,
 	TERRAIN_MAX_TIGHTNESS = 150f;
-	
+
 	public static float terrainCenter = Display.getHeight()/2;
 	public static float terrainTightness = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 	public static float terrainCenterTimer = TERRAIN_CENTER_TIMER;
 	public static float terrainCenterGoal = Display.getHeight()/2;
 	public static float terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
-	
+
 	private static boolean powerUpPickup = false;
 	private static boolean healthPickup = false;
 	private static boolean scorePickup = false;
+	private static float powerUpTextCurrentHeight;
 
 	private static float powerUpTextX;
 	private static float powerUpTextY;
 	public static float playerErrorTimer = 0f;
+	private static boolean powerUpHeightCheck = true;
 
 	public static void initialize(){
 		globalTimer = 0f;
-		
+
 		terrainCenter = Display.getHeight()/2;
 		terrainTightness = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 		terrainCenterTimer = TERRAIN_CENTER_TIMER;
 		terrainCenterGoal = Display.getHeight()/2;
 		terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
-		
+
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 		tites = new ArrayList<LineSegment>();
 		mites = new ArrayList<LineSegment>();
@@ -70,9 +72,9 @@ public class Game {
 
 	public static void update(float delta){
 		globalTimer += delta;
-		
+
 		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta/2f, 0f);
-		
+
 		terrainCenterTimer -= delta;
 		if(terrainCenterTimer <= 0){
 			terrainCenterTimer = TERRAIN_CENTER_TIMER;
@@ -84,12 +86,12 @@ public class Game {
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter, 25, 25, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter - terrainTightness, 15, 15, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter + terrainTightness, 15, 15, Color.pink);
-		
+
 		for(LineSegment miteWave : mites) {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
 			miteWave.draw(delta);
-			
+
 		}
 		for(LineSegment titeWave : tites) {
 			titeWave.start.x -= delta*SCROLLSPEED;
@@ -102,22 +104,25 @@ public class Game {
 		if(tites.get(tites.size()-1).end.x <= Display.getWidth() + 10) {
 			generateTerrain(delta, true);
 		}
-		
+
 		float gradientAlpha = Math.min(globalTimer/3f, 1f) - HvlMath.mapl(player.flareTimer, 0f, Flare.FLARE_LIFETIME/4f, 0, 0.3f);
 		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
-		
+
 		player.update(delta);
 		player.draw(delta);
-		
-		
+
+
 
 		PowerUp.update(delta);
+		
+		
+		
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
-			
+
 			powerUp.setxPos(powerUp.getxPos() - PowerUp.POWERUP_SPEED);
-			
-			
+
+
 			if(powerUp.getxPos() <= 854) {
 				powerUp.setxPos(854);
 			}
@@ -132,66 +137,70 @@ public class Game {
 				powerUp.setyPos(PowerUp.powerUpSpawnY);
 				powerUpPickup = true;
 			}
-			
-			if(powerUpPickup) {
-				
-				if(player.getHealth() < Player.MAX_HEALTH) {
-					
-					healthPickup = true;
-					powerUpPickup = false;
-					
-				}else if((player.getHealth() == Player.MAX_HEALTH)) {
-					
-					scorePickup = true;
-					powerUpPickup = false;
 
-					
+			if(powerUpPickup) {
+
+				if(player.getHealth() < Player.MAX_HEALTH && scorePickup == false) {
+					healthPickup = true;
+				}else if((player.getHealth() == Player.MAX_HEALTH && healthPickup == false)) {
+					scorePickup = true;
 				}
-					
-					if(healthPickup && !scorePickup) {
-					
+
+				if(healthPickup && !scorePickup) {
+					if(powerUpHeightCheck) {
+						powerUpTextCurrentHeight = powerUpTextY;
+						powerUpHeightCheck = false;
+					}
 					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, Color.white, 0.15f);
+					if(player.getHealth() < Player.MAX_HEALTH) {
 					player.setHealth(player.getHealth() + 1);
-					
-					if(powerUpTextY >= (720/2) - 19) {
-					powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, (720/2) - 20);
+					}
+
+					if(powerUpTextY >= powerUpTextCurrentHeight - 19) {
+						powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
 					}else {
-						powerUpPickup = false;
 						powerUpTextY = 1000;
 						healthPickup = false;
-					}
-					}
-					
-					
-					if(scorePickup && !healthPickup) {
-					
-					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, Color.white, 0.15f);
-					//Add 1000 to score
-					
-					if(powerUpTextY >= (720/2) - 19) {
-					powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, (720/2) - 20);
-					}else {
+						powerUpHeightCheck = true;
 						powerUpPickup = false;
-						powerUpTextY = 1000;
-						scorePickup = false;
-					}
 					}
 				}
-				
-				
-				
+
+
+				if(scorePickup && !healthPickup) {
+					if(powerUpHeightCheck) {
+						powerUpTextCurrentHeight = powerUpTextY;
+						powerUpHeightCheck = false;
+					}
+					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, Color.white, 0.15f);
+					//Add 1000 to score
+
+					if(powerUpTextY >= powerUpTextCurrentHeight - 19) {
+						powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, powerUpTextCurrentHeight - 20);
+					}else {
+						powerUpTextY = 1000;
+						scorePickup = false;
+						powerUpHeightCheck = true;
+						powerUpPickup = false;
+
+					}
+				}
 			}
-			
-		
-		
+
+
+
+		}
+
+
+
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){
 			s.update(delta);
 		}
-		
+
 		for(Flare f : flares){
 			f.update(delta);
 		}
-		
+
 		for(LineSegment miteWave : mites) {
 			miteWave.drawError(delta);
 		}
@@ -206,7 +215,7 @@ public class Game {
 		tites.clear();
 		mites.clear();
 	}
-	
+
 	public static void generateTerrain(float delta, boolean tite) {
 		HvlCoord2D lineStart = new HvlCoord2D();
 		HvlCoord2D lineEnd = new HvlCoord2D();

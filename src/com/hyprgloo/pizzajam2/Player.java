@@ -85,6 +85,7 @@ public class Player {
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 			flareTimer = Flare.FLARE_LIFETIME/2f;
+			damageTaken = true;
 		}
 		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
