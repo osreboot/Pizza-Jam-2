@@ -38,6 +38,8 @@ public class Game {
 	public static float terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 	
 	private static boolean powerUpPickup = false;
+	private static float powerUpTextX;
+	private static float powerUpTextY;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -115,6 +117,8 @@ public class Game {
 					player.getY() <= powerUp.getyPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2) &&
 					player.getX() >= powerUp.getxPos() - (PowerUp.POWERUP_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getX() <= powerUp.getxPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2)) {
+				powerUpTextX = powerUp.getxPos();
+				powerUpTextY = powerUp.getyPos();
 				PowerUp.powerUpOnScreen = false;
 				powerUp.setxPos(PowerUp.POWERUP_START_LOCATION_X);
 				powerUp.setyPos(PowerUp.POWERUP_START_LOCATION_Y);
@@ -125,7 +129,9 @@ public class Game {
 				
 				if(player.getHealth() == Player.MAX_HEALTH) {
 					
-					Main.font.drawWordc("+1 HP", powerUp.getxPos(), powerUp.getyPos(), Color.white);
+					
+					
+					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, Color.white, 0.15f);
 					
 				}
 				
