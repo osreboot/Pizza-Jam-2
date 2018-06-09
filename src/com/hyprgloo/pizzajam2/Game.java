@@ -95,7 +95,7 @@ public class Game {
 			generateTerrain(delta, true);
 		}
 		
-		float gradientAlpha = Math.min(globalTimer/3f, 1f);
+		float gradientAlpha = Math.min(globalTimer/3f, 1f) - HvlMath.mapl(player.flareTimer, Flare.FLARE_LIFETIME/2f, 0f, 0.4f, 0f);
 		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
 		
 		player.update(delta);
