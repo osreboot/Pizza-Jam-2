@@ -19,7 +19,7 @@ public class Game {
 	public static ArrayList<LineSegment> mites;
 	public static ArrayList<Flare> flares;
 
-	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.POWERUP_START_LOCATION_Y, 1);
+	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY, 1);
 
 	public static final float SCROLLSPEED = 400;
 	public static final float 
@@ -38,6 +38,9 @@ public class Game {
 	public static float terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 	
 	private static boolean powerUpPickup = false;
+	private static boolean healthPickup = false;
+	private static boolean scorePickup = false;
+
 	private static float powerUpTextX;
 	private static float powerUpTextY;
 
@@ -102,6 +105,8 @@ public class Game {
 		
 		player.update(delta);
 		player.draw(delta);
+		
+		
 
 		PowerUp.update(delta);
 		if(PowerUp.powerUpOnScreen) {
@@ -121,28 +126,60 @@ public class Game {
 				powerUpTextY = powerUp.getyPos();
 				PowerUp.powerUpOnScreen = false;
 				powerUp.setxPos(PowerUp.POWERUP_START_LOCATION_X);
-				powerUp.setyPos(PowerUp.POWERUP_START_LOCATION_Y);
+				powerUp.setyPos(PowerUp.powerUpSpawnY);
 				powerUpPickup = true;
 			}
 			
 			if(powerUpPickup) {
 				
-				if(player.getHealth() == Player.MAX_HEALTH) {
+				if(player.getHealth() < Player.MAX_HEALTH) {
+					
+					healthPickup = true;
+					powerUpPickup = false;
+					
+				}else if((player.getHealth() == Player.MAX_HEALTH)) {
+					
+					scorePickup = true;
+					powerUpPickup = false;
+
+					
+				}
+					
+					if(healthPickup && !scorePickup) {
 					
 					Main.font.drawWordc("+1 HP", powerUpTextX, powerUpTextY, Color.white, 0.15f);
+					player.setHealth(player.getHealth() + 1);
 					
 					if(powerUpTextY >= (720/2) - 19) {
 					powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, (720/2) - 20);
 					}else {
+						powerUpPickup = false;
 						powerUpTextY = 1000;
+						healthPickup = false;
+					}
 					}
 					
 					
+					if(scorePickup && !healthPickup) {
+					
+					Main.font.drawWordc("+1000 Pts", powerUpTextX, powerUpTextY, Color.white, 0.15f);
+					//Add 1000 to score
+					
+					if(powerUpTextY >= (720/2) - 19) {
+					powerUpTextY = HvlMath.stepTowards(powerUpTextY, delta*20, (720/2) - 20);
+					}else {
+						powerUpPickup = false;
+						powerUpTextY = 1000;
+						scorePickup = false;
+					}
+					}
 				}
+				
+				
 				
 			}
 			
-		}
+		
 		
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){
 			s.update(delta);
@@ -155,7 +192,7 @@ public class Game {
 
 	public static void restart(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
-		powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.POWERUP_START_LOCATION_Y, 1);
+		powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY, 1);
 		tites.clear();
 		mites.clear();
 	}

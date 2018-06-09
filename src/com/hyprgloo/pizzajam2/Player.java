@@ -21,7 +21,9 @@ public class Player {
 	private static boolean damageTaken;
 	private static boolean invincibility = false;
 	private static float tempTimer;
+	private static boolean flareLaunched;
 	public float flareTimer = 0f;
+	
 	
 
 	public static float MAX_HEALTH = 4;
@@ -32,6 +34,10 @@ public class Player {
 	public static final float HEALTHBAR_Y = 694;
 	public static final float MAX_SPEED = 300;
 	public static final float ACCELERATION = 8500f;
+	public static final float FLARE_INV_X = HEALTHBAR_X + 170;
+	public static final float FLARE_INV_Y = HEALTHBAR_Y;
+	public static final float FLARE_INV_SIZE_X = 10;
+	public static final float FLARE_INV_SIZE_Y = 20;
 
 	public Player(float xArg, float yArg){
 
@@ -51,9 +57,19 @@ public class Player {
 		
 		tempTimer -= delta;
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			damageTaken = true;
+		if(Keyboard.isKeyDown(Keyboard.KEY_X) && Flare.hasFlare) {
+			//damageTaken = true;
+			new Flare(xPos, yPos, 30f, -100f);
+			new Flare(xPos, yPos, 30f, 100f);
+			new Flare(xPos, yPos, -50f, -100f);
+			new Flare(xPos, yPos, -50f, 100f);
+			Flare.hasFlare = false;
 		}
+		
+		if(Flare.hasFlare) {
+			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, FLARE_INV_SIZE_X, FLARE_INV_SIZE_Y, Color.orange);
+		}
+		
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 			flareTimer = Flare.FLARE_LIFETIME/2f;
@@ -152,6 +168,10 @@ public class Player {
 	
 	public float getHealth() {
 		return health;
+	}
+	
+	public void setHealth(float healthArg) {
+		health = healthArg;
 	}
 
 }
