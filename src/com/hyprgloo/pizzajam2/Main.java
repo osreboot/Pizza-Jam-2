@@ -13,13 +13,15 @@ public class Main extends HvlTemplateInteg2D{
 	public static void main(String[] args){
 		new Main();
 	}
-	
+
 	public static final int
 	INDEX_FONT = 0,
-	INDEX_HYPRGLOO = 1;
-	
+	INDEX_HYPRGLOO = 1,
+	INDEX_GRADIENT = 2,
+	INDEX_TERRAIN_GRADIENT = 3;
+
 	public static HvlFontPainter2D font;
-	
+
 	public Main(){
 		super(144, 1280, 720, "Pizza Jam 2 : HYPRGLOO Submission", new HvlDisplayModeDefault());
 	}
@@ -28,10 +30,12 @@ public class Main extends HvlTemplateInteg2D{
 	public void initialize(){
 		getTextureLoader().loadResource("INOF");
 		getTextureLoader().loadResource("HYPRGLOO");
-		
+		getTextureLoader().loadResource("Gradient");
+		getTextureLoader().loadResource("Gradient2");
+
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
-		
+
 		MenuManager.initialize();
 		try{
 			MenuManager.pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
