@@ -6,6 +6,7 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import java.util.HashMap;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -15,6 +16,8 @@ import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.action.HvlAction0;
 import com.osreboot.ridhvl.action.HvlAction1;
 import com.osreboot.ridhvl.action.HvlAction2;
+import com.osreboot.ridhvl.input.HvlInput;
+import com.osreboot.ridhvl.menu.HvlButtonMenuLink;
 import com.osreboot.ridhvl.menu.HvlComponent;
 import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
@@ -33,10 +36,25 @@ public class MenuManager {
 	
 	public static HvlMenu intro, main, game, pause;
 	public static HvlRenderFrame pauseFrame;
+	public static HvlInput inputPause;
 	
 	private static HashMap<HvlLabeledButton, LabeledButtonAlias> buttonAliases = new HashMap<>();
 	
 	public static void initialize(){
+		inputPause = new HvlInput(new HvlInput.InputFilter(){
+			@Override
+			public float getCurrentOutput() {
+				return Keyboard.isKeyDown(Keyboard.KEY_P) || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) ? 1f : 0f;
+			}
+		});
+		inputPause.setPressedAction(new HvlAction1<HvlInput>(){
+			@Override
+			public void run(HvlInput aArg){
+				if(HvlMenu.getCurrent() == game) HvlMenu.setCurrent(pause);
+				else if(HvlMenu.getCurrent() == pause) HvlMenu.setCurrent(game);
+			}
+		});
+		
 		HvlComponentDefault.setDefault(new HvlArrangerBox(Display.getWidth(), Display.getHeight(), HvlArrangerBox.ArrangementStyle.HORIZONTAL));
 		HvlLabeledButton defaultLabeledButton = new HvlLabeledButton(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT, new HvlComponentDrawable(){
 			@Override
@@ -93,6 +111,18 @@ public class MenuManager {
 		
 		game = new HvlMenu();
 		
+		pause = new HvlMenu();
+		pause.add(new HvlArrangerBox.Builder().setStyle(HvlArrangerBox.ArrangementStyle.VERTICAL).setxAlign(0f).build());
+		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Resume").setClickedCommand(new HvlButtonMenuLink(game)).build());
+		pause.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
+		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Quit").setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg){
+				HvlMenu.setCurrent(main);
+				Game.restart();
+			}
+		}).build());
+		
 		HvlMenu.setCurrent(intro);
 	}
 	
@@ -108,9 +138,13 @@ public class MenuManager {
 			//Main.font.drawWordc("INTRO", Display.getWidth()/2, Display.getHeight()/2, new Color(1f, 1f, 1f, alpha));
 		}else if(HvlMenu.getCurrent() == main){
 			//UPDATING THE MAIN MENU//
-			Main.font.drawWordc("MAIN MENU", Display.getWidth()/2, Display.getHeight()/2, Color.white);
+			Main.font.drawWordc("MAIN MENU", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
 		}else if(HvlMenu.getCurrent() == game){
 			//UPDATING THE GAME//
+			for(HvlLabeledButton b : buttonAliases.keySet()){
+				buttonAliases.get(b).reset();
+			}
+			
 			pauseFrame.doCapture(new HvlAction0(){
 				@Override
 				public void run() {
@@ -119,9 +153,10 @@ public class MenuManager {
 			});
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 		}else if(HvlMenu.getCurrent() == pause){
-			//UPDATING THE GAME//
+			//UPDATING THE PAUSE MENU//
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
-			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.5f));
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.8f));
+			Main.font.drawWordc("PAUSED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
 		}
 		
 		HvlMenu.updateMenus(delta);
@@ -146,6 +181,12 @@ public class MenuManager {
 			hoverAlpha = HvlMath.stepTowards(hoverAlpha, delta*4f, hover ? 1f : 0f);
 			hoverAlpha2 = HvlMath.stepTowards(hoverAlpha2, delta*8f, hover ? 1f : 0f);
 			widthAdd = HvlMath.stepTowards(widthAdd, delta*512f, hover ? 64f : 0f);
+		}
+		
+		public void reset(){
+			hoverAlpha = 0;
+			hoverAlpha2 = 0;
+			widthAdd = 0;
 		}
 	}
 	

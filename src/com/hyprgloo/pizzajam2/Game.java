@@ -95,8 +95,8 @@ public class Game {
 	
 	public static void restart(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
-//		tites.clear();
-//		mites.clear();
+		tites.clear();
+		mites.clear();
 	}
 
 }
