@@ -22,6 +22,7 @@ public class Player {
 	private static float fuelLevel;
 	private static boolean boostState;
 	private static boolean damageTaken;
+	static boolean hitMine;
 	private static boolean invincibility = false;
 	private static float tempTimer;
 	private static boolean flareLaunched;
@@ -88,9 +89,8 @@ public class Player {
 		}
 		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_X) && Flare.hasFlare == true) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
 			damageTaken = true;
-			Flare.hasFlare = false;
 		}
 
 		
@@ -101,11 +101,14 @@ public class Player {
 			new Flare(xPos, yPos, -50f, -100f);
 			new Flare(xPos, yPos, -50f, 100f);
 			
-			//health = health - 1;
+			health = health - 1;
 			invincibility = true;
 			tempTimer = 2;
 		}
-		
+		if(hitMine) {
+			health -= 1;
+			hitMine = false;
+		}
 		if(tempTimer <= 0) {
 			invincibility = false;
 			damageTaken = false;

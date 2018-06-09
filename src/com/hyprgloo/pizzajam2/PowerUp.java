@@ -41,7 +41,7 @@ public class PowerUp {
 	
 	static void update(float delta) {
 		
-		System.out.println(powerUpType);
+		//System.out.println(powerUpType);
 		
 		powerUpSpawnY = r.nextInt(((720/2) + 200) - ((720/2) - 200) + 1) + ((720/2) - 200);
 

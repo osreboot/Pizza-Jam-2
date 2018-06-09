@@ -20,6 +20,7 @@ public class Game {
 	public static ArrayList<Flare> flares;
 
 	public static PowerUp powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY);
+	public static Mine mine = new Mine(Mine.MINE_START_LOC_X, Mine.mineSpawnY);
 
 	public static final float SCROLLSPEED = 400;
 	public static final float 
@@ -80,7 +81,7 @@ public class Game {
 
 	public static void update(float delta){
 		globalTimer += delta;
-
+		
 		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta/2f, 0f);
 
 		terrainCenterTimer -= delta;
@@ -120,10 +121,9 @@ public class Game {
 		player.draw(delta);
 
 
-
 		PowerUp.update(delta);
-
-
+		Mine.update(delta);
+		
 
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
@@ -283,8 +283,26 @@ public class Game {
 			}
 		}
 
-
-
+		if(Mine.mineOnScreen) {
+			mine.draw(delta);
+			mine.setxPos(HvlMath.stepTowards(mine.getxPos(), Mine.MINE_SPEED * delta, -50));
+			if(player.getY() >= mine.getyPos() - (Mine.MINE_SIZE/2) - (Player.PLAYER_SIZE/2) &&
+					player.getY() <= mine.getyPos() + (Mine.MINE_SIZE/2) + (Player.PLAYER_SIZE/2) &&
+					player.getX() >= mine.getxPos() - (Mine.MINE_SIZE/2) - (Player.PLAYER_SIZE/2) &&
+					player.getX() <= mine.getxPos() + (Mine.MINE_SIZE/2) + (Player.PLAYER_SIZE/2)) {
+				Player.hitMine = true;
+				mine.setxPos(Mine.MINE_START_LOC_X);
+				mine.setyPos(Mine.mineSpawnY);
+				Mine.mineOnScreen = false;
+			}
+			
+			if(mine.getxPos() < -25) {
+				mine.setxPos(Mine.MINE_START_LOC_X);
+				mine.setyPos(Mine.mineSpawnY);
+				Mine.mineOnScreen = false;
+			}
+		}
+		
 
 
 

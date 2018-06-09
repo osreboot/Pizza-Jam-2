@@ -52,7 +52,8 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_SMOKE = 8,
 	INDEX_SHIP = 9,
 	INDEX_FLARE_ICON1 = 10,
-	INDEX_FLARE_ICON2 = 11;
+	INDEX_FLARE_ICON2 = 11,
+	INDEX_MINE = 12;
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -77,6 +78,7 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Ship");
 		getTextureLoader().loadResource("FlareIcon1");
 		getTextureLoader().loadResource("FlareIcon2");
+		getTextureLoader().loadResource("mine");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
