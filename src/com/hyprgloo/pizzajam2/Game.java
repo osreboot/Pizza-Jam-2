@@ -36,6 +36,8 @@ public class Game {
 	public static float terrainCenterTimer = TERRAIN_CENTER_TIMER;
 	public static float terrainCenterGoal = Display.getHeight()/2;
 	public static float terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
+	
+	private static boolean powerUpPickup = false;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -116,7 +118,19 @@ public class Game {
 				PowerUp.powerUpOnScreen = false;
 				powerUp.setxPos(PowerUp.POWERUP_START_LOCATION_X);
 				powerUp.setyPos(PowerUp.POWERUP_START_LOCATION_Y);
+				powerUpPickup = true;
 			}
+			
+			if(powerUpPickup) {
+				
+				if(player.getHealth() == Player.MAX_HEALTH) {
+					
+					Main.font.drawWordc("+1 HP", powerUp.getxPos(), powerUp.getyPos(), Color.white);
+					
+				}
+				
+			}
+			
 		}
 		
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){

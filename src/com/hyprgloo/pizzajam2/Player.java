@@ -1,5 +1,6 @@
 package com.hyprgloo.pizzajam2;
 
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import org.lwjgl.input.Keyboard;
@@ -20,10 +21,12 @@ public class Player {
 	private static boolean damageTaken;
 	private static boolean invincibility = false;
 	private static float tempTimer;
+	private static float flareTimer = 1;
+	
 
-	private static float MAX_HEALTH = 4;
+	public static float MAX_HEALTH = 4;
 	public static final float PLAYER_SIZE = 50;
-	public static final float PLAYER_START_X = 50;
+	public static final float PLAYER_START_X = 25;
 	public static final float PLAYER_START_Y = 720/2;
 	public static final float HEALTHBAR_X = 100;
 	public static final float HEALTHBAR_Y = 694;
@@ -40,7 +43,7 @@ public class Player {
 	public void draw(float delta){
 
 		hvlDrawQuadc(xPos, yPos, PLAYER_SIZE, PLAYER_SIZE, Color.white);
-		hvlDrawQuadc(HEALTHBAR_X, HEALTHBAR_Y, health*40, 20, Color.white);
+		hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, health*40, 20, Color.white);
 
 	}
 
@@ -51,6 +54,11 @@ public class Player {
 		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
 			damageTaken = true;
 		}
+		
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+			flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
+		}
+		
 		
 		if(damageTaken && !invincibility) {
 			new Flare(xPos, yPos, 30f, -100f);
@@ -140,6 +148,10 @@ public class Player {
 
 	public void setySpeed(float yArg) {
 		ySpeed = yArg;
+	}
+	
+	public float getHealth() {
+		return health;
 	}
 
 }
