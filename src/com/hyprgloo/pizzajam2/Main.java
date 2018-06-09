@@ -43,7 +43,6 @@ public class Main extends HvlTemplateInteg2D{
 	@Override
 	public void update(float delta){
 		MenuManager.update(delta);
-		PowerUp.update(delta);
 	}
 
 }

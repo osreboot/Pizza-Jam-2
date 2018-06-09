@@ -8,10 +8,11 @@ import org.newdawn.slick.Color;
 
 public class PowerUp {
 
-	public static final float POWERUP_SIZE = 100;
+	public static final float POWERUP_SIZE = 15;
 	public static final float POWERUP_START_LOCATION_X = 1440;
 	public static final float POWERUP_START_LOCATION_Y = 720/2;
-	public static final int POWERUP_CHANCE = 5000;
+	public static final int POWERUP_CHANCE = 4000;
+	public static final int POWERUP_SPEED = 1;
 
 
 
@@ -31,12 +32,10 @@ public class PowerUp {
 		powerUpType = typeArg;
 		
 	}
-
-	//Powerup moved inward from right side of screen and stops in center. Disappears when collected.
 	
 	static void update(float delta) {
 		
-		//System.out.println(random);
+		System.out.println(random);
 		
 		if(!powerUpOnScreen) {
 			random = r.nextInt(POWERUP_CHANCE + 1);
@@ -67,7 +66,7 @@ public class PowerUp {
 
 	public void draw(float delta) {
 		
-		hvlDrawQuadc(POWERUP_START_LOCATION_X, POWERUP_START_LOCATION_Y, POWERUP_SIZE, POWERUP_SIZE, Color.red);
+		hvlDrawQuadc(xPos, yPos, POWERUP_SIZE, POWERUP_SIZE, Color.red);
 		
 	}
 	
