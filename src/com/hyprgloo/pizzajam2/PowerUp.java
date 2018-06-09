@@ -12,7 +12,6 @@ public class PowerUp {
 
 	public static final float POWERUP_SIZE = 20;
 	public static final float POWERUP_START_LOCATION_X = 1440;
-	public static final float POWERUP_START_LOCATION_Y = 720/2;
 	public static final int POWERUP_CHANCE = 10;
 	//base = 4000
 	public static final int POWERUP_SPEED = 1;
@@ -26,6 +25,8 @@ public class PowerUp {
 	public static int powerUpType;
 	public static boolean powerUpOnScreen;
 	static Random r = new Random();
+	public static float powerUpSpawnY = r.nextInt(((720/2) + 200) - ((720/2) - 200) + 1) + ((720/2) - 200);
+
 	private static int random = r.nextInt(POWERUP_CHANCE + 1); 
 	
 
@@ -38,6 +39,7 @@ public class PowerUp {
 	}
 	
 	static void update(float delta) {
+		powerUpSpawnY = r.nextInt(((720/2) + 200) - ((720/2) - 200) + 1) + ((720/2) - 200);
 		
 		if(!powerUpOnScreen) {
 			random = r.nextInt(POWERUP_CHANCE + 1);

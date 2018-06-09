@@ -12,12 +12,17 @@ import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 
 public class Flare {
-	
+
 	public static final float FLARE_LIFETIME = 4f;
-	
+
 	public HvlCoord2D loc;
 	public float xs, ys, smokeEmitTimer, life;
-	
+	public static boolean hasFlare = true;
+	public static final float FLARE_INV_X = Player.HEALTHBAR_X + 130;
+	public static final float FLARE_INV_Y = Player.HEALTHBAR_Y;
+	public static final float FLARE_INV_SIZE_X = 10;
+	public static final float FLARE_INV_SIZE_Y = 20;
+
 	public Flare(float xArg, float yArg, float xsArg, float ysArg){
 		loc = new HvlCoord2D(xArg, yArg);
 		xs = xsArg;
@@ -26,7 +31,7 @@ public class Flare {
 		Game.flares.add(this);
 		life = FLARE_LIFETIME;
 	}
-	
+
 	public void update(float delta){
 		smokeEmitTimer += delta;
 		if(smokeEmitTimer > 0.1f && life > 2f){
@@ -40,11 +45,17 @@ public class Flare {
 		loc.x += xs*delta;
 		loc.y += ys*delta;
 		hvlDrawQuadc(loc.x, loc.y, 128, 128, Main.getTexture(Main.INDEX_FLARE), new Color(1f, 1f, 1f, HvlMath.randomFloatBetween(0.2f, 0.9f) * (life/FLARE_LIFETIME)));
+
+		if(hasFlare) {
+			hvlDrawQuadc(FLARE_INV_X, FLARE_INV_Y, FLARE_INV_SIZE_X, FLARE_INV_SIZE_Y, Color.orange);
+		}
 	}
-	
+
+
+
 	public static class Smoke{
 		public static ArrayList<Smoke> smokeParticles = new ArrayList<>();
-		
+
 		public HvlCoord2D loc;
 		public float size, life, rotation, xs;
 		public Smoke(float xArg, float yArg, float sizeArg, float xsArg){
@@ -62,6 +73,9 @@ public class Flare {
 			hvlDrawQuadc(loc.x, loc.y, size * HvlMath.map(life, 1f, 0, 0.5f, 2f), size * HvlMath.map(life, 1f, 0, 0.5f, 2f), Main.getTexture(Main.INDEX_SMOKE), new Color(1f, 1f, 1f, life/1.5f));
 			hvlResetRotation();
 		}
+
 	}
-	
+
+
+
 }
