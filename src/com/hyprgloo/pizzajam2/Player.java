@@ -88,10 +88,11 @@ public class Player {
 		}
 		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_X) && Flare.hasFlare == true) {
 			damageTaken = true;
+			Flare.hasFlare = false;
 		}
+
 		
 		
 		if(damageTaken && !invincibility) {
@@ -100,7 +101,7 @@ public class Player {
 			new Flare(xPos, yPos, -50f, -100f);
 			new Flare(xPos, yPos, -50f, 100f);
 			
-			health = health - 1;
+			//health = health - 1;
 			invincibility = true;
 			tempTimer = 2;
 		}
