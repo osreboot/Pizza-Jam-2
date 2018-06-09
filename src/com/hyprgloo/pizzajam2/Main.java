@@ -27,7 +27,7 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO stage progression (to win state)		L<<
 	//TODO stage progression visuals 			S<<
 	//TODO particle fields						M		[OS]
-	//TODO mines								L
+	//TODO mines								L		[SAM]
 	//TODO game name							S<<<
 	//TODO game icon							S<		[OS]
 	//TODO ship lighting effects				S
@@ -35,7 +35,7 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO flare spawns							M<<		[BASS]
 	//TODO fuel pickups/bar						L		[BASS]
 	//TODO bar visuals (hp dividers)			M		[OS]
-	
+	//TODO AI?									M		[SAM]
 	public static void main(String[] args){
 		new Main();
 	}
