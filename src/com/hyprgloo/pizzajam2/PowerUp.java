@@ -22,15 +22,14 @@ public class PowerUp {
 	private float yPos;
 	private float rotation = 0;
 	
-	public static int powerUpType;
+	public static int powerUpType = 1;
 	public static boolean powerUpOnScreen;
 	static Random r = new Random();
 	public static float powerUpSpawnY = r.nextInt(((720/2) + 200) - ((720/2) - 200) + 1) + ((720/2) - 200);
-	public static float powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1500);
-	public static float powerUpTypeGen = r.nextInt(100 + 1);
+	public static float powerUpSpawnX = HvlMath.randomIntBetween((1280 + 400), (1280 + 900));
+	public static float powerUpTypeGen = HvlMath.randomIntBetween(0, 100);
 	public static float powerUpValHolder;
-
-	private static int random = r.nextInt(POWERUP_CHANCE + 1); 
+ 
 	
 
 	public PowerUp(float xArg, float yArg) {
@@ -45,18 +44,18 @@ public class PowerUp {
 		//System.out.println(powerUpType);
 		
 		powerUpSpawnY = r.nextInt(((720/2) + 200) - ((720/2) - 200) + 1) + ((720/2) - 200);
-		powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1500);
+		powerUpSpawnX = HvlMath.randomIntBetween((1280 + 400), (1280 + 900));
 
 		
-		
-		
-		if(!powerUpOnScreen && Game.globalTimer >= 8) {
+		if(!powerUpOnScreen && Game.globalTimer >=  8) {
 			
-			powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1200);
-			powerUpTypeGen = r.nextInt(100 + 1);
+			powerUpSpawnX = HvlMath.randomIntBetween((1280 + 400), (1280 + 900));
+			powerUpTypeGen = HvlMath.randomIntBetween(0, 100);
 			
-			if(Game.globalTimer > Game.endlessBegin + 10) powerUpTypeGen = 100;
-			if(powerUpTypeGen > 0 && powerUpTypeGen < 66) {
+			if(Game.globalTimer > Game.endlessBegin + 10) {
+				powerUpTypeGen = 100;
+			}
+			if(powerUpTypeGen >= 0 && powerUpTypeGen < 66) {
 				powerUpType = 1;
 				//Health
 			}else if(powerUpTypeGen >= 66 && Game.stage >= 2) {

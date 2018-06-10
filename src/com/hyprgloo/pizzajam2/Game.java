@@ -57,7 +57,7 @@ public class Game {
 	private static float powerUpTextX;
 	private static float powerUpTextY;
 	private static boolean powerUpTimerCheck = false;
-	private static float powerUpTempTimer;
+	private static float powerUpTempTimer = Float.MAX_VALUE;
 	public static float playerErrorTimer = 0f;
 	private static boolean powerUpHeightCheck = true;
 	private static boolean powerUpHasGivenHealth = true;
@@ -92,6 +92,8 @@ public class Game {
 	public static int endlessBegin = 164;
 	
 	public static void initialize(){
+		powerUpTempTimer = Float.MAX_VALUE;
+		PowerUp.powerUpType = 1;
 		globalTimer = 0f;
 		stage = 1;
 
@@ -101,6 +103,8 @@ public class Game {
 		terrainCenterGoal = Display.getHeight()/2;
 		terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 
+		powerUpTimerCheck = false;
+		powerUpUrgent = false;
 		powerUpPickup = false;
 		healthPickup = false;
 		scorePickup = false;
@@ -118,6 +122,7 @@ public class Game {
 
 		mine = new Mine(Mine.MINE_START_LOC_X, Mine.mineSpawnY);
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
+		powerUp = new PowerUp(PowerUp.powerUpSpawnX, PowerUp.powerUpSpawnY);
 		tites = new ArrayList<LineSegment>();
 		mites = new ArrayList<LineSegment>();
 		flares = new ArrayList<>();
@@ -330,8 +335,7 @@ public class Game {
 
 		
 			
-			System.out.println(powerUpTempTimer);
-			
+System.out.println(powerUp.getxPos() + ";  " + PowerUp.powerUpType);
 
 
 
@@ -549,6 +553,9 @@ public class Game {
 	}
 
 	public static void restart(){
+		powerUpTimerCheck = false;
+		powerUpUrgent = false;
+		powerUpTempTimer = Float.MAX_VALUE;
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
 		powerUp = new PowerUp(PowerUp.powerUpSpawnX, PowerUp.powerUpSpawnY);
 		tites.clear();
@@ -563,6 +570,7 @@ public class Game {
 		level5Changed = false;
 		TERRAIN_MAX_TIGHTNESS = 150f;
 		Flare.Smoke.smokeParticles.clear();
+		PowerUp.powerUpType = 1;
 	}	
 
 	public static void generateTerrain(float delta, boolean tite) {
