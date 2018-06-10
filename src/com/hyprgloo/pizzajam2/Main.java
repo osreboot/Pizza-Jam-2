@@ -17,11 +17,9 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO functional settings page				S		[OS]
 	//TODO music								M<		[OS,BASS]
 	//TODO sound effects						M<
-	//TODO credits page							S<		[OS]
 	//TODO score, calculations					S		[BASS]
 	//TODO score, menus							S		[OS]
 	//TODO tutorial text						M<<		[OS]
-	//TODO player damage						L<<<	[SAM]
 	//TODO player fail state					M<<
 	//TODO player win state						M<<
 	//TODO stage progression (to win state)		L<<
@@ -32,9 +30,6 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO ship lighting effects				S
 	//TODO main menu fade-in					S		[OS]
 	//TODO fuel pickups/bar						L		[BASS]
-	//TODO bar visuals (hp dividers)			M		[OS]
-	//TODO AI?									M		[SAM]
-	//TODO smoke memory leak					M<<		[OS]
 
 	public static void main(String[] args){
 		new Main();
@@ -56,7 +51,13 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_MINE = 12,
 	INDEX_SHOCKWAVE = 13,
 	INDEX_MINE_LIGHT = 14,
-	INDEX_MENU_PAN1 = 15;
+	INDEX_MENU_PAN1 = 15,
+	INDEX_FLARE_ICON0 = 16,
+	INDEX_HEALTH0 = 17,
+	INDEX_HEALTH1 = 18,
+	INDEX_HEALTH2 = 19,
+	INDEX_HEALTH3 = 20,
+	INDEX_HEALTH4 = 21;
 
 	public static final int
 	INDEX_BEEP = 0,
@@ -90,6 +91,12 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Shockwave");
 		getTextureLoader().loadResource("MineLight");
 		getTextureLoader().loadResource("MenuPan1");
+		getTextureLoader().loadResource("FlareIcon0");
+		getTextureLoader().loadResource("Health0");
+		getTextureLoader().loadResource("Health1");
+		getTextureLoader().loadResource("Health2");
+		getTextureLoader().loadResource("Health3");
+		getTextureLoader().loadResource("Health4");
 
 		getSoundLoader().loadResource("Beep");
 		getSoundLoader().loadResource("Boom");

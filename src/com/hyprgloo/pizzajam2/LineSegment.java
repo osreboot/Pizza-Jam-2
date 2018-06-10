@@ -34,6 +34,10 @@ public class LineSegment {
 	public void drawError(float delta){
 		hvlDrawLine(this.start.x, this.start.y, this.end.x, this.end.y, new Color(1f, 0f, 0f, Game.playerErrorTimer), 2f);
 	}
+	
+	public boolean isOffscreen(){
+		return this.end.x < 0;
+	}
 
 	private static HvlCoord2D[] getSegmentPolygon(LineSegment sArg){
 		HvlCoord2D[] output;
