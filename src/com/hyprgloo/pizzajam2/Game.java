@@ -4,14 +4,11 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import java.util.ArrayList;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
-import com.osreboot.ridhvl.menu.HvlMenu;
-import com.osreboot.ridhvl.painter.HvlRenderFrame;
 
 public class Game {
 

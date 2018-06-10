@@ -13,9 +13,6 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D{
 
-	//TODO Main menu background					L<
-	//TODO sound effects 	(flare)				M<		[BASS]
-
 	public static void main(String[] args){
 		new Main();
 	}
