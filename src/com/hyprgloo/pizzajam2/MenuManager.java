@@ -213,7 +213,9 @@ public class MenuManager {
 			//Main.font.drawWordc("INTRO", Display.getWidth()/2, Display.getHeight()/2, new Color(1f, 1f, 1f, alpha));
 		}else if(HvlMenu.getCurrent() == main){
 			//UPDATING THE MAIN MENU//
+			Main.font.drawWordc("UNREACHED", (Display.getWidth()/2) + 4, (Display.getHeight()/8) + 4, Color.black, 0.5f);
 			Main.font.drawWordc("UNREACHED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
+
 		}else if(HvlMenu.getCurrent() == settings){
 			//UPDATING THE SETTINGS MENU//
 			Main.font.drawWordc("SETTINGS", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);

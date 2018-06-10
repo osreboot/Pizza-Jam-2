@@ -335,7 +335,7 @@ public class Game {
 
 		
 			
-System.out.println(powerUp.getxPos() + ";  " + PowerUp.powerUpType);
+//System.out.println(powerUp.getxPos() + ";  " + PowerUp.powerUpType);
 
 
 
