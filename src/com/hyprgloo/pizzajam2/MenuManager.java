@@ -224,8 +224,9 @@ public class MenuManager {
 			Main.font.drawWordc("@os_reboot", Display.getWidth()/2, Display.getHeight()*6/16, Color.gray, 0.25f);
 			Main.font.drawWordc("Basset", Display.getWidth()/2, Display.getHeight()*9/16, Color.white, 0.325f);
 			Main.font.drawWordc("@xbassetx", Display.getWidth()/2, Display.getHeight()*10/16, Color.gray, 0.25f);
+			Main.font.drawWordc("github.com/haveaniceday33", Display.getWidth()/2, Display.getHeight()*14/16, Color.gray, 0.25f);
 			Main.font.drawWordc("HaveANiceDay", Display.getWidth()/2, Display.getHeight()*13/16, Color.white, 0.325f);
-			Main.font.drawWordc("github.com/HaveANiceDay33", Display.getWidth()/2, Display.getHeight()*14/16, Color.gray, 0.25f);
+			Main.font.drawWordc("Made in 48 hours for Pizza Jam 2", Display.getWidth()/2, Display.getHeight()*15/16, Color.gray, 0.15f);
 		}else if(HvlMenu.getCurrent() == game){
 			//UPDATING THE GAME//
 			for(HvlLabeledButton b : buttonAliases.keySet()){
