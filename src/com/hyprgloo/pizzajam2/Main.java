@@ -28,7 +28,7 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO main menu fade-in					S		[OS]
 	//TODO first health grace period			S<<<	[BASS]
 	//TODO health/pickups tied to delta			M<<<	[BASS]
-	
+
 	//TODO Sam Suggestion: change ground gradient to some texture that does not repeat... and maybe make a line outline when using flares: green or white
 
 	public static void main(String[] args){
@@ -63,8 +63,8 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_BEEP = 0,
 	INDEX_BOOM = 1,
 	INDEX_CRUNCH = 2,
-	INDEX_DING = 3,
-	INDEX_SONG = 4;
+	INDEX_SONG = 3,
+	INDEX_PICKUP = 4;
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 
@@ -103,12 +103,12 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("Beep");
 		getSoundLoader().loadResource("Boom");
 		getSoundLoader().loadResource("Crunch");
-		getSoundLoader().loadResource("stageChange3");
 		getSoundLoader().loadResource("Unreached");
+		getSoundLoader().loadResource("PICKUP");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
-		
+
 		tutorialFont = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		tutorialFont.setCharSpacing(16f);
 		tutorialFont.setScale(0.25f);

@@ -82,7 +82,8 @@ public class Game {
 	timeStage4Start = 94,
 	timeStage4End = 119,
 	timeStage5Start = 122,
-	timeStage5End = 147;
+	timeStage5End = 147,
+	endlessBegin = 164;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -223,14 +224,12 @@ System.out.println(globalTimer % 1);
 		if(globalTimer > timeStage1Start) {
 			stage = 1;
 			if(!level1Changed) {
-				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
 				level1Changed = true;
 			}
 		}
 		if(globalTimer > timeStage2Start) {
 			stage = 2;
 			if(!level2Changed) {
-				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
 				level2Changed = true;
 			}
 
@@ -238,7 +237,6 @@ System.out.println(globalTimer % 1);
 		if(globalTimer > timeStage3Start) {
 			stage = 3;
 			if(!level3Changed) {
-				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
 				level3Changed = true;
 			}
 
@@ -246,7 +244,6 @@ System.out.println(globalTimer % 1);
 		if(globalTimer > timeStage4Start) {
 			stage = 4;
 			if(!level4Changed) {
-				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
 				level4Changed = true;
 			}
 
@@ -254,7 +251,6 @@ System.out.println(globalTimer % 1);
 		if(globalTimer > timeStage5Start) {
 			stage = 5;
 			if(!level5Changed) {
-				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
 				level5Changed = true;
 			}
 		}
@@ -267,12 +263,8 @@ System.out.println(globalTimer % 1);
 		else {
 			textX = 1580;
 		}
-		if(globalTimer > timeStage5End && globalTimer < 160) {
-			Main.font.drawWordc("You have reached the end! Congrats! \n To enter Endless Mode, do nothing! \n To return to the menu, press M at any point", Display.getWidth()/2, 300, Color.white, 0.3f);
-			
-		}
-		if(globalTimer > 150 && Keyboard.isKeyDown(Keyboard.KEY_M)) {
-			HvlMenu.setCurrent(MenuManager.main);
+		if(globalTimer > timeStage5End && globalTimer < endlessBegin) {
+			Main.font.drawWordc("Base stages complete. Continue onward to begin Endless mode -->", Display.getWidth()/2, Display.getHeight()/2, Color.white, 0.3f);
 		}
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
@@ -325,6 +317,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenFlare) {
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
 				player.hasFlare = true;
 				powerUpHasGivenFlare = false;
 			}
@@ -353,6 +346,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenBigScore) {
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
 				player.setScore(player.getScore() + 3000);
 				powerUpHasGivenBigScore = false;
 			}
@@ -381,6 +375,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(player.getHealth() < Player.MAX_HEALTH && powerUpHasGivenHealth) {
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
 				player.setHealth(player.getHealth() + 1);
 				powerUpHasGivenHealth = false;
 			}
@@ -409,6 +404,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenScore) {
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
 				player.setScore(player.getScore() + 1000);
 				powerUpHasGivenScore = false;
 			}
@@ -554,7 +550,7 @@ System.out.println(globalTimer % 1);
 				lineEnd.y = TERRAIN_BUFFER;
 			}
 		}
-		if(globalTimer > timeStage5End && globalTimer < 160) {
+		if(globalTimer > timeStage5End && globalTimer < endlessBegin) {
 			if(!tite) {
 				lineEnd.y = Display.getHeight()-TERRAIN_BUFFER;
 			}else {
