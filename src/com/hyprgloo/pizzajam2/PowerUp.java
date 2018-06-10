@@ -6,11 +6,13 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 
 import java.util.Random;
 
+import com.osreboot.ridhvl.HvlMath;
+
 public class PowerUp {
 
 	public static final float POWERUP_SIZE = 20;
 	public static final float POWERUP_START_LOCATION_X = 1440;
-	public static final int POWERUP_CHANCE = 500;
+	public static final int POWERUP_CHANCE = 5;
 	//base = 4000
 	public static final int POWERUP_SPEED = 200;
 
@@ -24,6 +26,7 @@ public class PowerUp {
 	public static boolean powerUpOnScreen;
 	static Random r = new Random();
 	public static float powerUpSpawnY = r.nextInt(((720/2) + 200) - ((720/2) - 200) + 1) + ((720/2) - 200);
+	public static float powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1500);
 	public static float powerUpTypeGen = r.nextInt(100 + 1);
 	public static float powerUpValHolder;
 
@@ -42,13 +45,16 @@ public class PowerUp {
 		//System.out.println(powerUpType);
 		
 		powerUpSpawnY = r.nextInt(((720/2) + 200) - ((720/2) - 200) + 1) + ((720/2) - 200);
+		powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1500);
 
 		
 		
 		
 		if(!powerUpOnScreen) {
-			random = r.nextInt(POWERUP_CHANCE + 1);
+			
+			powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1500);
 			powerUpTypeGen = r.nextInt(100 + 1);
+			
 			if(powerUpTypeGen > 0 && powerUpTypeGen < 66) {
 				powerUpType = 1;
 				//Health
@@ -56,11 +62,11 @@ public class PowerUp {
 				powerUpType = 2;
 				//Flare
 			}
-		}
-		
-		if(random == POWERUP_CHANCE) {
+			
 			powerUpOnScreen = true;
 		}
+		
+		
 		
 	}
 

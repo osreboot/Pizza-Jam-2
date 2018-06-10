@@ -283,7 +283,7 @@ System.out.println(globalTimer % 1);
 					player.getX() <= powerUp.getxPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2)) {
 				powerUpTextX = powerUp.getxPos();
 				powerUpTextY = powerUp.getyPos();
-				powerUp.setxPos(PowerUp.POWERUP_START_LOCATION_X);
+				powerUp.setxPos(PowerUp.powerUpSpawnX);
 				powerUp.setyPos(PowerUp.powerUpSpawnY);
 				powerUpPickup = true;
 				PowerUp.powerUpOnScreen = false;
@@ -507,7 +507,7 @@ System.out.println(globalTimer % 1);
 
 	public static void restart(){
 		player = new Player(Player.PLAYER_START_X, Player.PLAYER_START_Y);
-		powerUp = new PowerUp(PowerUp.POWERUP_START_LOCATION_X, PowerUp.powerUpSpawnY);
+		powerUp = new PowerUp(PowerUp.powerUpSpawnX, PowerUp.powerUpSpawnY);
 		tites.clear();
 		mites.clear();
 		flares.clear();
