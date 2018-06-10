@@ -50,9 +50,9 @@ public class PowerUp {
 		
 		
 		
-		if(!powerUpOnScreen) {
+		if(!powerUpOnScreen && Game.globalTimer >= 8) {
 			
-			powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1500);
+			powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1200);
 			powerUpTypeGen = r.nextInt(100 + 1);
 			
 			if(Game.globalTimer > Game.endlessBegin + 10) powerUpTypeGen = 100;
