@@ -23,6 +23,7 @@ public class Player {
 	public boolean hitMine;
 	private boolean invincibility = false;
 	private float tempTimer;
+	private float score;
 	public float flareTimer = 0f;
 	public boolean hasFlare = true;
 	
@@ -199,6 +200,14 @@ public class Player {
 	
 	public void setHealth(float healthArg) {
 		health = healthArg;
+	}
+	
+	public float getScore() {
+		return score;
+	}
+	
+	public void setScore(float scoreArg) {
+		score = scoreArg;
 	}
 
 }
