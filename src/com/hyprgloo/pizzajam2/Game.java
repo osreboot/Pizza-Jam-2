@@ -483,10 +483,9 @@ System.out.println(globalTimer % 1);
 		
 		
 		//Draw the score
-		
-		Main.font.drawWord("SCORE: " +(int)(Math.round(player.getScore())), Player.HEALTHBAR_X + 2, 19, Color.black, 0.17f);
+		Main.font.drawWord("SCORE: " + Float.toString(Math.round(player.getScore())), Player.HEALTHBAR_X, 30, Color.black, 0.17f);
 
-		Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X, 17, Color.white, 0.17f);
+		Main.font.drawWord("SCORE: " + Float.toString(Math.round(player.getScore())), Player.HEALTHBAR_X, 30, Color.white, 0.17f);
 		
 	}
 
