@@ -59,6 +59,8 @@ public class Game {
 	public static boolean spawnedWave = false;
 	static float yCrossTites = 0;
 	static float yCrossMites = 0;
+	
+	private static int stage;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -110,15 +112,26 @@ public class Game {
 			terrainTightnessGoal = HvlMath.randomFloatBetween(TERRAIN_MIN_TIGHTNESS, TERRAIN_MAX_TIGHTNESS);
 			terrainCenterGoal = HvlMath.randomFloatBetween(TERRAIN_BUFFER + terrainTightnessGoal, Display.getHeight() - TERRAIN_BUFFER - terrainTightnessGoal);
 		}
+
 		terrainTightness = HvlMath.stepTowards(terrainTightness, delta*60f, terrainTightnessGoal);
 		terrainCenter = HvlMath.stepTowards(terrainCenter, delta*100f, terrainCenterGoal);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter, 25, 25, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter - terrainTightness, 15, 15, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter + terrainTightness, 15, 15, Color.pink);
-
+		if(globalTimer == 1) {
+			Main.font.drawWord("Stage 1", 100, 100, Color.white);
+		}
+	
 		for(LineSegment miteWave : mites) {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
+			if(globalTimer > 25 && globalTimer < 27) {
+				miteWave.start.y = 670;
+				miteWave.end.y = 670;
+				if(globalTimer == 26) {
+					Main.font.drawWord("Stage 2", miteWave.start.x, 100, Color.white);
+				}
+			}
 			miteWave.draw(delta);
 			float origAngle;
 			float newAngle;
@@ -141,9 +154,14 @@ public class Game {
 				}
 			}
 		}
+		System.out.println(globalTimer);
 		for(LineSegment titeWave : tites) {
 			titeWave.start.x -= delta*SCROLLSPEED;
 			titeWave.end.x -= delta*SCROLLSPEED;
+			if(globalTimer > 25 && globalTimer < 27) {
+				titeWave.start.y = 50;
+				titeWave.end.y = 50;
+			}
 			titeWave.draw(delta);
 			float origAngle;
 			origAngle = HvlMath.fullRadians(titeWave.start, titeWave.end);
