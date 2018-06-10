@@ -82,8 +82,8 @@ public class Game {
 	timeStage4Start = 94,
 	timeStage4End = 119,
 	timeStage5Start = 122,
-	timeStage5End = 147,
-	endlessBegin = 164;
+	timeStage5End = 147;
+	public static int endlessBegin = 164;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -318,7 +318,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenFlare) {
-				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.3f, false);
 				player.hasFlare = true;
 				powerUpHasGivenFlare = false;
 			}
@@ -347,7 +347,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenBigScore) {
-				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.3f, false);
 				player.setScore(player.getScore() + 3000);
 				powerUpHasGivenBigScore = false;
 			}
@@ -376,7 +376,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(player.getHealth() < Player.MAX_HEALTH && powerUpHasGivenHealth) {
-				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.3f, false);
 				player.setHealth(player.getHealth() + 1);
 				powerUpHasGivenHealth = false;
 			}
@@ -405,7 +405,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenScore) {
-				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.35f, false);
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_PICKUP).playAsSoundEffect(1, 0.3f, false);
 				player.setScore(player.getScore() + 1000);
 				powerUpHasGivenScore = false;
 			}

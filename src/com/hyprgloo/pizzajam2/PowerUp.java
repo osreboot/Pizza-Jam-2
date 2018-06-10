@@ -49,6 +49,7 @@ public class PowerUp {
 		if(!powerUpOnScreen) {
 			random = r.nextInt(POWERUP_CHANCE + 1);
 			powerUpTypeGen = r.nextInt(100 + 1);
+			if(Game.globalTimer > Game.endlessBegin + 10) powerUpTypeGen = 100;
 			if(powerUpTypeGen > 0 && powerUpTypeGen < 66) {
 				powerUpType = 1;
 				//Health
