@@ -218,9 +218,11 @@ public class MenuManager {
 
 		}else if(HvlMenu.getCurrent() == settings){
 			//UPDATING THE SETTINGS MENU//
+			Main.font.drawWordc("SETTINGS", (Display.getWidth()/2) + 4, (Display.getHeight()/8) + 4, Color.black, 0.5f);
 			Main.font.drawWordc("SETTINGS", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
 		}else if(HvlMenu.getCurrent() == credits){
 			//UPDATING THE CREDITS MENU//
+			Main.font.drawWordc("CREDITS", (Display.getWidth()/2) + 4, (Display.getHeight()/8) + 4, Color.black, 0.5f);
 			Main.font.drawWordc("CREDITS", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
 			Main.font.drawWordc("os_reboot", Display.getWidth()/2, Display.getHeight()*4/16 + 12, Color.white, 0.325f);
 			Main.font.drawWordc("@os_reboot", Display.getWidth()/2, Display.getHeight()*5/16 + 24, Color.gray, 0.25f);
@@ -252,6 +254,7 @@ public class MenuManager {
 			//UPDATING THE PAUSE MENU//
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.8f));
+			Main.font.drawWordc("PAUSED", (Display.getWidth()/2) + 4, (Display.getHeight()/8) + 4, Color.black, 0.5f);
 			Main.font.drawWordc("PAUSED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
 		}else if(HvlMenu.getCurrent() == tutorial){
 			//UPDATING THE TUTORIAL MENU//
@@ -262,6 +265,7 @@ public class MenuManager {
 			//UPDATING THE PAUSE MENU//
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.8f));
+			Main.font.drawWordc("ELIMINATED", (Display.getWidth()/2) + 4, (Display.getHeight()/8) + 4, Color.black, 0.5f);
 			Main.font.drawWordc("ELIMINATED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
 			Main.font.drawWordc("Final Score:", 1280/2, 720/2, Color.white, 0.5f);
 			Main.font.drawWordc("" +(int)Game.player.getScore(), 1280/2, (720/2 + 100), Color.white, 0.5f);
