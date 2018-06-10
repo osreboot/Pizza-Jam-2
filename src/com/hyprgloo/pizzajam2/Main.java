@@ -15,11 +15,6 @@ public class Main extends HvlTemplateInteg2D{
 
 	//TODO Main menu background					L<
 	//TODO sound effects 	(flare)				M<		[BASS]
-	//TODO stage progression visuals 			S<<		[OS]
-	//TODO particle fields						M		[OS]
-	//TODO ground gradient						L		[OS]
-	//TODO ground outline						L		[OS]
-	//TODO despawning health packs				M		[BASS]
 
 	public static void main(String[] args){
 		new Main();

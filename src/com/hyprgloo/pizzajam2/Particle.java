@@ -22,6 +22,7 @@ public class Particle {
 		xs = xsArg;
 		ys = ysArg;
 		c = cArg;
+		direction = HvlMath.randomFloatBetween(0f, 360f);
 	}
 	
 	public void update(float delta){
