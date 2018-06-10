@@ -125,8 +125,12 @@ public class Game {
 		globalTimer += delta;
 		
 		//System.out.println(player.getScore());
+
 		textX -= SCROLLSPEED*delta;
+
 		player.setScore(player.getScore() + (player.getX() * delta));
+		
+		//Main.font.drawWordc(player.getScore(), powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
 
 
 		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta, 0f);
@@ -200,10 +204,18 @@ public class Game {
 		//hvlDrawQuadc(player.getX(), yCrossMites, 20,20, Color.blue);
 		//hvlDrawQuadc(player.getX(), yCrossTites, 20,20, Color.blue);
 		if(Mine.mineOnScreen) mine.drawLight(delta);
-
+System.out.println(globalTimer % 1);
 		player.update(delta);
+		if(!player.getInvincibleState()) {
 		player.draw(delta);
 
+
+		}else{
+			if(globalTimer % 0.1 > 0.05) {
+			player.draw(delta);
+			}
+		}
+		
 		PowerUp.update(delta);
 		mine.update(delta);
 		if(globalTimer > timeStage1Start) {

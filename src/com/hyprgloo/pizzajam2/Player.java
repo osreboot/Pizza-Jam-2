@@ -64,7 +64,7 @@ public class Player {
 		if(health == 0){
 			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH0), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
 		}else if(health == 1){
-			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH1), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
+			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH1), new Color(1f, 0.15f, 0.15f, UI_TRANSPARENCY));
 		}else if(health == 2){
 			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH2), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
 		}else if(health == 3){
@@ -98,7 +98,7 @@ public class Player {
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			damageTaken = true;
+		 
 		}
 
 		
@@ -113,6 +113,8 @@ public class Player {
 			//health -= 1;
 			hitMine = false;
 		}
+		
+		
 		if(tempTimer <= 0) {
 			invincibility = false;
 			damageTaken = false;
@@ -205,6 +207,11 @@ public class Player {
 	public float getScore() {
 		return score;
 	}
+	
+	public boolean getInvincibleState() {
+		return invincibility;
+	}
+	
 	
 	public void setScore(float scoreArg) {
 		score = scoreArg;
