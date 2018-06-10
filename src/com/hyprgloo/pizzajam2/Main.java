@@ -30,6 +30,8 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO ship lighting effects				S
 	//TODO main menu fade-in					S		[OS]
 	//TODO fuel pickups/bar						L		[BASS]
+	//TODO first health grace period			S<<<	[BASS]
+	//TODO health/pickups tied to delta			M<<<	[BASS]
 
 	public static void main(String[] args){
 		new Main();
