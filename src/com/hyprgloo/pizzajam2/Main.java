@@ -102,7 +102,7 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("Beep");
 		getSoundLoader().loadResource("Boom");
 		getSoundLoader().loadResource("Crunch");
-		getSoundLoader().loadResource("stageChange");
+		getSoundLoader().loadResource("stageChange3");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
