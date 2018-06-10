@@ -331,7 +331,7 @@ public class Game {
 				knockback.mult(1000f);
 				player.impartedMomentum = new HvlCoord2D(knockback);
 
-				//Main.getSound(Main.INDEX_BOOM).playAsSoundEffect(1, (float) 1, false);
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_BOOM).playAsSoundEffect(1, 0.8f, false);
 				wave = new Shockwave(mine.getxPos(), mine.getyPos());
 				spawnedWave = true;
 				mine.setxPos(Mine.MINE_START_LOC_X);

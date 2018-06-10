@@ -154,6 +154,7 @@ public class MenuManager {
 		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Quit").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
+				MenuBackground.progress = 0f;
 				HvlMenu.setCurrent(main);
 				Game.restart();
 			}
@@ -172,6 +173,7 @@ public class MenuManager {
 		death.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Quit").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
+				MenuBackground.progress = 0f;
 				HvlMenu.setCurrent(main);
 				Game.restart();
 			}
@@ -184,6 +186,11 @@ public class MenuManager {
 
 	public static void update(float delta){
 		whiteFade = HvlMath.stepTowards(whiteFade, delta, 0f);
+		if(HvlMenu.getCurrent() == main || 
+				HvlMenu.getCurrent() == settings || 
+				HvlMenu.getCurrent() == credits){
+			MenuBackground.update(delta);
+		}
 		if(HvlMenu.getCurrent() == intro){
 			//UPDATING THE INTRO MENU//
 			introProgress += delta/4f;
@@ -205,7 +212,7 @@ public class MenuManager {
 			Main.font.drawWordc("Basset", Display.getWidth()/2, Display.getHeight()*9/16, Color.white, 0.325f);
 			Main.font.drawWordc("@xbassetx", Display.getWidth()/2, Display.getHeight()*10/16, Color.gray, 0.25f);
 			Main.font.drawWordc("HaveANiceDay", Display.getWidth()/2, Display.getHeight()*13/16, Color.white, 0.325f);
-			Main.font.drawWordc("...", Display.getWidth()/2, Display.getHeight()*14/16, Color.gray, 0.25f);
+			Main.font.drawWordc("github.com/HaveANiceDay33", Display.getWidth()/2, Display.getHeight()*14/16, Color.gray, 0.25f);
 		}else if(HvlMenu.getCurrent() == game){
 			//UPDATING THE GAME//
 			for(HvlLabeledButton b : buttonAliases.keySet()){

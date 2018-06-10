@@ -27,15 +27,14 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO stage progression (to win state)		L<<
 	//TODO stage progression visuals 			S<<
 	//TODO particle fields						M		[OS]
-	//TODO mines								L		[SAM]
 	//TODO game name							S<<<
 	//TODO game icon							S<		[OS]
 	//TODO ship lighting effects				S
 	//TODO main menu fade-in					S		[OS]
-	//TODO flare spawns							M<<		[BASS]
 	//TODO fuel pickups/bar						L		[BASS]
 	//TODO bar visuals (hp dividers)			M		[OS]
 	//TODO AI?									M		[SAM]
+	//TODO smoke memory leak					M<<		[OS]
 
 	public static void main(String[] args){
 		new Main();
@@ -56,10 +55,13 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_FLARE_ICON2 = 11,
 	INDEX_MINE = 12,
 	INDEX_SHOCKWAVE = 13,
-	INDEX_MINE_LIGHT = 14;
+	INDEX_MINE_LIGHT = 14,
+	INDEX_MENU_PAN1 = 15;
 
 	public static final int
-	INDEX_BEEP = 0;
+	INDEX_BEEP = 0,
+	INDEX_BOOM = 1,
+	INDEX_CRUNCH = 2;
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 
@@ -87,8 +89,11 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("MineOff");
 		getTextureLoader().loadResource("Shockwave");
 		getTextureLoader().loadResource("MineLight");
+		getTextureLoader().loadResource("MenuPan1");
 
 		getSoundLoader().loadResource("Beep");
+		getSoundLoader().loadResource("Boom");
+		getSoundLoader().loadResource("Crunch");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
@@ -106,6 +111,7 @@ public class Main extends HvlTemplateInteg2D{
 			settings = HvlConfig.loadFromFile(PATH_SETTINGS);
 		}
 		MenuManager.initialize();
+		MenuBackground.initialize();
 	}
 
 	@Override
