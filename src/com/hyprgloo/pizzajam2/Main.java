@@ -43,7 +43,10 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_HEALTH2 = 19,
 	INDEX_HEALTH3 = 20,
 	INDEX_HEALTH4 = 21,
-	INDEX_TERRAIN = 22;
+	INDEX_TERRAIN = 22,
+	INDEX_MENU_PAN2 = 23,
+	INDEX_MENU_PAN3 = 24,
+	INDEX_MENU_PAN4 = 25;
 
 	public static final int
 	INDEX_BEEP = 0,
@@ -51,7 +54,8 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_CRUNCH = 2,
 	INDEX_SONG = 3,
 	INDEX_PICKUP = 4,
-	INDEX_MENU = 5;
+	INDEX_MENU = 5,
+	INDEX_FLARE_SOUND = 6;
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 
@@ -87,6 +91,9 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Health3");
 		getTextureLoader().loadResource("Health4");
 		getTextureLoader().loadResource("Terrain");
+		getTextureLoader().loadResource("MenuPan2");
+		getTextureLoader().loadResource("MenuPan3");
+		getTextureLoader().loadResource("MenuPan4");
 
 		getSoundLoader().loadResource("Beep");
 		getSoundLoader().loadResource("Boom");
@@ -94,6 +101,7 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("Unreached");
 		getSoundLoader().loadResource("PICKUP");
 		getSoundLoader().loadResource("MENU_ROLLY_2");
+		getSoundLoader().loadResource("Flares");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
