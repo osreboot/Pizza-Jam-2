@@ -79,9 +79,8 @@ public class Player {
 		tempTimer -= delta;
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && hasFlare) {
-			//Game.playerErrorTimer = 1f;
+			if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_FLARE_SOUND).playAsSoundEffect(1, 0.35f, false);
 			flareTimer = Flare.FLARE_LIFETIME/2f;
-			//damageTaken = true;
 			new Flare(xPos, yPos, 30f, -100f);
 			new Flare(xPos, yPos, 30f, 100f);
 			new Flare(xPos, yPos, -50f, -100f);

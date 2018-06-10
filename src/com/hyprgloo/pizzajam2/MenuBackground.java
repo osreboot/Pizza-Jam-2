@@ -20,9 +20,10 @@ public class MenuBackground {
 	public static float progress = 0f;
 	
 	public static void initialize(){
-		new MenuBackground(Main.INDEX_MENU_PAN1, new HvlCoord2D(1280/2, 720/2 + 500), new HvlCoord2D(2048 - (1280/2), 2048 - (720/2) - 500));
-		//new MenuBackground(Main.INDEX_MENU_PAN1, new HvlCoord2D(1280/2, 720/2), new HvlCoord2D(2048 - (1280/2), 2048 - (720/2)));
-		//new MenuBackground(Main.INDEX_MENU_PAN1, new HvlCoord2D(1280/2, 720/2 + 500), new HvlCoord2D(2048 - (1280/2), 2048 - (720/2) - 500));
+		new MenuBackground(Main.INDEX_MENU_PAN1, new HvlCoord2D(1280/2, 720/2 + 500), new HvlCoord2D(2048 - (1280/2), 2048 - (720/2) - 500), 2048);
+		new MenuBackground(Main.INDEX_MENU_PAN2, new HvlCoord2D(1400 - (1280/2), (1280f*1400/2048) - (720/2)), new HvlCoord2D(1280/2, (1280f*1400/2048) - (720/2)), 1400);
+		new MenuBackground(Main.INDEX_MENU_PAN4, new HvlCoord2D(1280/2, 2048 - (720/2)), new HvlCoord2D(2048 - (1280/2), 720/2), 2048);
+		new MenuBackground(Main.INDEX_MENU_PAN3, new HvlCoord2D((1280/2), 720/2), new HvlCoord2D(1500 - (1280/2), (720/2)), 1500);
 		current = backgrounds.get(0);
 	}
 	
@@ -47,16 +48,18 @@ public class MenuBackground {
 	
 	private int texture;
 	private HvlCoord2D start, end;
+	private float size;
 	
-	public MenuBackground(int textureArg, HvlCoord2D startArg, HvlCoord2D endArg){
+	public MenuBackground(int textureArg, HvlCoord2D startArg, HvlCoord2D endArg, float sizeArg){
 		texture = textureArg;
 		start = startArg;
 		end = endArg;
+		size = sizeArg;
 		backgrounds.add(this);
 	}
 	
 	public void drawBackground(float progress){
-		hvlDrawQuada(-HvlMath.lerp(start, end, progress).x, -HvlMath.lerp(start, end, progress).y, 2048, 2048, Main.getTexture(texture));
+		hvlDrawQuada(-HvlMath.lerp(start, end, progress).x, -HvlMath.lerp(start, end, progress).y, size, size, Main.getTexture(texture));
 	}
 	
 }
