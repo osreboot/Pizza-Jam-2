@@ -308,7 +308,7 @@ public class Game {
 				powerUp.setxPos(PowerUp.powerUpSpawnX);
 				powerUp.setyPos(PowerUp.powerUpSpawnY);
 				powerUpPickup = false;
-				powerUpTempTimer = globalTimer;
+				powerUpTempTimer = Float.MAX_VALUE;
 
 			}
 
@@ -316,6 +316,7 @@ public class Game {
 					player.getY() <= powerUp.getyPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2) &&
 					player.getX() >= powerUp.getxPos() - (PowerUp.POWERUP_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getX() <= powerUp.getxPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2)) {
+				powerUpTempTimer = Float.MAX_VALUE;
 				powerUpTextX = powerUp.getxPos();
 				powerUpTextY = powerUp.getyPos();
 				powerUp.setxPos(PowerUp.powerUpSpawnX);
