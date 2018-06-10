@@ -264,7 +264,8 @@ System.out.println(globalTimer % 1);
 			textX = 1580;
 		}
 		if(globalTimer > timeStage5End && globalTimer < endlessBegin) {
-			Main.font.drawWordc("Base stages complete. Continue onward to begin Endless mode -->", Display.getWidth()/2, Display.getHeight()/2, Color.white, 0.3f);
+			Main.font.drawWordc("Base stages complete.", Display.getWidth()/2, Display.getHeight()*3/8, Color.white, 0.3f);
+			Main.font.drawWordc("Continue onward to begin Endless mode -->", Display.getWidth()/2, Display.getHeight()*4/8, Color.white, 0.3f);
 		}
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);

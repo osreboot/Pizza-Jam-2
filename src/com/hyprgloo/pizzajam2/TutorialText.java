@@ -21,8 +21,9 @@ public class TutorialText {
 	public static void initialize(){
 		if(!Main.settings.tut1Complete) 
 			new TutorialText(
-					new HvlCoord2D[]{new HvlCoord2D(Display.getWidth()/2, Display.getHeight()/2)}, 
-					new String[]{"WASD to move"}, 
+					new HvlCoord2D[]{new HvlCoord2D(Display.getWidth()/2, Display.getHeight()/2),
+							new HvlCoord2D(Display.getWidth()/2, Display.getHeight()/2)}, 
+					new String[]{"WASD to move", "Welcome to Unreached!"}, 
 					new HvlAction0r<Boolean>(){
 				@Override
 				public Boolean run() {

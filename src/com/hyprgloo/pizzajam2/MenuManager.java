@@ -213,7 +213,7 @@ public class MenuManager {
 			//Main.font.drawWordc("INTRO", Display.getWidth()/2, Display.getHeight()/2, new Color(1f, 1f, 1f, alpha));
 		}else if(HvlMenu.getCurrent() == main){
 			//UPDATING THE MAIN MENU//
-			Main.font.drawWordc("MAIN MENU", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
+			Main.font.drawWordc("UNREACHED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
 		}else if(HvlMenu.getCurrent() == settings){
 			//UPDATING THE SETTINGS MENU//
 			Main.font.drawWordc("SETTINGS", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
@@ -280,6 +280,7 @@ public class MenuManager {
 
 	private static class LabeledButtonAlias{
 		public float hoverAlpha = 0f, hoverAlpha2 = 0f, widthAdd = 0f;
+		boolean beeped = false;
 
 		public LabeledButtonAlias(){}
 
@@ -287,6 +288,11 @@ public class MenuManager {
 			hoverAlpha = HvlMath.stepTowards(hoverAlpha, delta*4f, hover ? 1f : 0f);
 			hoverAlpha2 = HvlMath.stepTowards(hoverAlpha2, delta*8f, hover ? 1f : 0f);
 			widthAdd = HvlMath.stepTowards(widthAdd, delta*512f, hover ? 64f : 0f);
+			if(hover && !beeped){
+				if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_MENU).playAsSoundEffect(1, 0.1f, false);
+				beeped = true;
+			}
+			if(!hover) beeped = false;
 		}
 
 		public void reset(){

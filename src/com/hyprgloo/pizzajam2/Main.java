@@ -64,7 +64,8 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_BOOM = 1,
 	INDEX_CRUNCH = 2,
 	INDEX_SONG = 3,
-	INDEX_PICKUP = 4;
+	INDEX_PICKUP = 4,
+	INDEX_MENU = 5;
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 
@@ -105,6 +106,7 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("Crunch");
 		getSoundLoader().loadResource("Unreached");
 		getSoundLoader().loadResource("PICKUP");
+		getSoundLoader().loadResource("MENU_ROLLY_2");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
