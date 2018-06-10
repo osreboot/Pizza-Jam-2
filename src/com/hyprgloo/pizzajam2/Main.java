@@ -14,22 +14,12 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 public class Main extends HvlTemplateInteg2D{
 
 	//TODO Main menu background					L<
-	//TODO functional settings page				S		[OS]
-	//TODO music								M<		[OS,BASS]
-	//TODO sound effects						M<
-	//TODO score, calculations					S		[BASS]
-	//TODO score, menus							S		[OS]
-	//TODO tutorial text						M<<		[OS]
-	//TODO player win state						M<<
-	//TODO stage progression visuals 			S<<
+	//TODO sound effects 	(flare)				M<		[BASS]
+	//TODO stage progression visuals 			S<<		[OS]
 	//TODO particle fields						M		[OS]
-	//TODO game name							S<<<
-	//TODO game icon							S<		[OS]
-	//TODO main menu fade-in					S		[OS]
-	//TODO first health grace period			S<<<	[BASS]
-	//TODO health/pickups tied to delta			M<<<	[BASS]
-
-	//TODO Sam Suggestion: change ground gradient to some texture that does not repeat... and maybe make a line outline when using flares: green or white
+	//TODO ground gradient						L		[OS]
+	//TODO ground outline						L		[OS]
+	//TODO despawning health packs				M		[BASS]
 
 	public static void main(String[] args){
 		new Main();

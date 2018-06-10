@@ -21,6 +21,8 @@ public class MenuBackground {
 	
 	public static void initialize(){
 		new MenuBackground(Main.INDEX_MENU_PAN1, new HvlCoord2D(1280/2, 720/2 + 500), new HvlCoord2D(2048 - (1280/2), 2048 - (720/2) - 500));
+		//new MenuBackground(Main.INDEX_MENU_PAN1, new HvlCoord2D(1280/2, 720/2), new HvlCoord2D(2048 - (1280/2), 2048 - (720/2)));
+		//new MenuBackground(Main.INDEX_MENU_PAN1, new HvlCoord2D(1280/2, 720/2 + 500), new HvlCoord2D(2048 - (1280/2), 2048 - (720/2) - 500));
 		current = backgrounds.get(0);
 	}
 	
