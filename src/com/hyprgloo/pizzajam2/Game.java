@@ -57,6 +57,7 @@ public class Game {
 	public static boolean spawnedWave = false;
 	static float yCrossTites = 0;
 	static float yCrossMites = 0;
+
 	public static void initialize(){
 		globalTimer = 0f;
 
@@ -117,12 +118,22 @@ public class Game {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
 			miteWave.draw(delta);
+			float origAngle;
+			float newAngle;
+			origAngle = HvlMath.fullRadians(miteWave.start, miteWave.end);
+			newAngle = (float) ((origAngle*180)/3.14159653238462643383279502884197)-180;
+			
 			if(player.getX() >= miteWave.start.x && player.getX() <= miteWave.end.x) {
 				yCrossMites = HvlMath.map(player.getX(), miteWave.start.x, miteWave.end.x, miteWave.start.y, miteWave.end.y);
+			//	System.out.println(f * (float)Math.sin(origAngle));
 				if(player.getY() > yCrossMites){
 					playerErrorTimer = 1f;
 					player.damageTaken = true;
-					player.impartedMomentum.y = -200f;
+					
+					
+					player.impartedMomentum.y = 400f * (float)Math.cos(origAngle);
+					player.impartedMomentum.x = -700f * (float)Math.sin(origAngle);
+					
 					player.setY(yCrossMites);
 					player.setySpeed(Math.min(player.getySpeed(), 0));
 				}
@@ -132,12 +143,15 @@ public class Game {
 			titeWave.start.x -= delta*SCROLLSPEED;
 			titeWave.end.x -= delta*SCROLLSPEED;
 			titeWave.draw(delta);
+			float origAngle;
+			origAngle = HvlMath.fullRadians(titeWave.start, titeWave.end);
 			if(player.getX() >= titeWave.start.x && player.getX() <= titeWave.end.x) {
 				yCrossTites = HvlMath.map(player.getX(), titeWave.start.x, titeWave.end.x, titeWave.start.y, titeWave.end.y);
 				if(player.getY() < yCrossTites){
 					playerErrorTimer = 1f;
 					player.damageTaken = true;
-					player.impartedMomentum.y = 200f;
+					player.impartedMomentum.y = -400f * (float)Math.cos(origAngle);
+					player.impartedMomentum.x = 700f * (float)Math.sin(origAngle);
 					player.setY(yCrossTites);
 					player.setySpeed(Math.max(player.getySpeed(), 0));
 				}
@@ -383,6 +397,7 @@ public class Game {
 		tites.clear();
 		mites.clear();
 		flares.clear();
+		Shockwave.displacementY = 0;
 		Flare.Smoke.smokeParticles.clear();
 	}
 
