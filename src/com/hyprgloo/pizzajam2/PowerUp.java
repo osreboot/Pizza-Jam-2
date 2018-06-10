@@ -52,7 +52,7 @@ public class PowerUp {
 			if(powerUpTypeGen > 0 && powerUpTypeGen < 66) {
 				powerUpType = 1;
 				//Health
-			}else if(powerUpTypeGen >= 66) {
+			}else if(powerUpTypeGen >= 66 && Game.stage >= 2) {
 				powerUpType = 2;
 				//Flare
 			}

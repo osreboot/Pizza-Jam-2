@@ -25,7 +25,7 @@ public class Player {
 	private float tempTimer;
 	private float score = 0;
 	public float flareTimer = 0f;
-	public boolean hasFlare = true;
+	public boolean hasFlare = false;
 	
 	public HvlCoord2D impartedMomentum = new HvlCoord2D();
 

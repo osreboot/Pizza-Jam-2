@@ -4,11 +4,13 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import java.util.ArrayList;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
+import com.osreboot.ridhvl.menu.HvlMenu;
 
 public class Game {
 
@@ -23,7 +25,7 @@ public class Game {
 	public static Mine mine = new Mine(Mine.MINE_START_LOC_X, Mine.mineSpawnY);
 	public static Shockwave wave;
 	public static final float SCROLLSPEED = 400;
-	public static final float 
+	public static float 
 	TERRAIN_CENTER_TIMER = 3f,
 	TERRAIN_BUFFER = 50f,
 	TERRAIN_HEIGHT = 256f, 
@@ -60,7 +62,7 @@ public class Game {
 	static float yCrossTites = 0;
 	static float yCrossMites = 0;
 	
-	private static int stage = 1;
+	static int stage = 1;
 	private static int textX = 100;
 	
 	private static boolean level1Changed = false;
@@ -265,7 +267,13 @@ System.out.println(globalTimer % 1);
 		else {
 			textX = 1580;
 		}
-
+		if(globalTimer > timeStage5End && globalTimer < 160) {
+			Main.font.drawWordc("You have reached the end! Congrats! \n To enter Endless Mode, do nothing! \n To return to the menu, press M at any point", Display.getWidth()/2, 300, Color.white);
+			
+		}
+		if(globalTimer > 160 && Keyboard.isKeyDown(Keyboard.KEY_M)) {
+			HvlMenu.setCurrent(MenuManager.main);
+		}
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
 
@@ -418,7 +426,7 @@ System.out.println(globalTimer % 1);
 			}
 		}
 
-		if(Mine.mineOnScreen && stage != 1) {
+		if(Mine.mineOnScreen && stage >= 3) {
 			mine.beepVolume = HvlMath.map(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()), 0, 400, 0.25f, 0f);
 			mine.beepVolume = HvlMath.limit(mine.beepVolume, 0f, 0.25f);
 			mine.beepTimer += delta * (Display.getWidth() - HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos())) * 0.005f;
@@ -480,6 +488,13 @@ System.out.println(globalTimer % 1);
 			if(mites.contains(s)) mites.remove(s);
 			if(tites.contains(s)) tites.remove(s);
 		}
+		
+		if(stage == 4) {
+			TERRAIN_MAX_TIGHTNESS = 60f;
+		}
+		if(stage == 5) {
+			TERRAIN_MAX_TIGHTNESS = 45f;
+		}
 	}
 
 	public static void restart(){
@@ -490,6 +505,12 @@ System.out.println(globalTimer % 1);
 		flares.clear();
 		Shockwave.displacementY = 0;
 		textX = 100;
+		level1Changed = false;
+		level2Changed = false;
+		level3Changed = false;
+		level4Changed = false;
+		level5Changed = false;
+		TERRAIN_MAX_TIGHTNESS = 150f;
 		Flare.Smoke.smokeParticles.clear();
 	}	
 
@@ -516,6 +537,13 @@ System.out.println(globalTimer % 1);
 				|| globalTimer > timeStage3End && globalTimer < timeStage4Start
 				|| globalTimer > timeStage4End && globalTimer < timeStage5Start) {
 			
+			if(!tite) {
+				lineEnd.y = Display.getHeight()-TERRAIN_BUFFER;
+			}else {
+				lineEnd.y = TERRAIN_BUFFER;
+			}
+		}
+		if(globalTimer > timeStage5End && globalTimer < 160) {
 			if(!tite) {
 				lineEnd.y = Display.getHeight()-TERRAIN_BUFFER;
 			}else {
