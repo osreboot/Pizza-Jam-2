@@ -66,7 +66,7 @@ public class Main extends HvlTemplateInteg2D{
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 
-	public static HvlFontPainter2D font;
+	public static HvlFontPainter2D font, tutorialFont;
 	public static Settings settings;
 
 	public Main(){
@@ -104,6 +104,10 @@ public class Main extends HvlTemplateInteg2D{
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
+		
+		tutorialFont = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
+		tutorialFont.setCharSpacing(16f);
+		tutorialFont.setScale(0.25f);
 
 		try{
 			MenuManager.pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
@@ -118,6 +122,7 @@ public class Main extends HvlTemplateInteg2D{
 			settings = HvlConfig.loadFromFile(PATH_SETTINGS);
 		}
 		MenuManager.initialize();
+		TutorialText.initialize();
 		MenuBackground.initialize();
 	}
 
