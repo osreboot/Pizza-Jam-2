@@ -368,28 +368,33 @@ public class Game {
 		}
 
 
-
-		//Shockwave.displacementY = HvlMath.stepTowards(Shockwave.displacementY, delta*10, 0);
-		//System.out.println(Shockwave.displacementY);
+		ArrayList<Flare.Smoke> smokeCleanup = new ArrayList<>();
 		for(Flare.Smoke s : Flare.Smoke.smokeParticles){
 			s.update(delta);
+			if(s.life == 0) smokeCleanup.add(s);
 		}
+		for(Flare.Smoke s : smokeCleanup) Flare.Smoke.smokeParticles.remove(s);
 
 		for(Flare f : flares){
 			f.update(delta);
 		}
 
+		ArrayList<LineSegment> lsCleanup = new ArrayList<>();
 		for(LineSegment miteWave : mites) {
-
 			miteWave.start.y += Shockwave.displacementY;
 			miteWave.end.y += Shockwave.displacementY;
 			miteWave.drawError(delta);
+			if(miteWave.isOffscreen()) lsCleanup.add(miteWave);
 		}
 		for(LineSegment titeWave : tites) {
-
 			titeWave.start.y += Shockwave.displacementY;
 			titeWave.end.y += Shockwave.displacementY;
 			titeWave.drawError(delta);
+			if(titeWave.isOffscreen()) lsCleanup.add(titeWave);
+		}
+		for(LineSegment s : lsCleanup){
+			if(mites.contains(s)) mites.remove(s);
+			if(tites.contains(s)) tites.remove(s);
 		}
 	}
 

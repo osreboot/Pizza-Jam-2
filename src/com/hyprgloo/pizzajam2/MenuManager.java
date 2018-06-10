@@ -113,12 +113,12 @@ public class MenuManager {
 			}
 		}).build());
 		settings.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
-		settings.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Tutorials: " + (Main.settings.tutorialsEnabled ? "on" : "off")).setClickedCommand(new HvlAction1<HvlButton>(){
+		settings.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Tutorial: " + (Main.settings.tutorialsEnabled ? "on" : "off")).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				HvlLabeledButton b = (HvlLabeledButton)aArg;
 				Main.settings.tutorialsEnabled = !Main.settings.tutorialsEnabled;
-				b.setText("Tutorials: " + (Main.settings.tutorialsEnabled ? "on" : "off"));
+				b.setText("Tutorial: " + (Main.settings.tutorialsEnabled ? "on" : "off"));
 			}
 		}).build());
 		settings.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));

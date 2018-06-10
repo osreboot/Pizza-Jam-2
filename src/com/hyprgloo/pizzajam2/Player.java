@@ -32,12 +32,13 @@ public class Player {
 	public static final float PLAYER_SIZE = 50;
 	public static final float PLAYER_START_X = 256;
 	public static final float PLAYER_START_Y = 720/2;
-	public static final float HEALTHBAR_X = 100;
-	public static final float HEALTHBAR_Y = 694;
+	public static final float HEALTHBAR_X = 64;
+	public static final float HEALTHBAR_Y = 720 - 36;
 	public static final float MAX_SPEED = 300;
 	public static final float ACCELERATION = 8500f;
-	public static final float FLARE_INV_X = HEALTHBAR_X + 170;
+	public static final float FLARE_INV_X = HEALTHBAR_X + 128 + 8;
 	public static final float FLARE_INV_Y = HEALTHBAR_Y;
+	public static final float UI_TRANSPARENCY = 0.8f;
 
 	public Player(float xArg, float yArg){
 
@@ -59,7 +60,17 @@ public class Player {
 		hvlRotate(xPos, yPos, rotateGoal);
 		hvlDrawQuadc(xPos, yPos, PLAYER_SIZE*1.5f, PLAYER_SIZE*1.5f, Main.getTexture(Main.INDEX_SHIP), new Color(value, value, value));
 		hvlResetRotation();
-		hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, health*40, 20, Color.white);
+		if(health == 0){
+			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH0), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
+		}else if(health == 1){
+			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH1), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
+		}else if(health == 2){
+			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH2), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
+		}else if(health == 3){
+			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH3), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
+		}else if(health == 4){
+			hvlDrawQuad(HEALTHBAR_X, HEALTHBAR_Y, 128, 32, Main.getTexture(Main.INDEX_HEALTH4), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
+		}
 	}
 
 	public void update(float delta) {
@@ -79,8 +90,10 @@ public class Player {
 		flareTimer = HvlMath.stepTowards(flareTimer, delta, 0);
 		
 		if(hasFlare){
-			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON1), Game.globalTimer % 1f > 0.5f ? new Color(1f, 0.5f, 0f) : Color.white);
-			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 40, 20, Main.getTexture(Main.INDEX_FLARE_ICON2), Game.globalTimer % 1f > 0.5f ? Color.white : new Color(1f, 0.5f, 0f));
+			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 64, 32, Main.getTexture(Main.INDEX_FLARE_ICON1), Game.globalTimer % 1f > 0.5f ? new Color(1f, 0.5f, 0f, UI_TRANSPARENCY) : new Color(1f, 1f, 1f, UI_TRANSPARENCY));
+			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 64, 32, Main.getTexture(Main.INDEX_FLARE_ICON2), Game.globalTimer % 1f > 0.5f ? new Color(1f, 1f, 1f, UI_TRANSPARENCY) : new Color(1f, 0.5f, 0f, UI_TRANSPARENCY));
+		}else{
+			hvlDrawQuad(FLARE_INV_X, FLARE_INV_Y, 64, 32, Main.getTexture(Main.INDEX_FLARE_ICON0), new Color(1f, 1f, 1f, UI_TRANSPARENCY));
 		}
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
