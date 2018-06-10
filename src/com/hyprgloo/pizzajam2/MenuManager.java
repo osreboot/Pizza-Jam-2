@@ -154,7 +154,7 @@ public class MenuManager {
 		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Quit").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
-				MenuBackground.progress = 0f;
+				MenuBackground.refresh();
 				HvlMenu.setCurrent(main);
 				Game.restart();
 			}
@@ -173,7 +173,7 @@ public class MenuManager {
 		death.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Quit").setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
-				MenuBackground.progress = 0f;
+				MenuBackground.refresh();
 				HvlMenu.setCurrent(main);
 				Game.restart();
 			}

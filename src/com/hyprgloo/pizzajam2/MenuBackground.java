@@ -37,6 +37,12 @@ public class MenuBackground {
 		hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.5f));
 	}
 	
+	public static void refresh(){
+		progress = 0;
+		currentIndex = HvlMath.randomInt(backgrounds.size());
+		current = backgrounds.get(currentIndex);
+	}
+	
 	private int texture;
 	private HvlCoord2D start, end;
 	
