@@ -30,6 +30,8 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO ship lighting effects				S
 	//TODO main menu fade-in					S		[OS]
 	//TODO fuel pickups/bar						L		[BASS]
+	//TODO first health grace period			S<<<	[BASS]
+	//TODO health/pickups tied to delta			M<<<	[BASS]
 	
 	//TODO Sam Suggestion: change ground gradient to some texture that does not repeat... and maybe make a line outline when using flares: green or white
 
