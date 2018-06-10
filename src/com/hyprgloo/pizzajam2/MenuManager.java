@@ -36,9 +36,9 @@ public class MenuManager {
 
 	private static float whiteFade = 0f;
 	
-	public static HvlMenu intro, main, game, pause, settings, credits, death, win;
+	public static HvlMenu intro, main, game, pause, settings, credits, death, win, tutorial;
 	public static HvlRenderFrame pauseFrame;
-	public static HvlInput inputPause;
+	public static HvlInput inputPause, inputTutorialAdvance;
 
 	private static HashMap<HvlLabeledButton, LabeledButtonAlias> buttonAliases = new HashMap<>();
 
@@ -54,6 +54,18 @@ public class MenuManager {
 			public void run(HvlInput aArg){
 				if(HvlMenu.getCurrent() == game) HvlMenu.setCurrent(pause);
 				else if(HvlMenu.getCurrent() == pause) HvlMenu.setCurrent(game);
+			}
+		});
+		inputTutorialAdvance = new HvlInput(new HvlInput.InputFilter(){
+			@Override
+			public float getCurrentOutput() {
+				return Mouse.isButtonDown(0) ? 1f : 0f;
+			}
+		});
+		inputTutorialAdvance.setPressedAction(new HvlAction1<HvlInput>(){
+			@Override
+			public void run(HvlInput aArg){
+				if(TutorialText.textIndex > 0) TutorialText.textIndex--;
 			}
 		});
 
@@ -93,6 +105,7 @@ public class MenuManager {
 		pause = new HvlMenu();
 		death = new HvlMenu();
 		win = new HvlMenu();
+		tutorial = new HvlMenu();
 
 		settings.add(new HvlArrangerBox.Builder().setStyle(HvlArrangerBox.ArrangementStyle.VERTICAL).setxAlign(0f).build());
 		settings.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Sound: " + (Main.settings.soundEnabled ? "on" : "off")).setClickedCommand(new HvlAction1<HvlButton>(){
@@ -228,12 +241,20 @@ public class MenuManager {
 			if(!Game.getLivingState()){
 				whiteFade = 1f;
 				HvlMenu.setCurrent(death);
+			}else{
+				TutorialText.update(delta);
+				if(TutorialText.current != null) HvlMenu.setCurrent(tutorial);
 			}
 		}else if(HvlMenu.getCurrent() == pause){
 			//UPDATING THE PAUSE MENU//
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.8f));
 			Main.font.drawWordc("PAUSED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
+		}else if(HvlMenu.getCurrent() == tutorial){
+			//UPDATING THE TUTORIAL MENU//
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.5f));
+			TutorialText.update(delta);
 		}else if(HvlMenu.getCurrent() == death){
 			//UPDATING THE PAUSE MENU//
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);

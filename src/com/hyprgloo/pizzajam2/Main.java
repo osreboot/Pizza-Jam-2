@@ -30,6 +30,8 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO ship lighting effects				S
 	//TODO main menu fade-in					S		[OS]
 	//TODO fuel pickups/bar						L		[BASS]
+	
+	//TODO Sam Suggestion: change ground gradient to some texture that does not repeat... and maybe make a line outline when using flares: green or white
 
 	public static void main(String[] args){
 		new Main();
@@ -67,7 +69,7 @@ public class Main extends HvlTemplateInteg2D{
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 
-	public static HvlFontPainter2D font;
+	public static HvlFontPainter2D font, tutorialFont;
 	public static Settings settings;
 
 	public Main(){
@@ -106,6 +108,10 @@ public class Main extends HvlTemplateInteg2D{
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
+		
+		tutorialFont = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
+		tutorialFont.setCharSpacing(16f);
+		tutorialFont.setScale(0.25f);
 
 		try{
 			MenuManager.pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
@@ -120,6 +126,7 @@ public class Main extends HvlTemplateInteg2D{
 			settings = HvlConfig.loadFromFile(PATH_SETTINGS);
 		}
 		MenuManager.initialize();
+		TutorialText.initialize();
 		MenuBackground.initialize();
 	}
 

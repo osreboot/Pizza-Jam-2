@@ -268,10 +268,10 @@ System.out.println(globalTimer % 1);
 			textX = 1580;
 		}
 		if(globalTimer > timeStage5End && globalTimer < 160) {
-			Main.font.drawWordc("You have reached the end! Congrats! \n To enter Endless Mode, do nothing! \n To return to the menu, press M at any point", Display.getWidth()/2, 300, Color.white);
+			Main.font.drawWordc("You have reached the end! Congrats! \n To enter Endless Mode, do nothing! \n To return to the menu, press M at any point", Display.getWidth()/2, 300, Color.white, 0.3f);
 			
 		}
-		if(globalTimer > 160 && Keyboard.isKeyDown(Keyboard.KEY_M)) {
+		if(globalTimer > 150 && Keyboard.isKeyDown(Keyboard.KEY_M)) {
 			HvlMenu.setCurrent(MenuManager.main);
 		}
 		if(PowerUp.powerUpOnScreen) {
