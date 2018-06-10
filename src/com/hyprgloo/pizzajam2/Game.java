@@ -499,9 +499,11 @@ System.out.println(globalTimer % 1);
 
 		
 		//Draw the score
+		if(player.getHealth() > 0) {
 		Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X+2, 15+2, Color.black, 0.17f);
 
 		Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X, 15, Color.white, 0.17f);
+		}
 		
 
 	}

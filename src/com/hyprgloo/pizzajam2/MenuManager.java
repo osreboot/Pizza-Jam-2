@@ -260,6 +260,8 @@ public class MenuManager {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.8f));
 			Main.font.drawWordc("ELIMINATED", Display.getWidth()/2, Display.getHeight()/8, Color.white, 0.5f);
+			Main.font.drawWordc("Final Score:", 1280/2, 720/2, Color.white, 0.5f);
+			Main.font.drawWordc("" +(int)Game.player.getScore(), 1280/2, (720/2 + 100), Color.white, 0.5f);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(1f, 1f, 1f, whiteFade));
 		}
 
