@@ -7,9 +7,12 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord2D;
+import com.osreboot.ridhvl.HvlMatrix2D;
 
 public class LineSegment {
-
+	
+	public static HvlMatrix2D TERRAIN_MATRIX;
+	
 	public static final HvlCoord2D[] UVS_UNIT = new HvlCoord2D[]{
 			new HvlCoord2D(0, 0),
 			new HvlCoord2D(1, 0),
@@ -28,7 +31,8 @@ public class LineSegment {
 	}
 
 	public void draw(float delta){
-		hvlDrawPolygon(0, 0, getSegmentPolygon(this), UVS_UNIT, Main.getTexture(Main.INDEX_TERRAIN_GRADIENT));
+		hvlDrawPolygon(0, 0, getSegmentPolygon(this, 1f, false), getSegmentPolygon(this, 1/512f, true), Main.getTexture(Main.INDEX_TERRAIN));
+		hvlDrawPolygon(0, 0, getSegmentPolygon(this, 1f, false), UVS_UNIT, Main.getTexture(Main.INDEX_TERRAIN_GRADIENT), new Color(1f, 1f, 1f, 0.35f));
 	}
 	
 	public void drawError(float delta){
@@ -39,7 +43,7 @@ public class LineSegment {
 		return this.end.x < 0;
 	}
 
-	private static HvlCoord2D[] getSegmentPolygon(LineSegment sArg){
+	private static HvlCoord2D[] getSegmentPolygon(LineSegment sArg, float scale, boolean scroll){
 		HvlCoord2D[] output;
 		if(sArg.tite){
 			output = new HvlCoord2D[]{
@@ -55,6 +59,10 @@ public class LineSegment {
 					new HvlCoord2D(sArg.end.x, sArg.end.y),
 					new HvlCoord2D(sArg.start.x, sArg.start.y),
 			};
+		}
+		if(scroll){
+			for(int i = 0; i < output.length; i++)
+				output[i].add(Game.SCROLLSPEED*Game.globalTimer, 0).mult(scale);
 		}
 		return output;
 	}
