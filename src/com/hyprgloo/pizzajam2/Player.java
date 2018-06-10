@@ -90,9 +90,10 @@ public class Player {
 		
 		
 		if(damageTaken && !invincibility) {
+			if(Main.settings.soundEnabled) Main.getSound(Main.INDEX_CRUNCH).playAsSoundEffect(1, 1f, false);
 			health = health - 1;
 			invincibility = true;
-			tempTimer = 2;
+			tempTimer = 1;
 		}
 		if(hitMine) {
 			//health -= 1;

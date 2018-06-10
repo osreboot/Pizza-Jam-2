@@ -30,7 +30,9 @@ public class Game {
 	TERRAIN_MIN_WIDTH = 50f,//1f,
 	TERRAIN_MAX_WIDTH = 250f,//5f,
 	TERRAIN_MIN_TIGHTNESS = 35f,
-	TERRAIN_MAX_TIGHTNESS = 150f;
+	TERRAIN_MAX_TIGHTNESS = 150f,
+	TERRAIN_KNOCKBACK_X = 800,
+	TERRAIN_KNOCKBACK_Y = 500;
 
 	public static float terrainCenter = Display.getHeight()/2;
 	public static float terrainTightness = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
@@ -100,7 +102,7 @@ public class Game {
 	public static void update(float delta){
 		globalTimer += delta;
 
-		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta/2f, 0f);
+		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta, 0f);
 
 		terrainCenterTimer -= delta;
 		if(terrainCenterTimer <= 0){
@@ -131,8 +133,8 @@ public class Game {
 					player.damageTaken = true;
 					
 					
-					player.impartedMomentum.y = 400f * (float)Math.cos(origAngle);
-					player.impartedMomentum.x = -700f * (float)Math.sin(origAngle);
+					player.impartedMomentum.y = TERRAIN_KNOCKBACK_Y * (float)Math.cos(origAngle);
+					player.impartedMomentum.x = -TERRAIN_KNOCKBACK_X * (float)Math.sin(origAngle);
 					
 					player.setY(yCrossMites);
 					player.setySpeed(Math.min(player.getySpeed(), 0));
@@ -150,8 +152,8 @@ public class Game {
 				if(player.getY() < yCrossTites){
 					playerErrorTimer = 1f;
 					player.damageTaken = true;
-					player.impartedMomentum.y = -400f * (float)Math.cos(origAngle);
-					player.impartedMomentum.x = 700f * (float)Math.sin(origAngle);
+					player.impartedMomentum.y = -TERRAIN_KNOCKBACK_Y * (float)Math.cos(origAngle);
+					player.impartedMomentum.x = TERRAIN_KNOCKBACK_X * (float)Math.sin(origAngle);
 					player.setY(yCrossTites);
 					player.setySpeed(Math.max(player.getySpeed(), 0));
 				}
@@ -333,8 +335,8 @@ public class Game {
 		}
 
 		if(Mine.mineOnScreen) {
-			mine.beepVolume = HvlMath.map(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()), 0, 400, 0.3f, 0f);
-			mine.beepVolume = HvlMath.limit(mine.beepVolume, 0f, 0.3f);
+			mine.beepVolume = HvlMath.map(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()), 0, 400, 0.25f, 0f);
+			mine.beepVolume = HvlMath.limit(mine.beepVolume, 0f, 0.25f);
 			mine.beepTimer += delta * (Display.getWidth() - HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos())) * 0.005f;
 			mine.setxPos(HvlMath.stepTowards(mine.getxPos(), Mine.MINE_SPEED * delta, -50));
 			if(HvlMath.distance(player.getX(), player.getY(), mine.getxPos(), mine.getyPos()) < Mine.MINE_RANGE) {
