@@ -23,7 +23,7 @@ public class Player {
 	public boolean hitMine;
 	private boolean invincibility = false;
 	private float tempTimer;
-	private float score;
+	private float score = 0;
 	public float flareTimer = 0f;
 	public boolean hasFlare = true;
 	

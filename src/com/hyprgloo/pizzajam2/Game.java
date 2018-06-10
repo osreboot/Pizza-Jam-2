@@ -103,6 +103,10 @@ public class Game {
 
 	public static void update(float delta){
 		globalTimer += delta;
+		
+		System.out.println(player.getScore());
+		
+		player.setScore(player.getScore() + (player.getX() * delta));
 
 		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta, 0f);
 
