@@ -73,7 +73,7 @@ public class Main extends HvlTemplateInteg2D{
 	public static Settings settings;
 
 	public Main(){
-		super(144, 1280, 720, "Pizza Jam 2 : HYPRGLOO Submission", new HvlDisplayModeDefault());
+		super(144, 1280, 720, "Unreached by HYPRGLOO", "IconSmall", new HvlDisplayModeDefault());
 	}
 
 	@Override
