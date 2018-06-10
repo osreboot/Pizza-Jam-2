@@ -60,20 +60,27 @@ public class Game {
 	static float yCrossTites = 0;
 	static float yCrossMites = 0;
 	
-	private static int stage;
+	private static int stage = 1;
 	private static int textX = 100;
+	
+	private static boolean level1Changed = false;
+	private static boolean level2Changed = false;
+	private static boolean level3Changed = false;
+	private static boolean level4Changed = false;
+	private static boolean level5Changed = false;
+	
 	
 	private static int
 	timeStage1Start = 0,
 	timeStage1End = 25,
-	timeStage2Start = 26,
-	timeStage2End = 51,
-	timeStage3Start = 52,
-	timeStage3End = 25,
-	timeStage4Start = 0,
-	timeStage4End = 25,
-	timeStage5Start = 0,
-	timeStage5End = 25;
+	timeStage2Start = 28,
+	timeStage2End = 63,
+	timeStage3Start = 66,
+	timeStage3End = 91,
+	timeStage4Start = 94,
+	timeStage4End = 119,
+	timeStage5Start = 122,
+	timeStage5End = 147;
 
 	public static void initialize(){
 		globalTimer = 0f;
@@ -117,8 +124,8 @@ public class Game {
 	public static void update(float delta){
 		globalTimer += delta;
 		
-		System.out.println(player.getScore());
-		
+		//System.out.println(player.getScore());
+		textX -= SCROLLSPEED*delta;
 		player.setScore(player.getScore() + (player.getX() * delta));
 
 
@@ -136,22 +143,10 @@ public class Game {
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter, 25, 25, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter - terrainTightness, 15, 15, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter + terrainTightness, 15, 15, Color.pink);
-		if(globalTimer > 0 && globalTimer < 15) {
-			Main.font.drawWord("Stage 1", textX, 100, Color.white);
-			textX -= SCROLLSPEED*delta;
-		}
-		if(globalTimer > 15 && globalTimer < 20) {
-			textX = 1280;
-			textX -= 0;
-		}
+
 		for(LineSegment miteWave : mites) {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
-			if(globalTimer > 25 && globalTimer < 27) {
-				miteWave.start.y = HvlMath.stepTowards(miteWave.start.y, delta*100, 670);
-				miteWave.end.y = HvlMath.stepTowards(miteWave.end.y, delta*100, 670);
-
-			}
 			miteWave.draw(delta);
 			float origAngle;
 			origAngle = HvlMath.fullRadians(miteWave.start, miteWave.end);
@@ -175,10 +170,7 @@ public class Game {
 		for(LineSegment titeWave : tites) {
 			titeWave.start.x -= delta*SCROLLSPEED;
 			titeWave.end.x -= delta*SCROLLSPEED;
-			if(globalTimer > 25 && globalTimer < 27) {
-				titeWave.start.y = HvlMath.stepTowards(titeWave.start.y, delta*200, 50);
-				titeWave.end.y = HvlMath.stepTowards(titeWave.end.y, delta*200, 50);
-			}
+
 			titeWave.draw(delta);
 			float origAngle;
 			origAngle = HvlMath.fullRadians(titeWave.start, titeWave.end);
@@ -212,13 +204,55 @@ public class Game {
 		player.update(delta);
 		player.draw(delta);
 
-		if(globalTimer > 26 && globalTimer < 41) {
-			Main.font.drawWord("Stage 2", textX, 100, Color.white);
-			textX -= SCROLLSPEED*delta;
-		}
 		PowerUp.update(delta);
 		mine.update(delta);
+		if(globalTimer > timeStage1Start) {
+			stage = 1;
+			if(!level1Changed) {
+				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
+				level1Changed = true;
+			}
+		}
+		if(globalTimer > timeStage2Start) {
+			stage = 2;
+			if(!level2Changed) {
+				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
+				level2Changed = true;
+			}
 
+		}
+		if(globalTimer > timeStage3Start) {
+			stage = 3;
+			if(!level3Changed) {
+				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
+				level3Changed = true;
+			}
+
+		}
+		if(globalTimer > timeStage4Start) {
+			stage = 4;
+			if(!level4Changed) {
+				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
+				level4Changed = true;
+			}
+
+		}
+		if(globalTimer > timeStage5Start) {
+			stage = 5;
+			if(!level5Changed) {
+				Main.getSound(Main.INDEX_DING).playAsSoundEffect(1, 0.8f, false);
+				level5Changed = true;
+			}
+		}
+		if(globalTimer > timeStage1Start && globalTimer < 1+10 ||globalTimer > timeStage1End && globalTimer < timeStage2Start +10
+				|| globalTimer > timeStage2End && globalTimer < timeStage3Start + 10
+				|| globalTimer > timeStage3End && globalTimer < timeStage4Start + 10
+				|| globalTimer > timeStage4End && globalTimer < timeStage5Start + 10) {
+			Main.font.drawWord("Stage "+stage, textX, 100, Color.white);
+		}
+		else {
+			textX = 1580;
+		}
 
 		if(PowerUp.powerUpOnScreen) {
 			powerUp.draw(delta);
@@ -443,8 +477,9 @@ public class Game {
 		mites.clear();
 		flares.clear();
 		Shockwave.displacementY = 0;
+		textX = 100;
 		Flare.Smoke.smokeParticles.clear();
-	}
+	}	
 
 	public static void generateTerrain(float delta, boolean tite) {
 		HvlCoord2D lineStart = new HvlCoord2D();
@@ -456,6 +491,7 @@ public class Game {
 			lineStart.x = mites.get(mites.size()-1).end.x;
 			lineStart.y = mites.get(mites.size()-1).end.y;
 		}
+
 		lineEnd.y = TERRAIN_BUFFER;
 		lineEnd.x = HvlMath.randomFloatBetween(Display.getWidth() + TERRAIN_MIN_WIDTH, Display.getWidth() + TERRAIN_MAX_WIDTH);
 		if(tite){
@@ -463,12 +499,24 @@ public class Game {
 		}else{
 			lineEnd.y = HvlMath.randomFloatBetween(Display.getHeight() - TERRAIN_BUFFER, terrainCenter + terrainTightness);
 		}
+		if(globalTimer > timeStage1Start && globalTimer < 1 ||globalTimer > timeStage1End && globalTimer < timeStage2Start 
+				|| globalTimer > timeStage2End && globalTimer < timeStage3Start
+				|| globalTimer > timeStage3End && globalTimer < timeStage4Start
+				|| globalTimer > timeStage4End && globalTimer < timeStage5Start) {
+			
+			if(!tite) {
+				lineEnd.y = Display.getHeight()-TERRAIN_BUFFER;
+			}else {
+				lineEnd.y = TERRAIN_BUFFER;
+			}
+		}
 		LineSegment line = new LineSegment(lineStart, lineEnd, tite);
 		if(tite){
 			tites.add(line); 
 		}else{
 			mites.add(line);
 		}
+		
 	}
 
 	public static boolean getLivingState() {
