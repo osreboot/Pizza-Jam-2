@@ -14,6 +14,8 @@ import com.osreboot.ridhvl.menu.HvlMenu;
 
 public class Game {
 
+	public static final float POWERUP_GOAL = 854;
+
 	public static float globalTimer = 0f;
 
 	public static Player player;
@@ -42,6 +44,7 @@ public class Game {
 	public static float terrainCenterGoal = Display.getHeight()/2;
 	public static float terrainTightnessGoal = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
 
+	public static boolean powerUpUrgent = false;
 	private static boolean powerUpPickup = false;
 	private static boolean healthPickup = false;
 	private static boolean scorePickup = false;
@@ -52,6 +55,8 @@ public class Game {
 
 	private static float powerUpTextX;
 	private static float powerUpTextY;
+	private static boolean powerUpTimerCheck = false;
+	private static float powerUpTempTimer;
 	public static float playerErrorTimer = 0f;
 	private static boolean powerUpHeightCheck = true;
 	private static boolean powerUpHasGivenHealth = true;
@@ -61,17 +66,17 @@ public class Game {
 	public static boolean spawnedWave = false;
 	static float yCrossTites = 0;
 	static float yCrossMites = 0;
-	
+
 	static int stage = 1;
 	private static int textX = 100;
-	
+
 	private static boolean level1Changed = false;
 	private static boolean level2Changed = false;
 	private static boolean level3Changed = false;
 	private static boolean level4Changed = false;
 	private static boolean level5Changed = false;
-	
-	
+
+
 	private static int
 	timeStage1Start = 0,
 	timeStage1End = 25,
@@ -127,14 +132,14 @@ public class Game {
 
 	public static void update(float delta){
 		globalTimer += delta;
-		
+
 		//System.out.println(player.getScore());
 
 		textX -= SCROLLSPEED*delta;
 
 		player.setScore(player.getScore() + (player.getX() * delta/2));
-		
-		
+
+
 
 
 		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta, 0f);
@@ -158,17 +163,17 @@ public class Game {
 			miteWave.draw(delta);
 			float origAngle;
 			origAngle = HvlMath.fullRadians(miteWave.start, miteWave.end);
-			
+
 			if(player.getX() >= miteWave.start.x && player.getX() <= miteWave.end.x) {
 				yCrossMites = HvlMath.map(player.getX(), miteWave.start.x, miteWave.end.x, miteWave.start.y, miteWave.end.y);
 				if(player.getY() > yCrossMites){
 					playerErrorTimer = 1f;
 					player.damageTaken = true;
-					
-					
+
+
 					player.impartedMomentum.y = TERRAIN_KNOCKBACK_Y * (float)Math.cos(origAngle);
 					player.impartedMomentum.x = -TERRAIN_KNOCKBACK_X * (float)Math.sin(origAngle);
-					
+
 					player.setY(yCrossMites);
 					player.setySpeed(Math.min(player.getySpeed(), 0));
 				}
@@ -208,18 +213,18 @@ public class Game {
 		//hvlDrawQuadc(player.getX(), yCrossMites, 20,20, Color.blue);
 		//hvlDrawQuadc(player.getX(), yCrossTites, 20,20, Color.blue);
 		if(Mine.mineOnScreen) mine.drawLight(delta);
-System.out.println(globalTimer % 1);
+		//System.out.println(globalTimer % 1);
 		player.update(delta);
 		if(!player.getInvincibleState()) {
-		player.draw(delta);
+			player.draw(delta);
 
 
 		}else{
 			if(globalTimer % 0.1 > 0.05) {
-			player.draw(delta);
+				player.draw(delta);
 			}
 		}
-		
+
 		PowerUp.update(delta);
 		mine.update(delta);
 		if(globalTimer > timeStage1Start) {
@@ -268,16 +273,42 @@ System.out.println(globalTimer % 1);
 			Main.font.drawWordc("Base stages complete.", Display.getWidth()/2, Display.getHeight()*3/8, Color.white, 0.3f);
 			Main.font.drawWordc("Continue onward to begin Endless mode -->", Display.getWidth()/2, Display.getHeight()*4/8, Color.white, 0.3f);
 		}
+		
+		
 		if(PowerUp.powerUpOnScreen) {
-			powerUp.draw(delta);
+			if(powerUpUrgent) {
+				if(globalTimer % 0.1 > 0.05) {
+					powerUp.draw(delta);
+				}
+			}else {
+				powerUp.draw(delta);
+			}
 
-			//powerUp.setxPos(powerUp.getxPos() - (PowerUp.POWERUP_SPEED * delta);
 
-			powerUp.setxPos(HvlMath.stepTowards(powerUp.getxPos(), PowerUp.POWERUP_SPEED * delta, 854));
+			powerUp.setxPos(HvlMath.stepTowards(powerUp.getxPos(), PowerUp.POWERUP_SPEED * delta, POWERUP_GOAL));
 
-			//if(powerUp.getxPos() <= 854) {
-			//	powerUp.setxPos(854);
-			//}
+
+			if(powerUp.getxPos() == POWERUP_GOAL && !powerUpTimerCheck) {
+				powerUpTempTimer = globalTimer;
+				powerUpTimerCheck = true;
+			}
+
+			if(powerUpTempTimer + 5 <= globalTimer) {
+				powerUpUrgent = true;
+				//Flash powerup
+			}
+
+			if(powerUpTempTimer + 7 <= globalTimer) {
+				PowerUp.powerUpOnScreen = false;
+				powerUpTimerCheck = false;
+				powerUpUrgent = false;
+				powerUp.setxPos(PowerUp.powerUpSpawnX);
+				powerUp.setyPos(PowerUp.powerUpSpawnY);
+				powerUpPickup = false;
+				powerUpTempTimer = globalTimer;
+
+			}
+
 			if(player.getY() >= powerUp.getyPos() - (PowerUp.POWERUP_SIZE/2) - (Player.PLAYER_SIZE/2) &&
 					player.getY() <= powerUp.getyPos() + (PowerUp.POWERUP_SIZE/2) + (Player.PLAYER_SIZE/2) &&
 					player.getX() >= powerUp.getxPos() - (PowerUp.POWERUP_SIZE/2) - (Player.PLAYER_SIZE/2) &&
@@ -287,9 +318,16 @@ System.out.println(globalTimer % 1);
 				powerUp.setxPos(PowerUp.powerUpSpawnX);
 				powerUp.setyPos(PowerUp.powerUpSpawnY);
 				powerUpPickup = true;
+				powerUpUrgent = false;
 				PowerUp.powerUpOnScreen = false;
+				powerUpTimerCheck = false;
 
 			}
+
+		
+			
+			System.out.println(powerUpTempTimer);
+			
 
 
 
@@ -486,7 +524,7 @@ System.out.println(globalTimer % 1);
 			if(mites.contains(s)) mites.remove(s);
 			if(tites.contains(s)) tites.remove(s);
 		}
-		
+
 
 		if(stage == 4) {
 			TERRAIN_MAX_TIGHTNESS = 60f;
@@ -495,14 +533,14 @@ System.out.println(globalTimer % 1);
 			TERRAIN_MAX_TIGHTNESS = 45f;
 		}
 
-		
+
 		//Draw the score
 		if(player.getHealth() > 0) {
-		Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X+2, 15+2, Color.black, 0.17f);
+			Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X+2, 15+2, Color.black, 0.17f);
 
-		Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X, 15, Color.white, 0.17f);
+			Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X, 15, Color.white, 0.17f);
 		}
-		
+
 
 	}
 
@@ -545,7 +583,7 @@ System.out.println(globalTimer % 1);
 				|| globalTimer > timeStage2End && globalTimer < timeStage3Start
 				|| globalTimer > timeStage3End && globalTimer < timeStage4Start
 				|| globalTimer > timeStage4End && globalTimer < timeStage5Start) {
-			
+
 			if(!tite) {
 				lineEnd.y = Display.getHeight()-TERRAIN_BUFFER;
 			}else {
@@ -565,7 +603,7 @@ System.out.println(globalTimer % 1);
 		}else{
 			mites.add(line);
 		}
-		
+
 	}
 
 	public static boolean getLivingState() {
