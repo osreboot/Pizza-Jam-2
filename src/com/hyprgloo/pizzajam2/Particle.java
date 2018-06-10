@@ -7,6 +7,7 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlRotate;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlCoord2D;
+import com.osreboot.ridhvl.HvlMath;
 
 public class Particle {
 
@@ -24,11 +25,15 @@ public class Particle {
 	}
 	
 	public void update(float delta){
-		loc.x += xs;
-		loc.y += ys;
+		loc.x += xs * delta;
+		loc.y += ys * delta;
 		hvlRotate(loc, direction);
 		hvlDrawQuadc(loc.x, loc.y, xl, yl, c);
 		hvlResetRotation();
+		if(loc.x < -xl - yl){
+			loc.x = xl + yl + 1280;
+			loc.y = HvlMath.randomFloatBetween(Game.TERRAIN_BUFFER, 720 - Game.TERRAIN_BUFFER);
+		}
 	}
 	
 }

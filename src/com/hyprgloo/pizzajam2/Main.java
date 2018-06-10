@@ -47,7 +47,8 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_HEALTH1 = 18,
 	INDEX_HEALTH2 = 19,
 	INDEX_HEALTH3 = 20,
-	INDEX_HEALTH4 = 21;
+	INDEX_HEALTH4 = 21,
+	INDEX_TERRAIN = 22;
 
 	public static final int
 	INDEX_BEEP = 0,
@@ -90,6 +91,7 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Health2");
 		getTextureLoader().loadResource("Health3");
 		getTextureLoader().loadResource("Health4");
+		getTextureLoader().loadResource("Terrain");
 
 		getSoundLoader().loadResource("Beep");
 		getSoundLoader().loadResource("Boom");
@@ -120,6 +122,7 @@ public class Main extends HvlTemplateInteg2D{
 		MenuManager.initialize();
 		TutorialText.initialize();
 		MenuBackground.initialize();
+		ParticleField.initialize();
 	}
 
 	@Override

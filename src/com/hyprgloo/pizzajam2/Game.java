@@ -11,6 +11,7 @@ import org.newdawn.slick.Color;
 import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.menu.HvlMenu;
+import com.osreboot.ridhvl.painter.HvlRenderFrame;
 
 public class Game {
 
@@ -84,7 +85,7 @@ public class Game {
 	timeStage5Start = 122,
 	timeStage5End = 147;
 	public static int endlessBegin = 164;
-
+	
 	public static void initialize(){
 		globalTimer = 0f;
 		stage = 1;
@@ -152,6 +153,8 @@ public class Game {
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter - terrainTightness, 15, 15, Color.pink);
 		//hvlDrawQuadc(Display.getWidth(), terrainCenter + terrainTightness, 15, 15, Color.pink);
 
+		ParticleField.update(delta);
+		
 		for(LineSegment miteWave : mites) {
 			miteWave.start.x -= delta*SCROLLSPEED;
 			miteWave.end.x -= delta*SCROLLSPEED;
@@ -204,11 +207,10 @@ public class Game {
 		if(Mine.mineOnScreen) mine.draw(delta);
 
 		float gradientAlpha = Math.min(globalTimer/3f, 1f) - HvlMath.mapl(player.flareTimer, 0f, Flare.FLARE_LIFETIME/4f, 0, 0.3f);
-		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1200, 1200, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
+		hvlDrawQuadc(player.getX(), Display.getHeight()/2, 1250, 1250, Main.getTexture(Main.INDEX_GRADIENT), new Color(1f, 1f, 1f, gradientAlpha));
 		//hvlDrawQuadc(player.getX(), yCrossMites, 20,20, Color.blue);
 		//hvlDrawQuadc(player.getX(), yCrossTites, 20,20, Color.blue);
 		if(Mine.mineOnScreen) mine.drawLight(delta);
-System.out.println(globalTimer % 1);
 		player.update(delta);
 		if(!player.getInvincibleState()) {
 		player.draw(delta);
