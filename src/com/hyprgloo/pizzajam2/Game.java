@@ -87,6 +87,7 @@ public class Game {
 
 	public static void initialize(){
 		globalTimer = 0f;
+		stage = 1;
 
 		terrainCenter = Display.getHeight()/2;
 		terrainTightness = (TERRAIN_MIN_TIGHTNESS + TERRAIN_MAX_TIGHTNESS)/2f;
