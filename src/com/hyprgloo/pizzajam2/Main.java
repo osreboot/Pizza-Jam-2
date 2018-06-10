@@ -20,16 +20,12 @@ public class Main extends HvlTemplateInteg2D{
 	//TODO score, calculations					S		[BASS]
 	//TODO score, menus							S		[OS]
 	//TODO tutorial text						M<<		[OS]
-	//TODO player fail state					M<<
 	//TODO player win state						M<<
-	//TODO stage progression (to win state)		L<<
 	//TODO stage progression visuals 			S<<
 	//TODO particle fields						M		[OS]
 	//TODO game name							S<<<
 	//TODO game icon							S<		[OS]
-	//TODO ship lighting effects				S
 	//TODO main menu fade-in					S		[OS]
-	//TODO fuel pickups/bar						L		[BASS]
 	//TODO first health grace period			S<<<	[BASS]
 	//TODO health/pickups tied to delta			M<<<	[BASS]
 	
@@ -67,7 +63,8 @@ public class Main extends HvlTemplateInteg2D{
 	INDEX_BEEP = 0,
 	INDEX_BOOM = 1,
 	INDEX_CRUNCH = 2,
-	INDEX_DING = 3;
+	INDEX_DING = 3,
+	INDEX_SONG = 4;
 
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 
@@ -107,6 +104,7 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("Boom");
 		getSoundLoader().loadResource("Crunch");
 		getSoundLoader().loadResource("stageChange3");
+		getSoundLoader().loadResource("Unreached");
 
 		font = new HvlFontPainter2D(getTexture(INDEX_FONT), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
@@ -134,6 +132,12 @@ public class Main extends HvlTemplateInteg2D{
 
 	@Override
 	public void update(float delta){
+		if(!getSound(INDEX_SONG).isPlaying() && settings.musicEnabled){
+			Main.getSound(Main.INDEX_SONG).playAsSoundEffect(1, 0.1f, false);
+		}
+		if(getSound(INDEX_SONG).isPlaying() && !settings.musicEnabled){
+			Main.getSound(Main.INDEX_SONG).stop();
+		}
 		MenuManager.update(delta);
 	}
 
