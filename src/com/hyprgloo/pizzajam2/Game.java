@@ -128,9 +128,9 @@ public class Game {
 
 		textX -= SCROLLSPEED*delta;
 
-		player.setScore(player.getScore() + (player.getX() * delta));
+		player.setScore(player.getScore() + (player.getX() * delta/2));
 		
-		//Main.font.drawWordc(player.getScore(), powerUpTextX, powerUpTextY, new Color(255, 255, 255, powerUpTextOpacity), 0.12f);
+		
 
 
 		playerErrorTimer = HvlMath.stepTowards(playerErrorTimer, delta, 0f);
@@ -345,7 +345,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenBigScore) {
-				//Add 3000 to score
+				player.setScore(player.getScore() + 3000);
 				powerUpHasGivenBigScore = false;
 			}
 
@@ -401,7 +401,7 @@ System.out.println(globalTimer % 1);
 			}
 
 			if(powerUpHasGivenScore) {
-				//Add 1000 to score
+				player.setScore(player.getScore() + 1000);
 				powerUpHasGivenScore = false;
 			}
 
@@ -480,6 +480,14 @@ System.out.println(globalTimer % 1);
 			if(mites.contains(s)) mites.remove(s);
 			if(tites.contains(s)) tites.remove(s);
 		}
+		
+		
+		//Draw the score
+		
+		Main.font.drawWord("SCORE: " +(int)(Math.round(player.getScore())), Player.HEALTHBAR_X + 2, 19, Color.black, 0.17f);
+
+		Main.font.drawWord("SCORE: " + (int)(Math.round(player.getScore())), Player.HEALTHBAR_X, 17, Color.white, 0.17f);
+		
 	}
 
 	public static void restart(){
