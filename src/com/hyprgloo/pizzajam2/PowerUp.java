@@ -55,6 +55,7 @@ public class PowerUp {
 			powerUpSpawnX = HvlMath.randomFloatBetween(1280 + 200, 1280 + 1500);
 			powerUpTypeGen = r.nextInt(100 + 1);
 			
+			if(Game.globalTimer > Game.endlessBegin + 10) powerUpTypeGen = 100;
 			if(powerUpTypeGen > 0 && powerUpTypeGen < 66) {
 				powerUpType = 1;
 				//Health
